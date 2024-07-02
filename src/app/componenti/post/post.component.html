@@ -1,0 +1,75 @@
+<!-- <form class="search" #postform="ngForm" (ngSubmit)="onSearch(postform)">
+  <mat-form-field class="searchBar">
+    <mat-label>Search By Title of Post</mat-label>
+    <input matInput type="text" name="title" ngModel />
+  </mat-form-field>
+  <button mat-fab extended color="primary" type="submit">Search</button>
+  <button class="back" mat-fab extended color="primary" (click)="back()">
+    Go Back
+  </button>
+</form> -->
+<form class="search" #postform="ngForm">
+  <mat-form-field appearance="outline" class="custom-search-bar">
+    <mat-label>Search By Title</mat-label>
+    <input matInput type="text" name="search" placeholder="Type here..." />
+    <!-- <button matSuffix mat-icon-button aria-label="Search">
+    <mat-icon>search</mat-icon>
+  </button> -->
+  </mat-form-field>
+</form>
+<form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)">
+  <h1>Add Post</h1>
+  <mat-form-field class="title">
+    <mat-label>Title</mat-label>
+    <input matInput type="text" name="title" [(ngModel)]="title" />
+  </mat-form-field>
+  <mat-form-field class="addPost">
+    <mat-label>Textarea</mat-label>
+    <textarea
+      matInput
+      type="text"
+      name="post"
+      [(ngModel)]="post"
+      class="fixed-height-textarea"
+    ></textarea>
+    <button
+      mat-fab
+      extended
+      color="primary"
+      type="submit"
+      [disabled]="!title || !post"
+      (click)="clear()"
+    >
+      Post
+    </button>
+  </mat-form-field>
+</form>
+
+<div class="post" *ngFor="let post of Allpost">
+  <app-post-unico [post]="post"></app-post-unico>
+</div>
+<div class="button-paginator">
+  <button
+    class="paginator"
+    *ngIf="remainingPosts > 0"
+    mat-fab
+    extended
+    (click)="loadMorePosts()"
+  >
+    Carica più post
+    <mat-icon
+      ><span class="paginator-color">
+        keyboard_double_arrow_down
+      </span></mat-icon
+    >
+  </button>
+</div>
+<!-- <mat-paginator
+  [length]="lenghtPost"
+  [pageIndex]="pageIndex"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="selectPage($event)"
+  aria-label="Select page"
+>
+</mat-paginator> -->

@@ -1,0 +1,106 @@
+.example-container {
+  height: 100%;
+}
+.example-spacer {
+  flex: 1;
+}
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+mat-drawer {
+  width: 10%;
+  text-align: center;
+  background-color: rgb(228, 201, 220);
+}
+
+mat-toolbar {
+  background-color: rgb(228, 201, 220);
+  position: fixed;
+  width: 90.3%;
+  z-index: 1000;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+.main-content {
+  margin-top: 65px; /* Altezza della toolbar */
+  padding: 20px;
+  overflow-y: auto; /* Abilita lo scrolling verticale */
+}
+
+/* mat-drawer .prova {
+  margin-top: auto;
+} */
+
+/* mat-drawer-content {
+  background-color: #ebe4e7;
+  overflow-y: auto;
+} */
+
+.mat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 43.5px;
+}
+
+.mat-list-item:hover {
+  background-color: rgb(163, 122, 151);
+}
+
+.mat-list-item mat-icon {
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.mat-list-item span {
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 2px;
+}
+
+.mat-list-item.active {
+  background-color: rgb(163, 122, 151);
+}
+@media only screen and (max-width: 1360px) {
+  mat-drawer {
+    width: 14%;
+  }
+  mat-toolbar {
+    width: 86.5%;
+  }
+  mat-drawer-content {
+    margin-top: 0px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  mat-drawer {
+    width: 16%;
+  }
+  mat-toolbar {
+    width: 85.6%;
+  }
+}
+
+@media only screen and (max-width: 820px) {
+  .mat-list-item span {
+    display: none;
+  }
+  .mat-list-item mat-icon {
+    margin: 0 auto;
+  }
+  mat-toolbar {
+    height: 64px;
+  }
+}

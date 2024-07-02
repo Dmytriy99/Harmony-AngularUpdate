@@ -1,0 +1,136 @@
+.custom-search-bar {
+  width: 35%; /* Larghezza fissa per il campo di ricerca */
+}
+
+.mat-form-field {
+  border-radius: 25px; /* Bordi arrotondati per il campo di input */
+  background-color: #f5f5f5; /* Colore di sfondo */
+}
+
+.mat-form-field-underline {
+  display: none; /* Nascondi la linea di sottolineatura di default */
+}
+
+.mat-input-element {
+  font-size: 14px; /* Dimensione del font */
+  color: #333; /* Colore del testo */
+}
+
+.mat-form-field.mat-focused .mat-form-field-outline {
+  color: #007bff; /* Colore dell'outline quando l'input è in focus */
+}
+
+.material-symbols-outlined {
+  color: aliceblue;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #4267b2;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+button {
+  background-color: lightcoral;
+
+  height: 32px;
+}
+
+.add {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-color: rgb(163, 122, 151);
+
+  width: 50%;
+  margin: 0 auto;
+}
+.post {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.addPost {
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  width: 70%;
+}
+
+h1 {
+  padding-top: 10px;
+  font-weight: 500;
+}
+
+.openPost {
+  background-color: rgb(239, 235, 243);
+}
+
+.title {
+  width: 70%;
+}
+
+.searchBar {
+  width: 30%;
+}
+.search {
+  width: 100%;
+  text-align: center;
+}
+
+.back {
+  margin-left: 10px;
+}
+.paginator {
+  background-color: rgb(163, 122, 151);
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.paginator-color {
+  color: black;
+}
+.button-paginator {
+  width: 100%;
+  text-align: center;
+}
+
+.fixed-height-textarea {
+  min-height: 60px; /* Altezza fissa */
+  overflow-y: auto; /* Mostra sempre la scrollbar verticale */
+}
+@media only screen and (max-width: 1000px) {
+  button {
+    font-size: 10px;
+    width: 30%;
+    height: 30px;
+  }
+  .searchBar {
+    width: 85%;
+  }
+  .add {
+    width: 95%;
+  }
+  .back {
+    margin-bottom: 15px;
+  }
+  mat-paginator {
+    margin-bottom: 2px;
+  }
+}

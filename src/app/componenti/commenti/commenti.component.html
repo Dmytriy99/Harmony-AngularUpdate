@@ -1,0 +1,35 @@
+<form #Commentform="ngForm" (ngSubmit)="onSubmit(Commentform)">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Leave a comment</mat-label>
+    <input
+      type="text"
+      name="body"
+      matInput
+      #message
+      maxlength="256"
+      placeholder="Ex. I like your Post"
+      [(ngModel)]="body"
+    />
+    <button
+      mat-icon-button
+      class="send"
+      aria-label="Example icon-button with heart icon"
+      type="submit"
+      [disabled]="!body"
+      (click)="clear()"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+
+<div class="commenti" *ngFor="let comments of comment">
+  <mat-card class="example-card">
+    <mat-card-title>{{ comments.name }}</mat-card-title>
+    <mat-card-subtitle>{{ comments.email }}</mat-card-subtitle>
+
+    <p>{{ comments.content }}</p>
+  </mat-card>
+</div>
+
+<h2>{{ noComment }}</h2>

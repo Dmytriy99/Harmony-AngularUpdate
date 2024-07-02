@@ -1,0 +1,68 @@
+<form
+  class="search"
+  #SearchUserform="ngForm"
+  (ngSubmit)="onSubmit(SearchUserform)"
+>
+  <mat-form-field appearance="outline" class="custom-search-bar">
+    <mat-label>Search By Name or Email</mat-label>
+    <input matInput type="text" name="search" placeholder="Type here..." />
+  </mat-form-field>
+  <mat-radio-group
+    aria-label="Select an option"
+    [(ngModel)]="selectedOption"
+    name="searchOption"
+  >
+    <mat-radio-button value="1">By Name</mat-radio-button>
+    <mat-radio-button value="2">By email</mat-radio-button>
+  </mat-radio-group>
+  <button mat-fab extended color="primary" type="submit">Search</button>
+  <button class="back" mat-fab extended color="primary" (click)="back()">
+    Go Back
+  </button>
+</form>
+<div class="card" *ngFor="let user of users">
+  <mat-card class="container"
+    ><mat-drawer-container class="example-container">
+      <mat-drawer mode="side" opened class="photo-border">
+        <div class="photo-container">
+          <img class="photo" [src]="userImage[user._id]" />
+        </div>
+      </mat-drawer>
+      <mat-drawer-content
+        ><mat-card-header class="card-info">
+          <mat-card-title
+            >{{ user.name }}
+            <div
+              class="cerchio"
+              [ngStyle]="{
+                background: user.status === 'online' ? 'green' : 'red'
+              }"
+            ></div>
+          </mat-card-title>
+          <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-fab extended color="primary" routerLink="{{ user._id }}">
+            Open Profile
+          </button>
+        </mat-card-actions>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </mat-card>
+</div>
+<div class="button-paginator">
+  <button
+    class="paginator"
+    *ngIf="remainingUsers > 0"
+    mat-fab
+    extended
+    (click)="loadMoreUsers()"
+  >
+    Carica più User
+    <mat-icon
+      ><span class="paginator-color">
+        keyboard_double_arrow_down
+      </span></mat-icon
+    >
+  </button>
+</div>

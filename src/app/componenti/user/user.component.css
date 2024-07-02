@@ -1,0 +1,241 @@
+/* mat-drawer-container {
+  height: 250px;
+}
+.example-container {
+  background-color: rgb(235, 232, 232);
+}
+.container {
+  display: flex;
+  margin-bottom: 25px;
+  display: flex;
+  margin: 0 auto;
+  width: 72%;
+  margin-top: 10px;
+}
+
+mat-drawer {
+  border-right: 0px;
+  margin-top: 6px;
+}
+.photo-container {
+  margin-top: 10px;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+.prova {
+  background-color: rgb(235, 232, 232);
+  margin-left: 10px;
+}
+
+.card {
+  margin-left: 20px;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+}
+.cerchio {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
+.example-card {
+  width: 75%;
+  margin: 0 auto;
+}
+.post {
+  width: 95%;
+  margin: 0 auto;
+  padding-bottom: 65px;
+}
+mat-card-header {
+  margin-bottom: 20px;
+}
+mat-card-title {
+  margin-bottom: 10px;
+}
+
+.delete {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+h2 {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+}
+h1 {
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 850px) {
+  .container {
+    width: 95%;
+  }
+  .post {
+    padding-bottom: 0;
+  }
+} */
+mat-drawer-container {
+  height: 250px;
+}
+
+.container {
+  display: flex;
+  margin-bottom: 25px;
+  display: flex;
+  margin: 0 auto;
+  width: 72%;
+  margin-top: 10px;
+}
+
+mat-drawer {
+  border-right: 0px;
+  margin-top: 6px;
+}
+
+.photo-container {
+  margin-top: 10px;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+}
+
+.cerchio {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+.example-card {
+  width: 75%;
+  margin: 0 auto;
+}
+.post {
+  margin-top: 30px;
+  width: 95%;
+  margin: 0 auto;
+  padding-bottom: 65px;
+}
+mat-card-header {
+  margin-bottom: 20px;
+}
+
+mat-card-title {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+h2 {
+  padding-bottom: 15px;
+}
+
+.addUser {
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.example-container {
+  background-color: rgb(235, 232, 232);
+}
+.photo-border {
+  margin-left: 10px;
+  background-color: rgb(235, 232, 232);
+}
+
+.card {
+  margin-left: 20px;
+}
+
+.user-info {
+  background-color: rgb(235, 232, 232);
+  width: 300px;
+}
+
+mat-card-subtitle {
+  margin-top: 10px;
+}
+
+.desc {
+  background-color: rgb(224, 219, 219);
+  text-align: center;
+}
+
+.example-card {
+  display: none;
+  margin-top: 1px;
+  width: 95%;
+  background-color: rgb(224, 219, 219);
+  text-align: center;
+}
+.description-hide {
+  text-align: center;
+}
+.container-device-info-user {
+  display: none;
+}
+.description-device {
+  text-align: center;
+}
+
+.no-post {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 25px;
+}
+
+@media only screen and (max-width: 1360px) {
+  .container {
+    width: 95%;
+  }
+  .desc {
+    display: none;
+  }
+  .example-card {
+    display: flex;
+  }
+}
+@media only screen and (max-width: 690px) {
+  .photo-container {
+    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+  }
+  .desktop-user-info {
+    display: none;
+  }
+  .photo-border {
+    margin-top: 25px;
+    width: 100%;
+  }
+  .container-device-info-user {
+    display: flex;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 0%;
+  }
+}

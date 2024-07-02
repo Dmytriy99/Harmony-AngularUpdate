@@ -1,0 +1,51 @@
+button {
+  font-size: 12px;
+}
+.example-card {
+  width: 92%;
+  margin: 0 auto;
+  background-color: rgb(202, 200, 200);
+}
+div {
+  margin-bottom: 8px;
+}
+mat-card-header {
+  margin-bottom: 8px;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 500;
+}
+
+p {
+  font-size: 15px;
+  margin-left: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin: 0 auto;
+}
+
+mat-card-title {
+  font-weight: 400;
+  margin-top: 3px;
+  margin-left: 20px;
+}
+
+mat-card-subtitle {
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 850px) {
+  mat-card-title {
+    font-size: 17px;
+  }
+  p {
+    font-size: 14px;
+  }
+}

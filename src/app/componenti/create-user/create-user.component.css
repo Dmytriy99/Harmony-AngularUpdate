@@ -1,0 +1,82 @@
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: rgb(163, 122, 151);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.custom-file-upload:hover {
+  background-color: rgb(134, 80, 118);
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+mat-form-field {
+  margin-top: 8px;
+  margin: 0 auto;
+  flex-direction: column;
+  display: flex;
+  width: 80%;
+}
+form {
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
+.adduser {
+  margin: 0 auto;
+  width: 50%;
+  background-color: rgb(163, 122, 151);
+  height: 32px;
+}
+button {
+  margin: 0 auto;
+}
+
+h2 {
+  font-weight: bold;
+  margin: 0 auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.error {
+  font-weight: 400;
+}
+
+.description {
+  height: 150px;
+}
+
+.dialog-content {
+  max-height: 88vh; /* Imposta l'altezza massima al 80% dell'altezza della finestra */
+  overflow-y: auto;
+  padding: 10px;
+}
+.fixed-height-textarea {
+  min-height: 60px; /* Altezza fissa */
+  overflow-y: auto; /* Mostra sempre la scrollbar verticale */
+}
+@media only screen and (max-width: 880px) {
+  form {
+    width: 280px;
+  }
+  .dialog-content {
+    padding: 5px;
+  }
+  h2 {
+    margin: 0 auto;
+    text-align: center;
+  }
+}

@@ -1,0 +1,55 @@
+<mat-card class="register">
+  <mat-card-content
+    ><h2>Welcome to CityHarmony</h2>
+    <p>Register to access the site</p>
+    <form #registerform="ngForm" (ngSubmit)="onSubmit(registerform)">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name="name" ngModel />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Gender</mat-label>
+        <mat-select name="gender" ngModel="data.select">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          type="email"
+          name="email"
+          ngModel
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" name="password" ngModel />
+      </mat-form-field>
+      <p>
+        If you don't have the token, get it at the following "<a
+          href="https://gorest.co.in/my-account/access-tokens"
+          >LINK</a
+        >"
+      </p>
+      <h2>{{ error }}</h2>
+      <button mat-fab extended color="primary" type="submit">Register</button>
+    </form></mat-card-content
+  >
+</mat-card>
+
+<mat-card class="login">
+  <mat-card-content>
+    <h3>
+      If you have just registered or have already obtained your credentials,
+      click here to log in
+    </h3>
+    <button mat-fab extended color="primary" type="submit" routerLink="/login">
+      Login
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<router-outlet></router-outlet>

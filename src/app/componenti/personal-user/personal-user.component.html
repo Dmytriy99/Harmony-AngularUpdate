@@ -1,0 +1,117 @@
+<div *ngIf="user">
+  <mat-card class="container"
+    ><mat-drawer-container class="example-container">
+      <mat-drawer mode="side" opened class="photo-border"
+        ><div class="photo-container">
+          <img class="photo" [src]="userImage" /></div
+      ></mat-drawer>
+      <mat-drawer-content class="desktop-user-info"
+        ><mat-drawer-container class="example-container">
+          <mat-drawer mode="side" opened class="user-info">
+            <mat-card-header class="card">
+              <mat-card-title
+                >{{ user.name }}
+                <div
+                  class="cerchio"
+                  [ngStyle]="{
+                    background: user.status === 'online' ? 'green' : 'red'
+                  }"
+                ></div>
+              </mat-card-title>
+              <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
+              <mat-card-subtitle
+                >Age : {{ user.age || "Età non fornita" }}</mat-card-subtitle
+              >
+              <mat-card-subtitle
+                >Address :
+                {{ user.address || "Indirizzo non fornito" }}</mat-card-subtitle
+              >
+              <mat-card-subtitle>Gender : {{ user.gender }}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-drawer>
+          <mat-drawer-content class="desc">
+            <mat-card-content>
+              <h2 class="description">Descrizione</h2>
+              {{
+                user.description || "Nessuna descrizione disponibile"
+              }}</mat-card-content
+            >
+          </mat-drawer-content>
+        </mat-drawer-container>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </mat-card>
+  <mat-card class="container-device-info-user">
+    <mat-card-content class="device-info-user">
+      <mat-card-title
+        >{{ user.name }}
+        <div
+          class="cerchio"
+          [ngStyle]="{
+            background: user.status === 'online' ? 'green' : 'red'
+          }"
+        ></div>
+      </mat-card-title>
+      <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
+      <mat-card-subtitle>Age : {{ user.age }}</mat-card-subtitle>
+      <mat-card-subtitle
+        >Address :
+        {{ user.address || "Indirizzo non fornito" }}</mat-card-subtitle
+      >
+      <mat-card-subtitle
+        >Gender : {{ user.gender || "Età non fornita" }}</mat-card-subtitle
+      >
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="example-card">
+    <mat-card-content>
+      <h2 class="description">Descrizione</h2>
+      {{
+        user.description || "Nessuna descrizione disponibile"
+      }}</mat-card-content
+    >
+  </mat-card>
+  <div class="addUser">
+    <button
+      mat-fab
+      extended
+      color="primary"
+      class="btnUser"
+      (click)="openDialog()"
+    >
+      Customize Profile
+    </button>
+  </div>
+  <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)">
+    <h1>Add Post</h1>
+    <mat-form-field class="title">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" name="title" [(ngModel)]="title" />
+    </mat-form-field>
+
+    <mat-form-field class="addPost">
+      <mat-label>Textarea</mat-label>
+      <textarea
+        matInput
+        type="text"
+        name="post"
+        [(ngModel)]="postInput"
+      ></textarea>
+    </mat-form-field>
+    <button
+      class="btnPost"
+      mat-fab
+      extended
+      color="primary"
+      type="submit"
+      [disabled]="!title || !postInput"
+      (click)="clear()"
+    >
+      Post
+    </button>
+  </form>
+  <h2 class="no-post">{{ nopost }}</h2>
+  <div class="post" *ngFor="let posts of post">
+    <app-post-unico [post]="posts"></app-post-unico>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <!-- <mat-list class="list" role="list">
+      <mat-list-item
+        class="user"
+        role="listitem"
+        routerLink="homeUser"
+        [routerLinkActive]="'active'"
+      >
+        <mat-icon><span> home </span></mat-icon><span>Home</span></mat-list-item
+      >
+      <mat-list-item
+        class="prova"
+        role="listitem"
+        routerLink="posts"
+        [routerLinkActive]="'active'"
+        ><mat-icon
+          ><span class="material-symbols-outlined"> post_add </span> </mat-icon
+        ><span>Posts</span></mat-list-item
+      >
+      <mat-list-item
+        class="prova"
+        role="listitem"
+        routerLink="users"
+        [routerLinkActive]="'active'"
+        ><mat-icon
+          ><span class="material-symbols-outlined"> group </span></mat-icon
+        ><span>Users</span></mat-list-item
+      >
+    </mat-list> -->
+    <ul class="mat-list">
+      <li
+        class="mat-list-item"
+        routerLink="/homeUser"
+        routerLinkActive="active"
+      >
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </li>
+      <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
+        <mat-icon>post_add</mat-icon>
+        <span>Posts</span>
+      </li>
+      <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
+        <mat-icon>group</mat-icon>
+        <span>Users</span>
+      </li>
+    </ul>
+  </mat-drawer>
+  <mat-drawer-content class="content-wrapper"
+    ><mat-toolbar>
+      <button mat-icon-button routerLink="posts">
+        <mat-icon><span> emoji_transportation </span></mat-icon>
+      </button>
+      <span>CityHarmony</span>
+      <span class="example-spacer"></span>
+      <button class="logOut" mat-icon-button type="button" (click)="logOut()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

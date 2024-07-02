@@ -1,0 +1,28 @@
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle
+        >{{ userName }}<br />
+        {{ userEmail }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ body }}</p>
+    </mat-card-content>
+    <div class="like">
+      <button
+        mat-icon-button
+        class="send"
+        aria-label="Example icon-button with heart icon"
+        type="submit"
+        (click)="like()"
+      >
+        <mat-icon matBadge="{{ post.likes }}" matBadgeColor="warn"
+          >favorite</mat-icon
+        >
+      </button>
+    </div>
+    <app-commenti [postId]="iDpost"></app-commenti>
+  </mat-card>
+</div>
