@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { userService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/modelli/interface';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { token } from 'src/app/service/api.export';
 
 @Component({
   selector: 'app-users',
@@ -37,7 +38,9 @@ export class UsersComponent implements OnInit {
   remainingUsers = 0;
   constructor(private userService: userService) {}
   ngOnInit(): void {
-    this.getAllUser();
+    if (token) {
+      this.getAllUser();
+    }
   }
 
   getAllUser() {
