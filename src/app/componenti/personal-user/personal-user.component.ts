@@ -7,6 +7,7 @@ import { postService } from 'src/app/service/postService/post.service';
 import { userService } from 'src/app/service/userService/user.service';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgForm } from '@angular/forms';
+import { token } from 'src/app/service/api.export';
 
 @Component({
   selector: 'app-personal-user',
@@ -44,7 +45,12 @@ export class PersonalUserComponent implements OnInit {
     private userService: userService
   ) {}
   ngOnInit(): void {
-    this.getPersonalUserInfo();
+    const localtoken = localStorage.getItem('token');
+    if (localtoken == token) {
+      this.getPersonalUserInfo();
+    } else {
+      location.reload();
+    }
   }
 
   getPersonalUserInfo() {

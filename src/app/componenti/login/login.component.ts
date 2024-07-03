@@ -10,8 +10,6 @@ import { AuthServiceComp } from 'src/app/service/authService/auth.service';
 })
 export class LoginComponent {
   error!: string;
-  localToken: string = localStorage.getItem('token')!;
-  localEmail: string = localStorage.getItem('email')!;
   constructor(public route: Router, private authservice: AuthServiceComp) {}
   onSubmit(form: NgForm) {
     const loginData = {
@@ -21,7 +19,7 @@ export class LoginComponent {
     this.authservice.login(loginData).subscribe((data: any) => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('isLog', 'true');
-      this.route.navigate(['/users']);
+      this.route.navigate(['/homeUser']);
       console.log(data);
     });
   }
