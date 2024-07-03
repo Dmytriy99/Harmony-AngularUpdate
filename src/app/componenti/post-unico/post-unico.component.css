@@ -12,9 +12,6 @@
 mat-card-header {
   margin-bottom: 20px;
 }
-mat-card-title {
-  margin-bottom: 10px;
-}
 
 form {
   display: flex;
@@ -31,15 +28,27 @@ p {
   font-size: 16px;
 }
 
-.like {
-  height: 50px;
-  width: 100%;
-  text-align: end;
-}
-
 .send {
   margin-right: 30px;
 }
+
+.nameLikes {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.mat-list-item {
+  align-items: center;
+  width: 100%;
+  transition: background-color 0.3s;
+  display: flex;
+  margin-bottom: 8px;
+  margin-left: 20px;
+}
+/* .mat-list-item {
+  width: 100%;
+  text-align: end;
+} */
 @media only screen and (max-width: 850px) {
   .container {
     margin-top: 40px;
@@ -48,9 +57,12 @@ p {
     width: 100%;
   }
   p {
-    font-size: 14px;
+    font-size: 16px;
   }
   mat-card-title {
     font-size: 18px;
+  }
+  mat-card-subtitle {
+    font-size: 12px;
   }
 }

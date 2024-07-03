@@ -22,6 +22,9 @@ export class postService {
   postPost(body: any) {
     return this.http.post(urlPost, body, httpOption2);
   }
+  getPostBySearch(title: string) {
+    return this.http.get(`${urlPost}?title=${title}`, httpOption2);
+  }
   // postPost(body: {}, idUser: number) {
   //   return this, this.http.post(`${urlUser}/${idUser}/posts`, body, httpOption);
   // }

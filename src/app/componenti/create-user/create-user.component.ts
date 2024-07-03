@@ -42,14 +42,13 @@ export class CreateUserComponent implements OnInit {
       })
       .subscribe({
         next: (data) => {
-          this.textCreate = 'User created successfully';
+          this.textCreate = 'User info update successfully';
           console.log(data);
         },
         error: (error) => {
           console.error('Errore durante la richiesta:', error);
           if (error.status === 422) {
-            this.textError =
-              'You must input all the credentials or it is invalid';
+            this.textError = 'Fail to Update';
           }
         },
       });

@@ -46,7 +46,7 @@ img {
 }
 
 button {
-  background-color: lightcoral;
+  background-color: rgb(163, 122, 151);
 
   height: 32px;
 }
@@ -92,6 +92,7 @@ h1 {
 .search {
   width: 100%;
   text-align: center;
+  margin: 0 auto;
 }
 
 .back {
@@ -115,6 +116,10 @@ h1 {
   min-height: 60px; /* Altezza fissa */
   overflow-y: auto; /* Mostra sempre la scrollbar verticale */
 }
+.srcbtn {
+  margin-left: 15px;
+  background-color: rgb(163, 122, 151);
+}
 @media only screen and (max-width: 1000px) {
   .post {
     width: 100%;
@@ -126,7 +131,7 @@ h1 {
     height: 30px;
   }
   .custom-search-bar {
-    width: 80%;
+    width: 60%;
   }
   .add {
     width: 95%;

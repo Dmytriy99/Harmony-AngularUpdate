@@ -32,7 +32,7 @@ describe('UserComponent', () => {
     mockPostService = jasmine.createSpyObj('postService', ['getPostById']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
-    mockUserService.getUserByID.and.returnValue(
+    mockUserService.getUserById.and.returnValue(
       of({
         _id: '1',
         name: 'John Doe',
@@ -41,7 +41,7 @@ describe('UserComponent', () => {
         status: 'Active',
       })
     );
-    mockPostService.getPostById.and.returnValue(
+    mockPostService.getPostbyId.and.returnValue(
       of([{ id: '1', user_id: '1', title: 'Post 1', body: 'Body of Post 1' }])
     );
 
@@ -85,6 +85,7 @@ describe('UserComponent', () => {
       gender: 'Male',
       status: 'Active',
       description: 'text',
+      address: 'via',
       image: '',
       age: '',
     };
@@ -98,13 +99,13 @@ describe('UserComponent', () => {
       },
     ];
 
-    mockUserService.getUserByID.and.returnValue(of(userData));
-    mockPostService.getPostById.and.returnValue(of(postData));
+    mockUserService.getUserById.and.returnValue(of(userData));
+    mockPostService.getPostbyId.and.returnValue(of(postData));
 
     fixture.detectChanges();
 
-    expect(mockUserService.getUserByID).toHaveBeenCalledWith(1);
-    expect(mockPostService.getPostById).toHaveBeenCalledWith(1);
+    expect(mockUserService.getUserById).toHaveBeenCalledWith(1);
+    expect(mockPostService.getPostbyId).toHaveBeenCalledWith('1');
 
     expect(component.user).toEqual(userData);
     expect(component.post).toEqual(postData);
@@ -119,15 +120,16 @@ describe('UserComponent', () => {
       status: 'Active',
       age: '',
       description: '',
+      address: 'via',
       image: '',
     };
 
-    mockUserService.getUserByID.and.returnValue(of(userData));
+    mockUserService.getUserById.and.returnValue(of(userData));
 
     fixture.detectChanges();
 
-    expect(mockUserService.getUserByID).toHaveBeenCalledWith(1);
-    expect(mockPostService.getPostById).toHaveBeenCalledWith(1);
+    expect(mockUserService.getUserById).toHaveBeenCalledWith(1);
+    expect(mockPostService.getPostbyId).toHaveBeenCalledWith('1');
 
     expect(component.user).toEqual(userData);
 

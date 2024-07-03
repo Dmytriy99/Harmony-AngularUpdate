@@ -70,6 +70,17 @@ export class PostComponent implements OnInit {
       });
   }
 
+  onSearch(form: NgForm) {
+    const title: string = form.value.search;
+    this.postService.getPostBySearch(title).subscribe((data: any) => {
+      this.Allpost = data.post;
+      this.totalPosts = data.post.length;
+      this.calculateRemainingPosts();
+      if (!title) {
+        this.getAllPost();
+      }
+    });
+  }
   // onSearch(form: NgForm) {
   //   const title = form.value.title;
 

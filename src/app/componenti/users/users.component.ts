@@ -104,6 +104,7 @@ export class UsersComponent implements OnInit {
   onSearch(form: NgForm) {
     const name = form.value.search;
     this.userService.getUserBySearch(name).subscribe((data: any) => {
+      console.log(data);
       this.users = data.user;
       this.loadAllImage();
       this.totalUser = this.users.length;

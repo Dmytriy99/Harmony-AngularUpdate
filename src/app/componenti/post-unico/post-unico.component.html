@@ -10,7 +10,8 @@
     <mat-card-content>
       <p>{{ body }}</p>
     </mat-card-content>
-    <div class="like">
+    <!-- <div class="like">
+      <span class="nameLikes">{{ nameLikes }}</span>
       <button
         mat-icon-button
         class="send"
@@ -18,10 +19,18 @@
         type="submit"
         (click)="like()"
       >
+        <mat-icon class="cuore" matBadge="{{ post.likes }}" matBadgeColor="warn"
+          >favorite</mat-icon
+        >
+      </button>
+    </div> -->
+    <div class="mat-list-item">
+      <button mat-icon-button type="submit" (click)="like()">
         <mat-icon matBadge="{{ post.likes }}" matBadgeColor="warn"
           >favorite</mat-icon
         >
       </button>
+      <span class="nameLikes"> {{ nameLikes }}</span>
     </div>
     <app-commenti [postId]="iDpost"></app-commenti>
   </mat-card>

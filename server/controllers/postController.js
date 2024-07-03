@@ -5,9 +5,17 @@ exports.getPost = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    const post = await Post.find().skip(skip).limit(limit).sort({ _id: -1 });
+    const title = req.query.title;
+    let query = {};
+    if (title) {
+      query.title = { $regex: `\\b${title}`, $options: "i" };
+    }
+    const post = await Post.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ _id: -1 });
     //const reversedPost = post.reverse();
-    const totalPosts = await Post.countDocuments();
+    const totalPosts = await Post.countDocuments(query);
     res.status(200).json({
       post,
       totalPosts,
