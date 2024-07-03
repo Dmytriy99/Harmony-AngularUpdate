@@ -169,6 +169,13 @@ h1 {
 }
 
 @media only screen and (max-width: 690px) {
+  .addUser {
+    display: none;
+  }
+  .addUser-device {
+    text-align: center;
+    margin-top: 15px;
+  }
   .photo-container {
     margin-top: 10px;
     width: 200px;
@@ -180,6 +187,9 @@ h1 {
     display: flex;
     justify-content: center;
   }
+  .example-card {
+    width: 100%;
+  }
   .desktop-user-info {
     display: none;
   }
@@ -190,14 +200,16 @@ h1 {
   }
   .container-device-info-user {
     display: flex;
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     border-radius: 0%;
   }
   .post {
+    width: 98%;
     padding-bottom: 0px;
   }
   .add {
-    width: 85%;
+    margin-top: 30px;
+    width: 90%;
   }
 }

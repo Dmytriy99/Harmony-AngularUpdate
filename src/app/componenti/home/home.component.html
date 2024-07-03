@@ -34,7 +34,7 @@
         routerLink="/homeUser"
         routerLinkActive="active"
       >
-        <mat-icon>home</mat-icon>
+        <mat-icon>account_circle</mat-icon>
         <span>Home</span>
       </li>
       <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
@@ -61,5 +61,31 @@
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
+    <nav class="bottom-nav">
+      <a
+        class="mat-list-item"
+        routerLink="/homeUser"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>account_circle</mat-icon>
+        <span>Home</span>
+      </a>
+      <a
+        class="mat-list-item"
+        routerLink="/posts"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>post_add</mat-icon>
+        <span>Posts</span>
+      </a>
+      <a
+        class="mat-list-item"
+        routerLink="/users"
+        routerLinkActive="active-link"
+      >
+        <mat-icon>group</mat-icon>
+        <span>Users</span>
+      </a>
+    </nav>
   </mat-drawer-content>
 </mat-drawer-container>

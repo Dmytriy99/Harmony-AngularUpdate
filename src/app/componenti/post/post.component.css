@@ -116,13 +116,17 @@ h1 {
   overflow-y: auto; /* Mostra sempre la scrollbar verticale */
 }
 @media only screen and (max-width: 1000px) {
+  .post {
+    width: 100%;
+    margin-top: 10px;
+  }
   button {
     font-size: 10px;
     width: 30%;
     height: 30px;
   }
-  .searchBar {
-    width: 85%;
+  .custom-search-bar {
+    width: 80%;
   }
   .add {
     width: 95%;

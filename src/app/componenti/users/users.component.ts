@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
     this.remainingUsers = this.totalUser - this.users.length;
   }
   onSubmit(form: NgForm) {
-    if (!form.value.title) {
+    if (!form.value.search) {
       this.getAllUser();
     } else if (this.selectedOption === '1') {
       this.onSearch(form);
@@ -102,8 +102,8 @@ export class UsersComponent implements OnInit {
     }
   }
   onSearch(form: NgForm) {
-    const title = form.value.title;
-    this.userService.getUserBySearch(title).subscribe((data: any) => {
+    const name = form.value.search;
+    this.userService.getUserBySearch(name).subscribe((data: any) => {
       this.users = data.user;
       this.loadAllImage();
       this.totalUser = this.users.length;
@@ -111,7 +111,7 @@ export class UsersComponent implements OnInit {
     });
   }
   onSearchEmail(form: NgForm) {
-    const email = form.value.title;
+    const email = form.value.search;
     this.userService.getUserBySearchEmail(email).subscribe((data: any) => {
       this.users = data.user;
     });

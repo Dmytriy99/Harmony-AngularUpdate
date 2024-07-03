@@ -61,6 +61,17 @@
       <mat-card-subtitle
         >Gender : {{ user.gender || "Età non fornita" }}</mat-card-subtitle
       >
+      <div class="addUser-device">
+        <button
+          mat-fab
+          extended
+          color="primary"
+          class="btnUser"
+          (click)="openDialog()"
+        >
+          Customize Profile
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
   <mat-card class="example-card">
