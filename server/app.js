@@ -19,7 +19,7 @@ app.use(
 
 app.use(bodyParser.json());
 // Serve i file statici di Angular
-app.use(express.static(path.join(__dirname, "../dist/angular15")));
+// app.use(express.static(path.join(__dirname, "../dist/angular15")));
 
 app.use("/api/user", userRoutes);
 app.use("/api", authRoutes);
@@ -27,8 +27,8 @@ app.use("/api/post", postRoutes);
 app.use("/api/post", commentRoutes);
 
 // Catch all other routes e ritorna l'index file di Angular
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/angular15/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../dist/angular15/index.html"));
+// });
 
 module.exports = app;
