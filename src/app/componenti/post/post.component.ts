@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddPostDto, Post } from 'src/app/modelli/interface';
 import { NgForm } from '@angular/forms';
 import { postService } from 'src/app/service/postService/post.service';
@@ -12,6 +12,7 @@ export class PostComponent implements OnInit {
   constructor(private postService: postService) {}
   userId!: String;
   Allpost: Post[] = [];
+  pageFirst = 1;
   page = 1;
   limit = 10;
   totalPosts = 0;
@@ -35,6 +36,7 @@ export class PostComponent implements OnInit {
   loadMorePosts(): void {
     this.page++;
     this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
+      console.log(data);
       this.Allpost = [...this.Allpost, ...data.post];
       this.totalPosts = data.totalPosts;
       this.calculateRemainingPosts();
@@ -48,12 +50,15 @@ export class PostComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
     this.postService.postPost(this.PostDto).subscribe((data) => {
-      this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
-        this.Allpost = data.post;
-        this.totalPosts = data.totalPost;
-        this.PostDto = new AddPostDto();
-        this.isSubmitting = false;
-      });
+      this.postService
+        .getPost(this.pageFirst, this.limit)
+        .subscribe((data: any) => {
+          this.Allpost = data.post;
+          this.totalPosts = data.totalPost;
+          this.PostDto = new AddPostDto();
+          this.isSubmitting = false;
+          this.page = 1;
+        });
     });
   }
 
@@ -71,7 +76,13 @@ export class PostComponent implements OnInit {
   }
 
   onPostDeleted() {
-    this.getAllPost();
-    this.calculateRemainingPosts();
+    this.postService
+      .getPost(this.pageFirst, this.limit)
+      .subscribe((data: any) => {
+        this.Allpost = data.post;
+        this.totalPosts = data.totalPosts;
+        this.page = 1;
+        this.calculateRemainingPosts();
+      });
   }
 }
