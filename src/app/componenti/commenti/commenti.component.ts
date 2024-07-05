@@ -15,6 +15,7 @@ export class CommentiComponent implements OnInit {
   body!: string;
   @Input() postId!: number;
   commentDto: CommentDto = new CommentDto();
+  isSend = false;
   constructor(private commentService: CommentService) {}
 
   ngOnInit(): void {
@@ -27,10 +28,12 @@ export class CommentiComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.isSend = true;
     this.commentService
       .postComment(this.commentDto, this.postId)
       .subscribe((data) => {
         this.commentDto = new CommentDto();
+        this.isSend = false;
         this.commentService
           .getCommentById(this.postId)
           .subscribe((data: any) => {

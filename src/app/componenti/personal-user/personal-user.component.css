@@ -120,6 +120,10 @@ mat-card-subtitle {
   margin-bottom: 20px;
   background-color: rgb(163, 122, 151);
 }
+.btnPost {
+  background-color: rgb(143, 94, 128);
+  color: white;
+}
 .no-post {
   font-size: 25px;
   margin-top: 30px;

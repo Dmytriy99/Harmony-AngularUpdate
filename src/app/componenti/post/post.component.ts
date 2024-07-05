@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
   currentPage = 0;
   remainingPosts = 0;
   selectedFile: File | null = null;
+  isSubmitting = false;
   PostDto: AddPostDto = new AddPostDto();
 
   ngOnInit(): void {
@@ -45,11 +46,13 @@ export class PostComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.isSubmitting = true;
     this.postService.postPost(this.PostDto).subscribe((data) => {
       this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
         this.Allpost = data.post;
         this.totalPosts = data.totalPost;
         this.PostDto = new AddPostDto();
+        this.isSubmitting = false;
       });
     });
   }

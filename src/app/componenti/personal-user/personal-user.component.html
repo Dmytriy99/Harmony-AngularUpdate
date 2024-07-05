@@ -113,9 +113,8 @@
       class="btnPost"
       mat-fab
       extended
-      color="primary"
       type="submit"
-      [disabled]="!PostDto.title || !PostDto.post"
+      [disabled]="!PostDto.title || !PostDto.post || isSubmitting"
     >
       Post
     </button>

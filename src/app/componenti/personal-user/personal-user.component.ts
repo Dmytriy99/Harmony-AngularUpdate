@@ -24,6 +24,7 @@ export class PersonalUserComponent implements OnInit {
   page = 1;
   limit = 10;
   PostDto: AddPostDto = new AddPostDto();
+  isSubmitting = false;
   @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
   photoGirl2: string =
@@ -84,9 +85,11 @@ export class PersonalUserComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.isSubmitting = true;
     this.postService.postPost(this.PostDto).subscribe((data) => {
       this.getPersonalUserInfo();
       this.PostDto = new AddPostDto();
+      this.isSubmitting = false;
     });
   }
   onPostDeleted() {

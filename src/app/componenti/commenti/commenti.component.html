@@ -15,7 +15,7 @@
       class="send"
       aria-label="Example icon-button with heart icon"
       type="submit"
-      [disabled]="!commentDto.content"
+      [disabled]="!commentDto.content || isSend"
     >
       <mat-icon>send</mat-icon>
     </button>
