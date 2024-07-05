@@ -20,7 +20,9 @@ app.use(
 app.use(bodyParser.json());
 // Serve i file statici di Angular
 // app.use(express.static(path.join(__dirname, "../dist/angular15")));
-
+app.get("/", (req, res) => {
+  res.send("Benvenuto sulla mia applicazione!");
+});
 app.use("/api/user", userRoutes);
 app.use("/api", authRoutes);
 app.use("/api/post", postRoutes);
