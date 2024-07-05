@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { Post, User } from 'src/app/modelli/interface';
+import { AddPostDto, Post, User } from 'src/app/modelli/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { postService } from 'src/app/service/postService/post.service';
 
@@ -17,23 +17,15 @@ import { token } from 'src/app/service/api.export';
 export class PersonalUserComponent implements OnInit {
   nopost: string = '';
   localData!: string;
-  idpost!: number;
-  //idUser!: number;
   user!: User;
   post!: Post[];
-  image: any;
   userImage!: any;
   userId!: string;
-  title!: any;
-  postInput!: any;
   page = 1;
   limit = 10;
+  PostDto: AddPostDto = new AddPostDto();
+  @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
 
-  body = {
-    age: '25',
-    gender: 'male',
-    email: 'Vega@gmail.com',
-  };
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
   photoMan2: string =
@@ -71,14 +63,17 @@ export class PersonalUserComponent implements OnInit {
         this.userImage =
           this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
       }
-      this.postService.getPostbyId(this.userId).subscribe((data: any) => {
-        if (data.length === 0) {
-          this.nopost = 'There are no Posts yet';
-        } else {
-          this.post = data;
-          console.log(data);
-        }
-      });
+      this.getAllPost();
+    });
+  }
+  getAllPost() {
+    this.postService.getPostbyId(this.userId).subscribe((data: any) => {
+      if (data.length === 0) {
+        this.nopost = 'There are no Posts yet';
+      } else {
+        this.post = data;
+        console.log(data);
+      }
     });
   }
   openDialog() {
@@ -89,19 +84,12 @@ export class PersonalUserComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const title: string = form.value.title;
-    const body: string = form.value.post;
-
-    this.postService
-      .postPost({ post: body, title: title })
-      .subscribe((data) => {
-        this.getPersonalUserInfo();
-      });
+    this.postService.postPost(this.PostDto).subscribe((data) => {
+      this.getPersonalUserInfo();
+      this.PostDto = new AddPostDto();
+    });
   }
-  clear() {
-    setTimeout(() => {
-      this.title = '';
-      this.postInput = '';
-    }, 1500);
+  onPostDeleted() {
+    this.getAllPost();
   }
 }

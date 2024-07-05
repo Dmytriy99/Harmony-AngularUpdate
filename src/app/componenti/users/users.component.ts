@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { userService } from 'src/app/service/userService/user.service';
-import { User } from 'src/app/modelli/interface';
+import { User, UserDto } from 'src/app/modelli/interface';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { token } from 'src/app/service/api.export';
 
@@ -36,6 +36,7 @@ export class UsersComponent implements OnInit {
   totalUser = 0;
   currentPage = 0;
   remainingUsers = 0;
+  userDto: UserDto = new UserDto();
   constructor(private userService: userService) {}
   ngOnInit(): void {
     if (token) {
@@ -102,20 +103,25 @@ export class UsersComponent implements OnInit {
     }
   }
   onSearch(form: NgForm) {
-    const name = form.value.search;
-    this.userService.getUserBySearch(name).subscribe((data: any) => {
-      console.log(data);
-      this.users = data.user;
-      this.loadAllImage();
-      this.totalUser = this.users.length;
-      this.calculateRemainingUsers();
-    });
+    this.userService
+      .getUserBySearch(this.userDto.search)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.users = data.user;
+        this.loadAllImage();
+        this.totalUser = this.users.length;
+        this.calculateRemainingUsers();
+      });
   }
   onSearchEmail(form: NgForm) {
-    const email = form.value.search;
-    this.userService.getUserBySearchEmail(email).subscribe((data: any) => {
-      this.users = data.user;
-    });
+    this.userService
+      .getUserBySearchEmail(this.userDto.search)
+      .subscribe((data: any) => {
+        this.users = data.user;
+        this.loadAllImage();
+        this.totalUser = this.users.length;
+        this.calculateRemainingUsers();
+      });
   }
   back() {
     window.location.reload();

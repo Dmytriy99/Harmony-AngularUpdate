@@ -5,32 +5,45 @@
       <input type="file" (change)="uploadImage($event)" accept="image/*" />
       Carica Immagine
     </label>
+    <div *ngIf="selectedImageName">
+      <h2>File selezionato: {{ selectedImageName }}</h2>
+    </div>
     <mat-form-field>
       <mat-label>Change Name</mat-label>
-      <input matInput type="text" name="name" ngModel />
+      <input matInput type="text" name="name" [(ngModel)]="userDto.name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Change your email</mat-label>
+      <input matInput type="email" name="email" [(ngModel)]="userDto.email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Change your Password</mat-label>
+      <input
+        matInput
+        type="text"
+        name="password"
+        [(ngModel)]="userDto.password"
+      />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Change Gender</mat-label>
-      <mat-select name="gender" ngModel>
+      <mat-select name="gender" [(ngModel)]="userDto.gender">
         <mat-option value="male">Male</mat-option>
         <mat-option value="female">Female</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Change your email</mat-label>
-      <input matInput type="email" name="email" ngModel />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Change your Password</mat-label>
-      <input matInput type="text" name="password" ngModel />
-    </mat-form-field>
-    <mat-form-field>
       <mat-label>Change your age</mat-label>
-      <input matInput type="text" name="age" ngModel />
+      <input matInput type="text" name="age" [(ngModel)]="userDto.age" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Change your Address</mat-label>
-      <input matInput type="text" name="address" ngModel />
+      <input
+        matInput
+        type="text"
+        name="address"
+        [(ngModel)]="userDto.address"
+      />
     </mat-form-field>
     <mat-form-field class="description">
       <mat-label>Description</mat-label>
@@ -38,7 +51,7 @@
         matInput
         type="text"
         name="description"
-        [(ngModel)]="description"
+        [(ngModel)]="userDto.description"
         class="fixed-height-textarea"
       ></textarea>
     </mat-form-field>

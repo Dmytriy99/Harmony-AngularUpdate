@@ -3,7 +3,6 @@ mat-form-field {
   margin-left: 8px;
   flex-direction: column;
   display: flex;
-  width: 65%;
   margin: 0 auto;
 }
 
@@ -17,7 +16,7 @@ button {
 }
 
 mat-card {
-  width: 40%;
+  width: 45%;
   margin: 0 auto;
   margin-bottom: 40px;
   margin-top: 40px;

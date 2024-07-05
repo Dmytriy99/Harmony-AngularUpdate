@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { catchError, forkJoin, of } from 'rxjs';
 import { Post } from 'src/app/modelli/interface';
@@ -16,11 +16,13 @@ export class PostUnicoComponent implements OnInit {
   userEmail!: string;
   useriD!: number;
   @Input() post!: any;
+  @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
   iDpost!: number;
   user!: number;
   title!: string;
   body!: string;
   nameLikes!: string;
+  logUserId!: string;
 
   constructor(
     private userService: userService,
@@ -28,47 +30,34 @@ export class PostUnicoComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     if (this.post) {
-      this.title = this.post.title;
-      this.body = this.post.post;
-      this.iDpost = this.post._id;
-      this.getNameLikes();
-      //console.log(this.post.likedBy);
-      this.userService
-        .getUserById(this.post.userId)
-        .pipe(catchError(() => of(this.error)))
-        .subscribe((data: any) => {
-          //console.log(this.iDpost);
-          if (data !== this.error) {
-            this.userName = data.name;
-            this.userEmail = data.email;
-          } else {
-            this.userName = this.error;
-          }
-        });
+      this.getPost();
     }
+    this.getLogUser();
   }
-  // getNameLike() {
-  //   this.userService.getUserById(this.post.likedBy).subscribe((data: any) => {
-  //     console.log(data);
-  //   });
-  // }
-  // getNameLikes(): void {
-  //   if (this.post.likedBy.length > 0) {
-  //     const requests = this.post.likedBy.map((userId: any) =>
-  //       this.userService.getUserById(userId)
-  //     );
-
-  //     forkJoin(requests).subscribe(
-  //       (users: any) => {
-  //         const names = users.map((user: any) => user.name);
-  //         console.log(names); // Stampa i nomi degli utenti che hanno messo like
-  //       },
-  //       (error) => {
-  //         console.error('Errore nel recuperare i nomi degli utenti:', error);
-  //       }
-  //     );
-  //   }
-  // }
+  getPost() {
+    this.title = this.post.title;
+    this.body = this.post.post;
+    this.iDpost = this.post._id;
+    this.getNameLikes();
+    //console.log(this.post.likedBy);
+    this.userService
+      .getUserById(this.post.userId)
+      .pipe(catchError(() => of(this.error)))
+      .subscribe((data: any) => {
+        //console.log(this.iDpost);
+        if (data !== this.error) {
+          this.userName = data.name;
+          this.userEmail = data.email;
+        } else {
+          this.userName = this.error;
+        }
+      });
+  }
+  getLogUser() {
+    this.userService.getUserInfo().subscribe((data: any) => {
+      this.logUserId = data._id;
+    });
+  }
   getNameLikes(): void {
     if (!this.post.likedBy || this.post.likedBy.length === 0) {
       this.nameLikes = '';
@@ -101,5 +90,14 @@ export class PostUnicoComponent implements OnInit {
       this.post.likedBy = data.likedBy;
       this.getNameLikes();
     });
+  }
+  delatePost() {
+    this.postService.delatePost(this.post._id).subscribe((data: any) => {
+      console.log(data);
+      this.postDeleted.emit();
+    });
+  }
+  canDeletePost(): boolean {
+    return this.post.userId === this.logUserId;
   }
 }

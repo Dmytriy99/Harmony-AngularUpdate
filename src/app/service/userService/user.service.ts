@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AddUser } from 'src/app/modelli/interface';
+//import { AddUser } from 'src/app/modelli/interface';
 import { httpOption2, urlUser } from '../api.export';
 import { Observable } from 'rxjs';
 

@@ -26,14 +26,22 @@ export interface Post {
   likes: number;
 }
 
-export class AddUser {
-  constructor(
-    public email: string,
-    public name: string,
-    public gender: string,
-    public status: string
-  ) {}
+export class AddPostDto {
+  title!: string;
+  post!: string;
+  search!: string;
 }
-export interface commentProva {
-  content: string;
+export class UserDto {
+  name!: string;
+  email!: string;
+  password!: string;
+  gender!: string;
+  age!: string;
+  description!: string;
+  address!: string;
+  image: any;
+  search!: string;
+}
+export class CommentDto {
+  content!: string;
 }

@@ -97,7 +97,7 @@
     <h1>Add Post</h1>
     <mat-form-field class="title">
       <mat-label>Title</mat-label>
-      <input matInput type="text" name="title" [(ngModel)]="title" />
+      <input matInput type="text" name="title" [(ngModel)]="PostDto.title" />
     </mat-form-field>
 
     <mat-form-field class="addPost">
@@ -106,7 +106,7 @@
         matInput
         type="text"
         name="post"
-        [(ngModel)]="postInput"
+        [(ngModel)]="PostDto.post"
       ></textarea>
     </mat-form-field>
     <button
@@ -115,14 +115,16 @@
       extended
       color="primary"
       type="submit"
-      [disabled]="!title || !postInput"
-      (click)="clear()"
+      [disabled]="!PostDto.title || !PostDto.post"
     >
       Post
     </button>
   </form>
   <h2 class="no-post">{{ nopost }}</h2>
   <div class="post" *ngFor="let posts of post">
-    <app-post-unico [post]="posts"></app-post-unico>
+    <app-post-unico
+      [post]="posts"
+      (postDeleted)="onPostDeleted()"
+    ></app-post-unico>
   </div>
 </div>

@@ -30,15 +30,6 @@ mat-toolbar {
   overflow-y: auto; /* Abilita lo scrolling verticale */
 }
 
-/* mat-drawer .prova {
-  margin-top: auto;
-} */
-
-/* mat-drawer-content {
-  background-color: #ebe4e7;
-  overflow-y: auto;
-} */
-
 .mat-list {
   list-style: none;
   padding: 0;

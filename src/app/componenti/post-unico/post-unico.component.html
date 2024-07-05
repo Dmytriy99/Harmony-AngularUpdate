@@ -1,6 +1,11 @@
 <div class="container">
   <mat-card class="example-card">
-    <mat-card-header>
+    <mat-card-header
+      ><mat-card-actions class="delatePost" *ngIf="canDeletePost()">
+        <button mat-icon-button (click)="delatePost()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
       <mat-card-title>{{ title }}</mat-card-title>
       <mat-card-subtitle
         >{{ userName }}<br />
@@ -10,20 +15,6 @@
     <mat-card-content>
       <p>{{ body }}</p>
     </mat-card-content>
-    <!-- <div class="like">
-      <span class="nameLikes">{{ nameLikes }}</span>
-      <button
-        mat-icon-button
-        class="send"
-        aria-label="Example icon-button with heart icon"
-        type="submit"
-        (click)="like()"
-      >
-        <mat-icon class="cuore" matBadge="{{ post.likes }}" matBadgeColor="warn"
-          >favorite</mat-icon
-        >
-      </button>
-    </div> -->
     <div class="mat-list-item">
       <button mat-icon-button type="submit" (click)="like()">
         <mat-icon matBadge="{{ post.likes }}" matBadgeColor="warn"

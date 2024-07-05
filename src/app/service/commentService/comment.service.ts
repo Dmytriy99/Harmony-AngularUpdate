@@ -15,12 +15,4 @@ export class CommentService {
   getCommentById(idPost: any) {
     return this.http.get(`${urlPost}/${idPost}/comment`, httpOption2);
   }
-
-  // getComment(post_id: number) {
-  //   return this.http.get(`${urlPost}/${post_id}/comments`, httpOption);
-  // }
-
-  // postComment(body: {}, postID: number) {
-  //   return this.http.post(`${urlPost}/${postID}/comments`, body, httpOption);
-  // }
 }

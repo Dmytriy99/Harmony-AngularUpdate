@@ -5,11 +5,11 @@
     <form #registerform="ngForm" (ngSubmit)="onSubmit(registerform)">
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput type="text" name="name" ngModel />
+        <input matInput type="text" name="name" [(ngModel)]="userDto.name" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Gender</mat-label>
-        <mat-select name="gender" ngModel="data.select">
+        <mat-select name="gender" [(ngModel)]="userDto.gender">
           <mat-option value="male">Male</mat-option>
           <mat-option value="female">Female</mat-option>
         </mat-select>
@@ -21,19 +21,18 @@
           placeholder="pat@example.com"
           type="email"
           name="email"
-          ngModel
+          [(ngModel)]="userDto.email"
         />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password" ngModel />
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="userDto.password"
+        />
       </mat-form-field>
-      <p>
-        If you don't have the token, get it at the following "<a
-          href="https://gorest.co.in/my-account/access-tokens"
-          >LINK</a
-        >"
-      </p>
       <h2>{{ error }}</h2>
       <button mat-fab extended color="primary" type="submit">Register</button>
     </form></mat-card-content

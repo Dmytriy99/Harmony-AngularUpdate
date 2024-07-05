@@ -213,6 +213,9 @@ mat-card-subtitle {
   }
 }
 @media only screen and (max-width: 690px) {
+  .container {
+    width: 100%;
+  }
   .photo-container {
     margin-top: 10px;
     width: 200px;

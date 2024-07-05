@@ -5,11 +5,16 @@
     <form #loginform="ngForm" (ngSubmit)="onSubmit(loginform)">
       <mat-form-field>
         <mat-label> Username</mat-label>
-        <input matInput type="text" name="name" ngModel />
+        <input matInput type="text" name="name" [(ngModel)]="userDto.name" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password" ngModel />
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="userDto.password"
+        />
       </mat-form-field>
       <button mat-fab extended color="primary" type="submit">LogIn</button>
       <h2>{{ error }}</h2>

@@ -1,4 +1,5 @@
 const Post = require("../model/post.model");
+const Comment = require("../model/comment.model");
 
 exports.getPost = async (req, res) => {
   try {
@@ -37,6 +38,22 @@ exports.getPostById = async (req, res) => {
     // }
 
     res.status(200).json(reversedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.delatePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findByIdAndDelete(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Cancellare tutti i commenti associati al post
+    await Comment.deleteMany({ postId: postId });
+    res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
