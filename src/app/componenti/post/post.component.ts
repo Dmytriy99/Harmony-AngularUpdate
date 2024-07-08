@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AddPostDto, Post } from 'src/app/modelli/interface';
 import { NgForm } from '@angular/forms';
 import { postService } from 'src/app/service/postService/post.service';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -9,7 +11,7 @@ import { postService } from 'src/app/service/postService/post.service';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
-  constructor(private postService: postService) {}
+  constructor(private postService: postService, private router: Router) {}
   userId!: String;
   Allpost: Post[] = [];
   pageFirst = 1;
@@ -26,17 +28,18 @@ export class PostComponent implements OnInit {
     this.getAllPost();
   }
   getAllPost() {
-    this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
-      console.log(data);
-      this.Allpost = data.post;
-      this.totalPosts = data.totalPosts;
-      this.calculateRemainingPosts();
-    });
+    this.postService
+      .getPost(this.page, this.limit)
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe((data: any) => {
+        this.Allpost = data.post;
+        this.totalPosts = data.totalPosts;
+        this.calculateRemainingPosts();
+      });
   }
   loadMorePosts(): void {
     this.page++;
     this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
-      console.log(data);
       this.Allpost = [...this.Allpost, ...data.post];
       this.totalPosts = data.totalPosts;
       this.calculateRemainingPosts();
@@ -84,5 +87,15 @@ export class PostComponent implements OnInit {
         this.page = 1;
         this.calculateRemainingPosts();
       });
+  }
+  handleError(error: any) {
+    if (
+      error.status === 500 &&
+      error.error.message === 'Failed to authenticate token.'
+    ) {
+      localStorage.clear();
+      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+    }
+    return throwError(() => new Error('Token expired'));
   }
 }

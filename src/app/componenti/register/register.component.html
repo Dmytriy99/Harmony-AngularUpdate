@@ -33,10 +33,22 @@
           [(ngModel)]="userDto.password"
         />
       </mat-form-field>
+      <h2></h2>
       <h2>{{ error }}</h2>
-      <button mat-fab extended color="primary" type="submit">Register</button>
-    </form></mat-card-content
-  >
+      <button
+        mat-fab
+        extended
+        color="primary"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        Register
+      </button>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner [diameter]="35"></mat-spinner>
+      </div>
+    </form>
+  </mat-card-content>
 </mat-card>
 
 <mat-card class="login">

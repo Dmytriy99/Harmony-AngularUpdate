@@ -39,12 +39,11 @@ export class PostUnicoComponent implements OnInit {
     this.body = this.post.post;
     this.iDpost = this.post._id;
     this.getNameLikes();
-    //console.log(this.post.likedBy);
+
     this.userService
       .getUserById(this.post.userId)
       .pipe(catchError(() => of(this.error)))
       .subscribe((data: any) => {
-        //console.log(this.iDpost);
         if (data !== this.error) {
           this.userName = data.name;
           this.userEmail = data.email;
@@ -93,7 +92,6 @@ export class PostUnicoComponent implements OnInit {
   }
   delatePost() {
     this.postService.delatePost(this.post._id).subscribe((data: any) => {
-      console.log(data);
       this.postDeleted.emit();
     });
   }

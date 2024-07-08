@@ -31,6 +31,7 @@ import { UserComponent } from './componenti/user/user.component';
 import { UsersComponent } from './componenti/users/users.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatPaginatorModule,
     MatRadioModule,
     MatBadgeModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

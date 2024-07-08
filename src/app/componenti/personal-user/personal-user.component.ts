@@ -8,6 +8,8 @@ import { userService } from 'src/app/service/userService/user.service';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgForm } from '@angular/forms';
 import { token } from 'src/app/service/api.export';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-user',
@@ -35,7 +37,8 @@ export class PersonalUserComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private postService: postService,
-    private userService: userService
+    private userService: userService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     const localtoken = localStorage.getItem('token');
@@ -47,25 +50,28 @@ export class PersonalUserComponent implements OnInit {
   }
 
   getPersonalUserInfo() {
-    this.userService.getUserInfo().subscribe((data: any) => {
-      this.user = data;
-      this.userId = this.user._id;
-      if (this.user.image) {
-        this.userService
-          .getUserImage(this.userId)
-          .subscribe((response: Blob) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(response);
-            reader.onloadend = () => {
-              this.userImage = reader.result;
-            };
-          });
-      } else {
-        this.userImage =
-          this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
-      }
-      this.getAllPost();
-    });
+    this.userService
+      .getUserInfo()
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe((data: any) => {
+        this.user = data;
+        this.userId = this.user._id;
+        if (this.user.image) {
+          this.userService
+            .getUserImage(this.userId)
+            .subscribe((response: Blob) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.userImage = reader.result;
+              };
+            });
+        } else {
+          this.userImage =
+            this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
+        }
+        this.getAllPost();
+      });
   }
   getAllPost() {
     this.postService.getPostbyId(this.userId).subscribe((data: any) => {
@@ -73,7 +79,6 @@ export class PersonalUserComponent implements OnInit {
         this.nopost = 'There are no Posts yet';
       } else {
         this.post = data;
-        console.log(data);
       }
     });
   }
@@ -94,5 +99,15 @@ export class PersonalUserComponent implements OnInit {
   }
   onPostDeleted() {
     this.getAllPost();
+  }
+  handleError(error: any) {
+    if (
+      error.status === 500 &&
+      error.error.message === 'Failed to authenticate token.'
+    ) {
+      localStorage.clear();
+      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+    }
+    return throwError(() => new Error('Token expired'));
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
 import { userService } from 'src/app/service/userService/user.service';
 import { User, UserDto } from 'src/app/modelli/interface';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { token } from 'src/app/service/api.export';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -37,7 +38,7 @@ export class UsersComponent implements OnInit {
   currentPage = 0;
   remainingUsers = 0;
   userDto: UserDto = new UserDto();
-  constructor(private userService: userService) {}
+  constructor(private userService: userService, private router: Router) {}
   ngOnInit(): void {
     if (token) {
       this.getAllUser();
@@ -45,13 +46,15 @@ export class UsersComponent implements OnInit {
   }
 
   getAllUser() {
-    this.userService.getUser(this.page, this.limit).subscribe((data: any) => {
-      this.users = data.user;
-      this.loadAllImage();
-      this.totalUser = data.totalUser;
-      this.calculateRemainingUsers();
-      console.log(data);
-    });
+    this.userService
+      .getUser(this.page, this.limit)
+      .pipe(catchError((error: any) => this.handleError(error)))
+      .subscribe((data: any) => {
+        this.users = data.user;
+        this.loadAllImage();
+        this.totalUser = data.totalUser;
+        this.calculateRemainingUsers();
+      });
   }
 
   getUserImage(userId: string) {
@@ -106,7 +109,6 @@ export class UsersComponent implements OnInit {
     this.userService
       .getUserBySearch(this.userDto.search)
       .subscribe((data: any) => {
-        console.log(data);
         this.users = data.user;
         this.loadAllImage();
         this.totalUser = this.users.length;
@@ -125,5 +127,15 @@ export class UsersComponent implements OnInit {
   }
   back() {
     window.location.reload();
+  }
+  handleError(error: any) {
+    if (
+      error.status === 500 &&
+      error.error.message === 'Failed to authenticate token.'
+    ) {
+      localStorage.clear();
+      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+    }
+    return throwError(() => new Error('Token expired'));
   }
 }

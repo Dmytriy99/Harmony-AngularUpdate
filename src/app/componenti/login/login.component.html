@@ -4,8 +4,8 @@
     <h3>Enter your credentials to log in!!</h3>
     <form #loginform="ngForm" (ngSubmit)="onSubmit(loginform)">
       <mat-form-field>
-        <mat-label> Username</mat-label>
-        <input matInput type="text" name="name" [(ngModel)]="userDto.name" />
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="userDto.email" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Password</mat-label>
@@ -16,10 +16,21 @@
           [(ngModel)]="userDto.password"
         />
       </mat-form-field>
-      <button mat-fab extended color="primary" type="submit">LogIn</button>
+      <button
+        mat-fab
+        extended
+        color="primary"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        LogIn
+      </button>
       <h2>{{ error }}</h2>
-    </form></mat-card-content
-  >
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner [diameter]="35"></mat-spinner>
+      </div>
+    </form>
+  </mat-card-content>
   <button mat-fab extended color="primary" type="submit" routerLink="/register">
     Back to Register
   </button>

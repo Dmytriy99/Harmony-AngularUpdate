@@ -12,13 +12,22 @@ import { AuthServiceComp } from 'src/app/service/authService/auth.service';
 export class LoginComponent {
   error!: string;
   userDto: UserDto = new UserDto();
+  isLoading = false;
   constructor(public route: Router, private authservice: AuthServiceComp) {}
   onSubmit(form: NgForm) {
-    this.authservice.login(this.userDto).subscribe((data: any) => {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('isLog', 'true');
-      this.route.navigate(['/homeUser']);
-      console.log(data);
+    this.isLoading = true;
+    this.authservice.login(this.userDto).subscribe({
+      next: (data: any) => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('isLog', 'true');
+        this.route.navigate(['/homeUser']);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('errore durante la richiesta: ', error.error);
+        this.error = error.error;
+        this.isLoading = false;
+      },
     });
   }
 }

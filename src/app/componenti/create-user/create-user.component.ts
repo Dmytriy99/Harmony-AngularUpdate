@@ -20,7 +20,6 @@ export class CreateUserComponent implements OnInit {
   constructor(private userService: userService) {}
   ngOnInit(): void {
     this.userService.getUserInfo().subscribe((data: any) => {
-      console.log(data);
       this.userDto.description = data.description;
     });
   }
@@ -28,7 +27,6 @@ export class CreateUserComponent implements OnInit {
     this.userService.updateUserInfo(this.userDto).subscribe({
       next: (data) => {
         this.textCreate = 'User info update successfully';
-        console.log(data);
       },
       error: (error) => {
         console.error('Errore durante la richiesta:', error);
@@ -48,8 +46,6 @@ export class CreateUserComponent implements OnInit {
     this.selectedImageName = selectedFile.name;
     const formData = new FormData();
     formData.append('image', selectedFile);
-    this.userService.updateImage(formData).subscribe((res: any) => {
-      console.log(res);
-    });
+    this.userService.updateImage(formData).subscribe((res: any) => {});
   }
 }

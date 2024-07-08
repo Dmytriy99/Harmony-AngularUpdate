@@ -14,10 +14,6 @@ exports.getUserLogInfo = async (req, res) => {
 
 exports.getAllUser = async (req, res) => {
   try {
-    // const page = parseInt(req.query.page) || 1;
-    // const limit = parseInt(req.query.limit) || 10;
-    // const name = req.query;
-    // const email = req.query;
     const { page = 1, limit = 10, name, email } = req.query;
     const skip = (page - 1) * limit;
     // Crea un oggetto query vuoto

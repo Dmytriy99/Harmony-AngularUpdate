@@ -35,7 +35,6 @@ export class UserComponent implements OnInit {
           this.userImage[this.idUser] =
             this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
         }
-        console.log(data);
       });
       this.postService.getPostbyId(this.idUser).subscribe((data: any) => {
         if (data.length === 0) {
@@ -45,18 +44,6 @@ export class UserComponent implements OnInit {
         }
       });
     }
-    // if (this.idUser) {
-    //   this.userService.getUserByID(this.idUser).subscribe((data: any) => {
-    //     this.users = data;
-    //   });
-    //   this.postService.getPostById(this.idUser).subscribe((data: any) => {
-    //     if (data.length === 0) {
-    //       this.noPost;
-    //     } else {
-    //       this.post = data;
-    //     }
-    //   });
-    // }
   }
   getUserImage(userId: string) {
     this.userService.getUserImage(userId).subscribe({
@@ -72,10 +59,4 @@ export class UserComponent implements OnInit {
       },
     });
   }
-  // deleteUser() {
-  //   this.userService.deleteUser2(this.idUser).subscribe((data: any) => {
-  //     this.users = data;
-  //     this.routing.navigate(['/users']);
-  //   });
-  // }
 }

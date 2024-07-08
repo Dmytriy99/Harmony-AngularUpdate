@@ -22,7 +22,6 @@ export class CommentiComponent implements OnInit {
     if (this.postId) {
       this.commentService.getCommentById(this.postId).subscribe((data: any) => {
         this.comment = data;
-        console.log(data);
       });
     }
   }

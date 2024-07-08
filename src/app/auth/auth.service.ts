@@ -13,7 +13,7 @@ export class AuthService {
     if (localStorage.getItem('isLog')) {
       return (this.isLog = true);
     } else {
-      this.router.navigate(['/register']);
+      this.router.navigate(['/login']);
       return (this.isLog = false);
     }
   }

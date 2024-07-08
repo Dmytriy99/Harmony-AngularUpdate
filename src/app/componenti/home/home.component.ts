@@ -11,11 +11,9 @@ import { AuthServiceComp } from 'src/app/service/authService/auth.service';
 export class HomeComponent {
   constructor(private route: Router, private authService: AuthServiceComp) {}
   logOut() {
-    this.authService.logout().subscribe((data: any) => {
-      console.log(data);
-    });
+    this.authService.logout().subscribe((data: any) => {});
     localStorage.removeItem('isLog');
     localStorage.removeItem('token');
-    this.route.navigate(['register']);
+    this.route.navigate(['login']);
   }
 }
