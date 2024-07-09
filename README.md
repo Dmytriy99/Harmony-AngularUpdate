@@ -4,26 +4,35 @@ Harmony is a social media platform designed to foster connection and interaction
 
 ## Features
 
-- **User Registration and Authentication**: Users can create an account by registering with their Username, Email, Gender and a password. Once registered, users can log in using their credentials.
+- **User Registration and Authentication**: Users can create an account by registering with their email and a password. Once registered, users can log in using their credentials.
+
+- **Profile Customization**: Users have the ability to personalize their profiles by adding additional information such as:
+
+  - Profile picture
+  - Address
+  - Self-description
+  - Age.
 
 - **Post Creation and Interaction**: Users can create new posts, comment on their own and others' posts, and like posts. Additionally, users have the capability to delete their own posts.
 
-- **Search Functionality**: Harmony provides a robust search feature, allowing users to search for posts by title and to find other users by name or email.
+- **User Directory**: Harmony allows users to view a directory of all registered users, facilitating easy discovery and interaction.
+
+- **Search Functionality**: Users can search for posts by title and find other users by name or email.
 
 ## Technology Stack
 
 - **Front End**: Developed with Angular, providing a dynamic and responsive user interface.
 - **Back End**: Built with Node.js, ensuring a scalable and efficient server-side environment.
 
-## Live Demo
-
-Experience Harmony by trying the live demo here: [Harmony Demo](https://harmony-smoky.vercel.app/)
-
 ## Deployment
 
 - **Client Side**: The front end of Harmony is deployed on [Vercel](https://vercel.com/).
 
 - **Server Side**: The back end of Harmony is deployed on [Render](https://render.com/).
+
+## Live Demo
+
+Experience Harmony by trying the live demo here: [Harmony Demo](https://harmony-smoky.vercel.app/)
 
 ## Development
 
