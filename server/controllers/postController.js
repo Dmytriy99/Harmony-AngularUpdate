@@ -8,14 +8,16 @@ exports.getPost = async (req, res) => {
     const skip = (page - 1) * limit;
     const title = req.query.title;
     let query = {};
+    // ricerca post kay insensitive
     if (title) {
-      query.title = { $regex: `\\b${title}`, $options: "i" };
+      query.title = { $regex: `\\b${title}`, $options: "i" }; //ricerca tramite titolo key insensitive
     }
+
+    // trova post con l'array invertito per ottenere i post dall'ultimo inserito
     const post = await Post.find(query)
       .skip(skip)
       .limit(limit)
       .sort({ _id: -1 });
-    //const reversedPost = post.reverse();
     const totalPosts = await Post.countDocuments(query);
     res.status(200).json({
       post,
@@ -33,10 +35,6 @@ exports.getPostById = async (req, res) => {
     const userId = req.params.userId;
     const posts = await Post.find({ userId: userId });
     const reversedPost = posts.reverse();
-    // if (posts.length === 0) {
-    //   return res.status(404).json({ message: "No posts found for this user." });
-    // }
-
     res.status(200).json(reversedPost);
   } catch (error) {
     res.status(500).json({ message: error.message });

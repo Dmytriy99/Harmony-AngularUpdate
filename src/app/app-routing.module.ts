@@ -15,7 +15,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [isauthGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: '/users' },
+      { path: '', pathMatch: 'full', redirectTo: '/posts' },
       { path: 'posts', canActivate: [isauthGuard], component: PostComponent },
       { path: 'users', canActivate: [isauthGuard], component: UsersComponent },
       {

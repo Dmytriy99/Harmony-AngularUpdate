@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container">
+<mat-drawer-container class="container">
   <mat-drawer mode="side" opened>
     <ul class="mat-list">
       <li
@@ -22,10 +22,15 @@
   <mat-drawer-content class="content-wrapper"
     ><mat-toolbar>
       <button mat-icon-button routerLink="posts">
-        <mat-icon><span> diversity_2 </span></mat-icon>
+        <img
+          src="../assets/faviconFiore.png"
+          alt="Harmony Icon"
+          style="width: 26px; height: 26px"
+        />
+        <!-- <mat-icon><span> diversity_2 </span></mat-icon> -->
       </button>
       <span>Harmony</span>
-      <span class="example-spacer"></span>
+      <span class="spacer"></span>
       <button class="logOut" mat-icon-button type="button" (click)="logOut()">
         <mat-icon>logout</mat-icon>
       </button>

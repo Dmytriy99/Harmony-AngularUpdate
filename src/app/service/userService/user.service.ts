@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//import { AddUser } from 'src/app/modelli/interface';
-import { httpOption2, urlUser } from '../api.export';
-import { Observable } from 'rxjs';
+import { httpOption, urlUser } from '../api.export';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +8,7 @@ import { Observable } from 'rxjs';
 export class userService {
   constructor(private http: HttpClient) {}
   updateUserInfo(body: any) {
-    return this.http.patch(`${urlUser}/updateDetails`, body, httpOption2);
+    return this.http.patch(`${urlUser}/updateDetails`, body, httpOption);
   }
 
   getUserImage(userId: string) {
@@ -20,57 +18,25 @@ export class userService {
   }
 
   getUserById(userId: any) {
-    return this.http.get(`${urlUser}/${userId}`, httpOption2);
+    return this.http.get(`${urlUser}/${userId}`, httpOption);
   }
 
   getUser(page: number, limit: number) {
-    return this.http.get(`${urlUser}?page=${page}&limit=${limit}`, httpOption2);
+    return this.http.get(`${urlUser}?page=${page}&limit=${limit}`, httpOption);
   }
 
   getUserBySearch(name: string) {
-    return this.http.get(`${urlUser}?name=${name}`, httpOption2);
+    return this.http.get(`${urlUser}?name=${name}`, httpOption);
   }
   getUserBySearchEmail(email: string) {
-    return this.http.get(`${urlUser}?email=${email}`, httpOption2);
+    return this.http.get(`${urlUser}?email=${email}`, httpOption);
   }
 
   getUserInfo() {
-    return this.http.get(`${urlUser}/userinfo`, httpOption2);
+    return this.http.get(`${urlUser}/userinfo`, httpOption);
   }
 
   updateImage(body: any) {
-    return this.http.patch(`${urlUser}/updatePhoto`, body, httpOption2);
+    return this.http.patch(`${urlUser}/updatePhoto`, body, httpOption);
   }
-  // createUser(name: string, email: string, gender: string, status: string) {
-  //   this.user = new AddUser(email, name, gender, status);
-  // }
-
-  // addUser(body: {}) {
-  //   return this.http.post(urlUser, body, httpOption);
-  // }
-  // getUser() {
-  //   return this.http.get(urlUser, httpOption);
-  // }
-
-  // getUserByID(idUser: Number) {
-  //   return this.http.get(`${urlUser}/${idUser}`, httpOption);
-  // }
-
-  // getUserbyIndex(pageIndex: number, pageSize: number): Observable<any> {
-  //   return this.http.get(
-  //     `${urlUser}?page=${pageIndex}&per_page=${pageSize}`,
-  //     httpOption
-  //   );
-  // }
-
-  // deleteUser2(idUser: Number) {
-  //   return this.http.delete(`${urlUser}/${idUser}`, httpOption);
-  // }
-
-  // getUserBySearch(input: string) {
-  //   return this.http.get(`${urlUser}?name=${input}`, httpOption);
-  // }
-  // getUserBySearchEmail(input: string) {
-  //   return this.http.get(`${urlUser}?email=${input}`, httpOption);
-  // }
 }

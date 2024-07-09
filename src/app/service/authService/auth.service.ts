@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { httpOption2, urlAuth } from '../api.export';
+import { httpOption, urlAuth } from '../api.export';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServiceComp {
   constructor(private http: HttpClient) {}
   logout() {
-    return this.http.post(`${urlAuth}/logout`, {}, httpOption2);
+    return this.http.post(`${urlAuth}/logout`, {}, httpOption);
   }
 
   register(body: {}) {

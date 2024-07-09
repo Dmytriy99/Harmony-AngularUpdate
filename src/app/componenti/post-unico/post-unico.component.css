@@ -1,4 +1,4 @@
-.example-card {
+.post-card {
   width: 85%;
   margin: 0 auto;
   background-color: rgb(235, 232, 232);
@@ -51,15 +51,18 @@ p {
 .delatePost {
   align-items: flex-start;
   display: flex;
-  flex-direction: row-reverse;
   padding: 0px;
 }
-
+.date {
+  margin-top: 14px;
+  font-size: 10px;
+  text-align: center;
+}
 @media only screen and (max-width: 850px) {
   .container {
     margin-top: 40px;
   }
-  .example-card {
+  .post-card {
     width: 100%;
   }
   p {

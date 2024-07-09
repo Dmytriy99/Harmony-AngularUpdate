@@ -1,12 +1,13 @@
 {
-  "name": "angular15",
+  "name": "harmony",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start-server": "cd server && npm start"
   },
   "private": true,
   "dependencies": {

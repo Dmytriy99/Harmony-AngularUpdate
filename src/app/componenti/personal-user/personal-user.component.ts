@@ -48,7 +48,7 @@ export class PersonalUserComponent implements OnInit {
       location.reload();
     }
   }
-
+  // carica informazioni dati User loggato, se non è presente una photo carica una di default in base al gender
   getPersonalUserInfo() {
     this.userService
       .getUserInfo()
@@ -100,13 +100,15 @@ export class PersonalUserComponent implements OnInit {
   onPostDeleted() {
     this.getAllPost();
   }
+
+  // se il token è scaduto torna al log-in
   handleError(error: any) {
     if (
       error.status === 500 &&
       error.error.message === 'Failed to authenticate token.'
     ) {
       localStorage.clear();
-      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+      this.router.navigate(['/login']);
     }
     return throwError(() => new Error('Token expired'));
   }

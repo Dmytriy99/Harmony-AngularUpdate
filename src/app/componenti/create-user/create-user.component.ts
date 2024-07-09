@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { User, UserDto } from 'src/app/modelli/interface';
-import { httpOption2 } from 'src/app/service/api.export';
+import { UserDto } from 'src/app/modelli/interface';
 
 import { userService } from 'src/app/service/userService/user.service';
 
@@ -16,6 +14,7 @@ export class CreateUserComponent implements OnInit {
   textCreate!: string;
   description: string = '';
   selectedImageName: string | null = null;
+
   userDto: UserDto = new UserDto();
   constructor(private userService: userService) {}
   ngOnInit(): void {

@@ -4,6 +4,7 @@ const User = require("../model/user.model");
 
 exports.register = async (req, res) => {
   try {
+    // controllo se l'email è gia esistente
     const existingUser = await User.findOne({
       $or: [{ email: req.body.email }],
     });
@@ -18,6 +19,7 @@ exports.register = async (req, res) => {
       email: req.body.email,
       gender: req.body.gender,
     });
+    // token scade dopo 24 ore
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: 86400,
     });
@@ -30,6 +32,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const user = await User.findOne({
+      // ottenere email key insensitive
       email: { $regex: new RegExp(req.body.email, "i") },
     });
     if (!user) return res.status(404).send("User not found.");

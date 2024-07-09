@@ -1,8 +1,11 @@
 <div class="container">
-  <mat-card class="example-card">
-    <mat-card-header
-      ><mat-card-actions class="delatePost" *ngIf="canDeletePost()">
-        <button mat-icon-button (click)="delatePost()">
+  <mat-card class="post-card">
+    <mat-card-header>
+      <mat-card-actions class="delatePost">
+        <span class="date">{{
+          post.createdAt | date : "dd/MM/yy, HH:mm"
+        }}</span>
+        <button *ngIf="canDeletePost()" mat-icon-button (click)="delatePost()">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-card-actions>

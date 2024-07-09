@@ -20,20 +20,20 @@
               </mat-card-title>
               <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
               <mat-card-subtitle
-                >Age : {{ user.age || "Età non fornita" }}</mat-card-subtitle
+                >Age : {{ user.age || "Age not provided" }}</mat-card-subtitle
               >
               <mat-card-subtitle
                 >Address :
-                {{ user.address || "Indirizzo non fornito" }}</mat-card-subtitle
+                {{ user.address || "Address not provided" }}</mat-card-subtitle
               >
               <mat-card-subtitle>Gender : {{ user.gender }}</mat-card-subtitle>
             </mat-card-header>
           </mat-drawer>
           <mat-drawer-content class="desc">
             <mat-card-content>
-              <h2 class="description">Descrizione</h2>
+              <h2 class="description">Description</h2>
               {{
-                user.description || "Nessuna descrizione disponibile"
+                user.description || "No description available"
               }}</mat-card-content
             >
           </mat-drawer-content>
@@ -54,21 +54,19 @@
       </mat-card-title>
       <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
       <mat-card-subtitle
-        >Age : {{ user.age || "Età non fornita" }}</mat-card-subtitle
+        >Age : {{ user.age || "Age not provided" }}</mat-card-subtitle
       >
       <mat-card-subtitle
         >Address :
-        {{ user.address || "Indirizzo non fornito" }}</mat-card-subtitle
+        {{ user.address || "Address not provided" }}</mat-card-subtitle
       >
       <mat-card-subtitle>Gender : {{ user.gender }}</mat-card-subtitle>
     </mat-card-content>
   </mat-card>
   <mat-card class="example-card">
     <mat-card-content>
-      <h2 class="description">Descrizione</h2>
-      {{
-        user.description || "Nessuna descrizione disponibile"
-      }}</mat-card-content
+      <h2 class="description">Description</h2>
+      {{ user.description || "No description available" }}</mat-card-content
     >
   </mat-card>
   <h2 class="no-post">{{ noPost }}</h2>

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { catchError, forkJoin, of } from 'rxjs';
-import { Post } from 'src/app/modelli/interface';
+import { forkJoin } from 'rxjs';
 import { postService } from 'src/app/service/postService/post.service';
 
 import { userService } from 'src/app/service/userService/user.service';
@@ -11,7 +10,6 @@ import { userService } from 'src/app/service/userService/user.service';
   styleUrls: ['./post-unico.component.css'],
 })
 export class PostUnicoComponent implements OnInit {
-  error: string = 'Utente non Trovato';
   userName!: string;
   userEmail!: string;
   useriD!: number;
@@ -31,39 +29,37 @@ export class PostUnicoComponent implements OnInit {
   ngOnInit(): void {
     if (this.post) {
       this.getPost();
+      this.getUserInfo();
+      this.getLogUser();
+      this.getNameLikes();
     }
-    this.getLogUser();
   }
   getPost() {
     this.title = this.post.title;
     this.body = this.post.post;
     this.iDpost = this.post._id;
-    this.getNameLikes();
+  }
 
-    this.userService
-      .getUserById(this.post.userId)
-      .pipe(catchError(() => of(this.error)))
-      .subscribe((data: any) => {
-        if (data !== this.error) {
-          this.userName = data.name;
-          this.userEmail = data.email;
-        } else {
-          this.userName = this.error;
-        }
-      });
+  getUserInfo() {
+    this.userService.getUserById(this.post.userId).subscribe((data: any) => {
+      this.userName = data.name;
+      this.userEmail = data.email;
+    });
   }
   getLogUser() {
     this.userService.getUserInfo().subscribe((data: any) => {
       this.logUserId = data._id;
     });
   }
+
+  // prende gli id degli user nel dato "likedBy" e cerca il nome di ogni user tramite l'id e lo manda a schermo formattato
   getNameLikes(): void {
     if (!this.post.likedBy || this.post.likedBy.length === 0) {
       this.nameLikes = '';
       return;
     }
-
-    const observables = this.post.likedBy.map((userId: any) =>
+    const reversedLikes = this.post.likedBy.slice().reverse();
+    const observables = reversedLikes.map((userId: any) =>
       this.userService.getUserById(userId)
     );
 
@@ -95,6 +91,8 @@ export class PostUnicoComponent implements OnInit {
       this.postDeleted.emit();
     });
   }
+
+  // se l'id Utente del post corrisponde all'id dell'Utente loggato visualizza il bottone per cancellare i propri post insieme a tutti i commenti
   canDeletePost(): boolean {
     return this.post.userId === this.logUserId;
   }

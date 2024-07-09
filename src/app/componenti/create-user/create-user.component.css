@@ -62,13 +62,13 @@ h2 {
 }
 
 .dialog-content {
-  max-height: 80vh; /* Imposta l'altezza massima al 80% dell'altezza della finestra */
+  max-height: 80vh;
   overflow-y: auto;
   padding: 10px;
 }
 .fixed-height-textarea {
-  min-height: 60px; /* Altezza fissa */
-  overflow-y: auto; /* Mostra sempre la scrollbar verticale */
+  min-height: 60px;
+  overflow-y: auto;
 }
 .close {
   margin: 0 auto;

@@ -24,6 +24,7 @@ export interface Post {
   title: string;
   body: string;
   likes: number;
+  date: string;
 }
 
 export class AddPostDto {

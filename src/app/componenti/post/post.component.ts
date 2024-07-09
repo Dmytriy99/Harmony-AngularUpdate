@@ -37,6 +37,8 @@ export class PostComponent implements OnInit {
         this.calculateRemainingPosts();
       });
   }
+
+  // Il limite di post caricati inizialmente è 10 e poi tramite pulsante ne carica di 10 in 10
   loadMorePosts(): void {
     this.page++;
     this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
@@ -77,7 +79,7 @@ export class PostComponent implements OnInit {
         }
       });
   }
-
+  // dopo aver cancellato un post ricarica i post per visualizzare subito l'array nuovo
   onPostDeleted() {
     this.postService
       .getPost(this.pageFirst, this.limit)
@@ -88,6 +90,8 @@ export class PostComponent implements OnInit {
         this.calculateRemainingPosts();
       });
   }
+
+  // token scaduto torna al log-in
   handleError(error: any) {
     if (
       error.status === 500 &&

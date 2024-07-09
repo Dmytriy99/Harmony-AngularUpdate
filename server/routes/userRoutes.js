@@ -15,6 +15,5 @@ router.patch(
   upload.single("image"),
   userController.updatePhoto
 );
-// Altre rotte per gli utenti
 
 module.exports = router;

@@ -16,10 +16,9 @@ exports.getAllUser = async (req, res) => {
   try {
     const { page = 1, limit = 10, name, email } = req.query;
     const skip = (page - 1) * limit;
-    // Crea un oggetto query vuoto
     let query = {};
 
-    // Aggiungi i filtri alla query se i parametri sono forniti
+    // filtri alla query
     if (name) {
       query.name = { $regex: `^${name}`, $options: "i" }; // Cerca il nome, case insensitive
     }
@@ -27,13 +26,12 @@ exports.getAllUser = async (req, res) => {
     if (email) {
       query.email = { $regex: `^${email}`, $options: "i" }; // Cerca l'email, case insensitive
     }
-
+    // ottenimento user dall'ultimo inserito
     const user = await User.find(query)
       .skip(skip)
       .limit(parseInt(limit))
       .sort({ _id: -1 });
     const totalUser = await User.countDocuments(query);
-    //console.log("Users retrieved:", user);
     res.status(200).json({
       user,
       totalUser,
@@ -64,14 +62,11 @@ exports.updateUserDetails = async (req, res) => {
       req.body;
     const userId = req.userId;
 
-    // Trova l'utente nel database per ID
     const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).send("User not found.");
     }
-
-    // Aggiorna le informazioni dell'utente con i nuovi dati forniti
 
     if (name !== undefined && name.trim() !== "") {
       user.name = name;
@@ -109,7 +104,6 @@ exports.updatePhoto = async (req, res) => {
   try {
     const userId = req.userId;
 
-    // Trova l'utente nel database per ID
     const user = await User.findById(userId);
 
     if (!user) {
@@ -122,7 +116,7 @@ exports.updatePhoto = async (req, res) => {
     } else {
       return res.status(400).send("No image file uploaded");
     }
-    // Salva le modifiche nel database
+
     await user.save();
 
     res.status(200).send({ message: "User Photo updated successfully." });

@@ -30,8 +30,6 @@ export class UsersComponent implements OnInit {
   defaultImage: any;
 
   users: User[] = [];
-  email!: string;
-  name!: string;
   page = 1;
   limit = 10;
   totalUser = 0;
@@ -82,7 +80,7 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-
+  // Limite massimo di user visualizzati inizialemte è di 10 e col bottone ne carica di 10 in 10
   loadMoreUsers(): void {
     this.page++;
     this.userService.getUser(this.page, this.limit).subscribe((data: any) => {
@@ -96,6 +94,8 @@ export class UsersComponent implements OnInit {
   calculateRemainingUsers(): void {
     this.remainingUsers = this.totalUser - this.users.length;
   }
+
+  // cercare gli user tramite o nome o email
   onSubmit(form: NgForm) {
     if (!form.value.search) {
       this.getAllUser();
@@ -105,6 +105,8 @@ export class UsersComponent implements OnInit {
       this.onSearchEmail(form);
     }
   }
+
+  // cerca user tramite nome e calcola le pagine degli user trovati
   onSearch(form: NgForm) {
     this.userService
       .getUserBySearch(this.userDto.search)
@@ -115,6 +117,8 @@ export class UsersComponent implements OnInit {
         this.calculateRemainingUsers();
       });
   }
+
+  // cerca user tramite email e calcola le pagine degli user trovati
   onSearchEmail(form: NgForm) {
     this.userService
       .getUserBySearchEmail(this.userDto.search)
@@ -128,13 +132,15 @@ export class UsersComponent implements OnInit {
   back() {
     window.location.reload();
   }
+
+  // se il token è scaduto torna al log-in
   handleError(error: any) {
     if (
       error.status === 500 &&
       error.error.message === 'Failed to authenticate token.'
     ) {
       localStorage.clear();
-      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+      this.router.navigate(['/login']);
     }
     return throwError(() => new Error('Token expired'));
   }
