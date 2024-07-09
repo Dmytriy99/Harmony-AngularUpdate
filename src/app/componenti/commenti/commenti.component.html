@@ -24,7 +24,12 @@
 
 <div class="commenti" *ngFor="let comments of comment">
   <mat-card class="comment-card">
-    <mat-card-title>{{ comments.name }}</mat-card-title>
+    <div class="card-header">
+      <mat-card-title>{{ comments.name }}</mat-card-title>
+      <span class="date">{{
+        comments.createdAt | date : "dd/MM/yy, HH:mm"
+      }}</span>
+    </div>
     <mat-card-subtitle>{{ comments.email }}</mat-card-subtitle>
     <p>{{ comments.content }}</p>
   </mat-card>

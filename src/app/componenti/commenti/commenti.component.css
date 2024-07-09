@@ -6,7 +6,7 @@ button {
   margin: 0 auto;
   background-color: rgb(202, 200, 200);
 }
-div {
+.commenti {
   margin-bottom: 8px;
 }
 mat-card-header {
@@ -34,13 +34,23 @@ mat-card-title {
   font-weight: 400;
   margin-top: 3px;
   margin-left: 20px;
+  margin-bottom: 0;
 }
 
 mat-card-subtitle {
   font-size: 12px;
   margin-left: 20px;
+  align-items: center;
 }
-
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.date {
+  margin-right: 15px;
+  font-size: 9px;
+}
 @media only screen and (max-width: 850px) {
   mat-card-title {
     font-size: 17px;

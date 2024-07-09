@@ -17,7 +17,7 @@ export class CommentiComponent implements OnInit {
   commentDto: CommentDto = new CommentDto();
   isSend = false;
   constructor(private commentService: CommentService) {}
-
+  // visualizzazione commenti
   ngOnInit(): void {
     if (this.postId) {
       this.commentService.getCommentById(this.postId).subscribe((data: any) => {
@@ -25,7 +25,7 @@ export class CommentiComponent implements OnInit {
       });
     }
   }
-
+  // post commenti e visualizzazione nuovo commento
   onSubmit(form: NgForm) {
     this.isSend = true;
     this.commentService
