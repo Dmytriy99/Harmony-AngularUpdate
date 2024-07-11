@@ -23,11 +23,13 @@ export class PostComponent implements OnInit {
   selectedFile: File | null = null;
   isSubmitting = false;
   PostDto: AddPostDto = new AddPostDto();
+  isLoading = false;
 
   ngOnInit(): void {
     this.getAllPost();
   }
   getAllPost() {
+    this.isLoading = true;
     this.postService
       .getPost(this.page, this.limit)
       .pipe(catchError((error) => this.handleError(error)))
@@ -35,6 +37,7 @@ export class PostComponent implements OnInit {
         this.Allpost = data.post;
         this.totalPosts = data.totalPosts;
         this.calculateRemainingPosts();
+        this.isLoading = false;
       });
   }
 

@@ -135,6 +135,13 @@ mat-card-title {
     margin-right: 8px;
   }
 }
+.loading-overlay {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
 @media only screen and (max-width: 580px) {
   mat-radio-group {
     margin-left: 60px;

@@ -28,6 +28,7 @@ export class PersonalUserComponent implements OnInit {
   PostDto: AddPostDto = new AddPostDto();
   isSubmitting = false;
   @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
+  isLoading = false;
 
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
@@ -50,6 +51,7 @@ export class PersonalUserComponent implements OnInit {
   }
   // carica informazioni dati User loggato, se non è presente una photo carica una di default in base al gender
   getPersonalUserInfo() {
+    this.isLoading = true;
     this.userService
       .getUserInfo()
       .pipe(catchError((error) => this.handleError(error)))
@@ -71,6 +73,7 @@ export class PersonalUserComponent implements OnInit {
             this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
         }
         this.getAllPost();
+        this.isLoading = false;
       });
   }
   getAllPost() {

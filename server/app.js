@@ -18,7 +18,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("Benvenuto sulla mia applicazione!");
+  res.send("Server!!");
 });
 app.use("/api/user", userRoutes);
 app.use("/api", authRoutes);

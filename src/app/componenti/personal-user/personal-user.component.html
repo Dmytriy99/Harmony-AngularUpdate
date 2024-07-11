@@ -1,3 +1,7 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <!-- Puoi personalizzare questo elemento con la rotella di caricamento o altri indicatori visivi -->
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
 <div *ngIf="user">
   <mat-card class="container"
     ><mat-drawer-container class="drawer-container">

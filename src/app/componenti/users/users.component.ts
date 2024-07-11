@@ -36,6 +36,7 @@ export class UsersComponent implements OnInit {
   currentPage = 0;
   remainingUsers = 0;
   userDto: UserDto = new UserDto();
+  isLoading = false;
   constructor(private userService: userService, private router: Router) {}
   ngOnInit(): void {
     if (token) {
@@ -44,6 +45,7 @@ export class UsersComponent implements OnInit {
   }
 
   getAllUser() {
+    this.isLoading = true;
     this.userService
       .getUser(this.page, this.limit)
       .pipe(catchError((error: any) => this.handleError(error)))
@@ -52,6 +54,7 @@ export class UsersComponent implements OnInit {
         this.loadAllImage();
         this.totalUser = data.totalUser;
         this.calculateRemainingUsers();
+        this.isLoading = false;
       });
   }
 

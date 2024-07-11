@@ -120,6 +120,11 @@ h1 {
   margin-left: 15px;
   background-color: rgb(163, 122, 151);
 }
+.loading-overlay {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
 @media only screen and (max-width: 1000px) {
   .post {
     width: 100%;

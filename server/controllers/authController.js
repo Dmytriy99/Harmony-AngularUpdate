@@ -19,11 +19,7 @@ exports.register = async (req, res) => {
       email: req.body.email,
       gender: req.body.gender,
     });
-    // token scade dopo 24 ore
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: 86400,
-    });
-    res.status(200).send({ auth: true, token: token });
+    res.status(200).send("User registered successfully");
   } catch (error) {
     res.status(500).send("Error registering user.");
   }
