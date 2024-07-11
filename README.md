@@ -66,8 +66,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## ScreenShots
 
-![ScreenShot dell'app](./assets/ScreenShot-HomeUser.png)
+![ScreenShot dell'app](./src/assets/Screenshot-HomeUser.png)
 
-![ScreenShot dell'app](./assets/ScreenShot-Post.png)
+![ScreenShot dell'app](./src/assets/Screenshot-Post.png)
 
-![ScreenShot dell'app](./assets/ScreenShot-Users.png)
+![ScreenShot dell'app](./src/assets/Screenshot-Users.png)
