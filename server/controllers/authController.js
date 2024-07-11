@@ -35,13 +35,15 @@ exports.login = async (req, res) => {
       // ottenere email key insensitive
       email: { $regex: new RegExp(req.body.email, "i") },
     });
-    if (!user) return res.status(404).send("User not found.");
+    if (!user) return res.status(404).send({ message: "User not found." });
     const passwordIsValid = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!passwordIsValid)
-      return res.status(401).send({ auth: false, token: null });
+      return res
+        .status(401)
+        .send({ auth: false, token: null, message: "Invalid password" });
     user.status = "online";
     await user.save();
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {

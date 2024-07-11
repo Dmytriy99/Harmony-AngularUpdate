@@ -17,11 +17,13 @@ export class CreateUserComponent implements OnInit {
 
   userDto: UserDto = new UserDto();
   constructor(private userService: userService) {}
+  // informazioni utente loggato
   ngOnInit(): void {
     this.userService.getUserInfo().subscribe((data: any) => {
       this.userDto.description = data.description;
     });
   }
+
   onSubmit(form: NgForm) {
     this.userService.updateUserInfo(this.userDto).subscribe({
       next: (data) => {

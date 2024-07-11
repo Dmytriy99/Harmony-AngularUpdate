@@ -24,8 +24,8 @@ export class LoginComponent {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('errore durante la richiesta: ', error.error);
-        this.error = error.error;
+        console.error('errore durante la richiesta: ', error.error.message);
+        this.error = error.error.message;
         this.isLoading = false;
       },
     });

@@ -64,6 +64,8 @@ exports.updateUserDetails = async (req, res) => {
 
     const user = await User.findById(userId);
 
+    // se non vengono ottentuti input lasciare i dati come erano
+
     if (!user) {
       return res.status(404).send("User not found.");
     }

@@ -54,9 +54,7 @@ p {
   padding: 0px;
 }
 .date {
-  margin-top: 14px;
-  font-size: 10px;
-  text-align: center;
+  font-size: 11px;
 }
 @media only screen and (max-width: 850px) {
   .container {
