@@ -102,6 +102,7 @@ mat-card-title {
 
 .paginator {
   background-color: rgb(163, 122, 151);
+  font-size: 11px;
   width: 200px;
   margin: 0 auto;
   margin-top: 10px;

@@ -144,7 +144,4 @@ h1 {
   .back {
     margin-bottom: 15px;
   }
-  mat-paginator {
-    margin-bottom: 2px;
-  }
 }

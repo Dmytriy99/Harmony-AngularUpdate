@@ -98,6 +98,7 @@ export class PersonalUserComponent implements OnInit {
       this.getPersonalUserInfo();
       this.PostDto = new AddPostDto();
       this.isSubmitting = false;
+      this.isLoading = false;
       this.nopost = '';
     });
   }
