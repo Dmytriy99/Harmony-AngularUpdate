@@ -75,6 +75,15 @@ exports.updateUserDetails = async (req, res) => {
     }
 
     if (email !== undefined && email.trim() !== "") {
+      const emailRegex = /.+\@.+\..+/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).send("Invalid email format.");
+      }
+      // Controllo se l'email è già esistente per un altro utente
+      const existingUser = await User.findOne({ email });
+      if (existingUser && existingUser._id.toString() !== userId) {
+        return res.status(400).send("Email already in use.");
+      }
       user.email = email;
     }
     if (gender !== undefined && gender.trim() !== "") {

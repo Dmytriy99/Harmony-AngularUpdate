@@ -25,9 +25,9 @@ mat-toolbar {
   display: flex;
 }
 .main-content {
-  margin-top: 65px; /* Altezza della toolbar */
+  margin-top: 65px;
   padding: 20px;
-  overflow-y: auto; /* Abilita lo scrolling verticale */
+  overflow-y: auto;
 }
 
 .mat-list {

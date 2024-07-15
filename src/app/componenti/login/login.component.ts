@@ -13,6 +13,7 @@ export class LoginComponent {
   error!: string;
   userDto: UserDto = new UserDto();
   isLoading = false;
+  disabledLog = false;
   constructor(public route: Router, private authservice: AuthServiceComp) {}
   onSubmit(form: NgForm) {
     this.isLoading = true;

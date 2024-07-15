@@ -40,7 +40,13 @@
         extended
         color="primary"
         type="submit"
-        [disabled]="isLoading"
+        [disabled]="
+          isLoading ||
+          !userDto.name ||
+          !userDto.email ||
+          !userDto.gender ||
+          !userDto.password
+        "
       >
         Register
       </button>

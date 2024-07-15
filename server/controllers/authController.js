@@ -4,6 +4,28 @@ const User = require("../model/user.model");
 
 exports.register = async (req, res) => {
   try {
+    // controllo inserimento dati e controllo email valida
+    if (!req.body.email) {
+      return res.status(400).send("Email is required.");
+    }
+
+    const emailRegex = /.+\@.+\..+/;
+    if (!emailRegex.test(req.body.email)) {
+      return res.status(400).send("Invalid email format.");
+    }
+
+    if (!req.body.name) {
+      return res.status(400).send("Name is required.");
+    }
+
+    if (!req.body.password) {
+      return res.status(400).send("Password is required.");
+    }
+
+    if (!req.body.gender) {
+      return res.status(400).send("Gender is required.");
+    }
+
     // controllo se l'email è gia esistente
     const existingUser = await User.findOne({
       $or: [{ email: req.body.email }],

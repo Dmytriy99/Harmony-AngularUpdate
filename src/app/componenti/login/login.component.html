@@ -21,7 +21,7 @@
         extended
         color="primary"
         type="submit"
-        [disabled]="isLoading"
+        [disabled]="isLoading || !userDto.email || !userDto.password"
       >
         LogIn
       </button>

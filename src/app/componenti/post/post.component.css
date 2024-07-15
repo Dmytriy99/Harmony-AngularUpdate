@@ -113,8 +113,8 @@ h1 {
 }
 
 .fixed-height-textarea {
-  min-height: 60px; /* Altezza fissa */
-  overflow-y: auto; /* Mostra sempre la scrollbar verticale */
+  min-height: 60px;
+  overflow-y: auto;
 }
 .srcbtn {
   margin-left: 15px;

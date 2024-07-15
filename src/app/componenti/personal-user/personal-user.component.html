@@ -1,5 +1,4 @@
 <div class="loading-overlay" *ngIf="isLoading">
-  <!-- Puoi personalizzare questo elemento con la rotella di caricamento o altri indicatori visivi -->
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <div *ngIf="user">
@@ -57,14 +56,14 @@
         ></div>
       </mat-card-title>
       <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
-      <mat-card-subtitle>Age : {{ user.age }}</mat-card-subtitle>
+      <mat-card-subtitle
+        >Age : {{ user.age || "Age not provided" }}</mat-card-subtitle
+      >
       <mat-card-subtitle
         >Address :
         {{ user.address || "Address not provided" }}</mat-card-subtitle
       >
-      <mat-card-subtitle
-        >Gender : {{ user.gender || "Age not provided" }}</mat-card-subtitle
-      >
+      <mat-card-subtitle>Gender : {{ user.gender }}</mat-card-subtitle>
       <div class="addUser-device">
         <button
           mat-fab

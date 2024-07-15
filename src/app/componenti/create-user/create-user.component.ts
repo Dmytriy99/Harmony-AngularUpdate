@@ -30,10 +30,8 @@ export class CreateUserComponent implements OnInit {
         this.textCreate = 'User info update successfully';
       },
       error: (error) => {
-        console.error('Errore durante la richiesta:', error);
-        if (error.status === 422) {
-          this.textError = 'Fail to Update';
-        }
+        console.error('Errore durante la richiesta:', error.error);
+        this.textError = error.error;
       },
     });
   }

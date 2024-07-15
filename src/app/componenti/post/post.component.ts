@@ -102,7 +102,7 @@ export class PostComponent implements OnInit {
       error.error.message === 'Failed to authenticate token.'
     ) {
       localStorage.clear();
-      this.router.navigate(['/login']); // Assumendo che il path della pagina di login sia '/login'
+      this.router.navigate(['/login']);
     }
     return throwError(() => new Error('Token expired'));
   }
