@@ -101,6 +101,7 @@ export class UsersComponent implements OnInit {
   // cercare gli user tramite o nome o email
   onSubmit(form: NgForm) {
     if (!form.value.search) {
+      this.page = 1;
       this.getAllUser();
     } else if (this.selectedOption === '1') {
       this.onSearch(form);

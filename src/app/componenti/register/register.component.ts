@@ -20,7 +20,7 @@ export class RegisterComponent {
     this.isLoading = true;
     this.authService.register(this.userDto).subscribe({
       next: (data: any) => {
-        this.registerSuccess = 'User has been successfully registered.';
+        this.error = 'User has been successfully registered.';
         this.isLoading = false;
         this.route.navigate(['/login']);
       },

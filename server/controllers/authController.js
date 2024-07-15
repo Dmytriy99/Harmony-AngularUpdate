@@ -19,7 +19,8 @@ exports.register = async (req, res) => {
       email: req.body.email,
       gender: req.body.gender,
     });
-    res.status(200).send("User registered successfully");
+
+    res.status(200).send({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).send("Error registering user.");
   }

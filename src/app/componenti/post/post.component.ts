@@ -78,6 +78,7 @@ export class PostComponent implements OnInit {
         this.totalPosts = data.post.length;
         this.calculateRemainingPosts();
         if (!this.PostDto.search) {
+          this.page = 1;
           this.getAllPost();
         }
       });
