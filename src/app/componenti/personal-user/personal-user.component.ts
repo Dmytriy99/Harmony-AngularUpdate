@@ -98,9 +98,13 @@ export class PersonalUserComponent implements OnInit {
       this.getPersonalUserInfo();
       this.PostDto = new AddPostDto();
       this.isSubmitting = false;
+      this.nopost = '';
     });
   }
   onPostDeleted() {
+    if (this.post.length === 1) {
+      this.post = [];
+    }
     this.getAllPost();
   }
 
