@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start-server": "cd server && npm start",
-    "install": "npm install && npm run install-server",
+    "install-server-client": "npm install && npm run install-server",
     "install-server": "cd server && npm install"
   },
   "private": true,
