@@ -40,7 +40,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Install
 
-Run `npm install && cd server && npm install` on your device to install dependencies.
+Run `npm install` on your device to install dependencies.
 
 ## Angular Material
 
