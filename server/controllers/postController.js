@@ -1,6 +1,6 @@
 const Post = require("../model/post.model");
 const Comment = require("../model/comment.model");
-
+const User = require("../model/user.model")
 exports.getPost = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -61,9 +61,11 @@ exports.postLike = async (req, res) => {
   try {
     const postId = req.params.postId;
     const userId = req.userId;
-
+    
+    const user = await User.findById(userId)
     const post = await Post.findById(postId);
 
+    const userName = user.name
     if (!post) {
       return res.status(404).send("Post not found");
     }
@@ -73,6 +75,8 @@ exports.postLike = async (req, res) => {
     }
 
     post.likedBy.push(userId);
+    post.likedByName.push(userName);
+    
     post.likes += 1;
 
     await post.save();
@@ -85,8 +89,19 @@ exports.postLike = async (req, res) => {
 
 exports.PostPost = async (req, res) => {
   try {
+    console.log("Inizio della funzione");
+    console.log("req.userId:", req.userId);
+    const user = await User.findById(req.userId)
+    console.log("Utente trovato:", user);
+    if (!user) {
+      return res.status(404).json({ message: "Utente non trovato" });
+    }
     req.body.userId = req.userId;
+    req.body.userName = user.name;
+    req.body.email = user.email
+    console.log("Creazione del post");
     const post = await Post.create(req.body);
+    console.log("Post creato:", post);
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });

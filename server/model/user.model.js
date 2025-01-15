@@ -13,10 +13,11 @@ const userSchema = mongoose.Schema({
   description: String,
   address: String,
   status: { type: String, enum: ["online", "offline"] },
-  image: {
-    contentType: String,
-    data: Buffer,
-  },
+  imageId: { type: mongoose.Schema.Types.ObjectId, ref: "Image", default: null }, // Collegamento all'immagine
+  // image: {
+  //   contentType: String,
+  //   data: Buffer,
+  // },
 });
 
 const User = mongoose.model("user", userSchema);

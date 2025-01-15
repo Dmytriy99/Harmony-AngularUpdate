@@ -1,3 +1,65 @@
+::-webkit-scrollbar{
+  background-color: #e6ddee;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color:  #ab80cc;
+  border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.user-nav {
+  height: calc(100vh - 110px);
+}
+
+.input-add {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-weight: 500;
+  font-size: .8vw;
+  color: #000000;
+  background-color:  #faf9f9;
+  box-shadow: 0 0 .4vw rgba(53, 52, 52, 0.5), 0 0 0 .15vw transparent;
+  border-radius: 0.4vw;
+  border: none;
+  outline: none;
+  padding: 0.4vw;
+  width: 80%;
+  transition: .4s;
+}
+
+.input-add:hover {
+  box-shadow: 0 0 0 .15vw skyblue;
+  background-color: white;
+}
+
+
+.input-add:focus {
+  box-shadow: 0 0 0 .15vw #3B82F6;
+  background-color: white;
+ }
+
+.input {
+  border: 2px solid transparent;
+  width: 40%;
+  height: 3em;
+  padding-left: 0.8em;
+  outline: none;
+  overflow: hidden;
+  background-color: #F3F3F3;
+  box-shadow: 0 0 .2vw rgba(53, 52, 52, 0.5), 0 0 0 .15vw transparent;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.input:hover,
+.input:focus {
+  border: 2px solid #4A9DEC;
+  box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+  background-color: white;
+}
+
 .custom-search-bar {
   width: 35%;
 }
@@ -46,24 +108,24 @@ img {
 }
 
 button {
-  background-color: rgb(163, 122, 151);
-
-  height: 32px;
+  background-color: #e8eaf6;
+ 
+}
+button:valid {
+  background-color: rgb(161 118 183);
 }
 
 .add {
   align-items: center;
   text-align: center;
   justify-content: center;
-  background-color: rgb(163, 122, 151);
-
-  width: 50%;
+  background-color: #ede8f6  ;
+  width:90%;
   margin: 0 auto;
 }
 .post {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
-  margin-bottom: 30px;
 }
 
 .addPost {
@@ -105,7 +167,7 @@ h1 {
   margin-top: 30px;
 }
 .paginator-color {
-  color: black;
+  color: rgb(255, 255, 255);
 }
 .button-paginator {
   width: 100%;

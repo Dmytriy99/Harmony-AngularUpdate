@@ -19,6 +19,7 @@ export class postService {
     return this.http.get(`${urlPost}/${idUser}/post`, httpOption);
   }
 
+
   postPost(body: any) {
     return this.http.post(urlPost, body, httpOption);
   }

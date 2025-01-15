@@ -11,8 +11,8 @@ export class userService {
     return this.http.patch(`${urlUser}/updateDetails`, body, httpOption);
   }
 
-  getUserImage(userId: string) {
-    return this.http.get(`${urlUser}/${userId}/image`, {
+  getUserImage(imageID: string) {
+    return this.http.get(`${urlUser}/${imageID}/image`, {
       responseType: 'blob',
     });
   }

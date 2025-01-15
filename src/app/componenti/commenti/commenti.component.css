@@ -1,14 +1,43 @@
+.textArea:focus{
+  border: none;
+}
+.textArea{
+  outline: none;
+  border: none;
+}
+.input-add {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-weight: 500;
+  font-size: .8vw;
+  color: #000000;
+  background-color:  #faf9f9;
+  box-shadow: 0 0 .4vw rgba(53, 52, 52, 0.5), 0 0 0 .15vw transparent;
+  border-radius: 0.4vw;
+  border: none;
+  outline: none;
+  padding: 0.4vw;
+  width: 100%;
+  transition: .4s;
+}
+
+.input-add:hover {
+  box-shadow: 0 0 0 .15vw skyblue;
+  
+}
+
+
+.input-add:focus {
+  box-shadow: 0 0 0 .15vw #3B82F6;
+  
+ }
+
 button {
   font-size: 12px;
 }
 .comment-card {
-  width: 92%;
-  margin: 0 auto;
   background-color: rgb(202, 200, 200);
 }
-.commenti {
-  margin-bottom: 8px;
-}
+
 mat-card-header {
   margin-bottom: 8px;
 }
@@ -26,8 +55,8 @@ p {
 form {
   display: flex;
   flex-direction: column;
-  width: 95%;
-  margin: 0 auto;
+  width: 65%;
+  padding-left: 20px;
 }
 
 mat-card-title {
@@ -44,8 +73,6 @@ mat-card-subtitle {
 }
 .card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 .date {
   margin-right: 15px;

@@ -9,4 +9,5 @@ router.get("/", verifyToken, postController.getPost);
 router.get("/:userId/post", verifyToken, postController.getPostById);
 router.delete("/:postId", verifyToken, postController.delatePost);
 
+
 module.exports = router;

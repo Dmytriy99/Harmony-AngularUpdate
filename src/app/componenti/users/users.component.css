@@ -1,3 +1,23 @@
+.input {
+  border: 2px solid transparent;
+  width: 40%;
+  height: 3em;
+  padding-left: 0.8em;
+  outline: none;
+  overflow: hidden;
+  background-color: #F3F3F3;
+  box-shadow: 0 0 .2vw rgba(53, 52, 52, 0.5), 0 0 0 .15vw transparent;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.input:hover,
+.input:focus {
+  border: 2px solid #4A9DEC;
+  box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+  background-color: white;
+}
+
 .custom-search-bar {
   width: 35%;
 }
@@ -37,7 +57,7 @@ mat-card {
   margin: 0 auto;
   width: 65%;
   height: 135px;
-  border-radius: 5%;
+  border-radius: 15px;
 }
 mat-drawer-container {
   height: 135px;
@@ -50,9 +70,8 @@ mat-drawer {
 }
 
 .photo-container {
-  margin-top: 10px;
-  width: 95px;
-  height: 95px;
+  width: 75px;
+  height: 75px;
   overflow: hidden;
   align-items: center;
   border-radius: 50%;
@@ -81,11 +100,11 @@ mat-drawer {
   margin-left: 10px;
 }
 
-button {
+/* button {
   background-color: rgb(163, 122, 151);
   height: 32px;
   margin-left: 20px;
-}
+} */
 
 mat-radio-group {
   margin-right: 10px;
@@ -101,7 +120,9 @@ mat-card-title {
 }
 
 .paginator {
-  background-color: rgb(163, 122, 151);
+  background-color: #866ec0;
+  height: 26px;
+  color: white;
   font-size: 11px;
   width: 200px;
   margin: 0 auto;

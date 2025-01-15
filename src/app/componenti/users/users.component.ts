@@ -75,8 +75,8 @@ export class UsersComponent implements OnInit {
 
   loadAllImage() {
     this.users.forEach((user) => {
-      if (user.image) {
-        this.getUserImage(user._id);
+      if (user.imageId) {
+        this.getUserImage(user.imageId);
       } else {
         this.userImage[user._id] =
           user.gender === 'female' ? this.photoGirl2 : this.photoMan2;

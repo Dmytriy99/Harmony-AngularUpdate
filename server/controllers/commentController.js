@@ -24,6 +24,9 @@ exports.createComment = async (req, res) => {
       email: email,
     });
 
+    // post.commentCount += 1;
+    // await post.save()
+
     res.status(200).json(comment);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
     if (this.idUser) {
       this.userService.getUserById(this.idUser).subscribe((data: any) => {
         this.user = data;
-        if (this.user.image) {
+        if (this.user.imageId) {
           this.getUserImage(this.idUser);
         } else {
           this.userImage[this.idUser] =

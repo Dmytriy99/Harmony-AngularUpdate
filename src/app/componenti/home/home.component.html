@@ -1,41 +1,43 @@
-<mat-drawer-container class="container">
-  <mat-drawer mode="side" opened>
-    <ul class="mat-list">
+<!-- <div class="fluid row w-100 m-0 p-0" style="overflow-y: hidden;">
+  <mat-toolbar class="toolBar p-0">
+    <button mat-icon-button routerLink="posts">
+      <img
+        src="../assets/faviconFiore.png"
+        alt="Harmony Icon"
+        style="width: 26px; height: 26px"
+      />
+    </button>
+    <span>Harmony</span>
+    <span class="spacer"></span>
+    <button class="logOut" mat-icon-button type="button" (click)="logOut()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div class="col-2" style="background-color:rgb(228, 201, 220); border-radius: 20px;">
+    <ul class="mat-list pt-2">
       <li
         class="mat-list-item"
         routerLink="/homeUser"
         routerLinkActive="active"
       >
         <mat-icon>account_circle</mat-icon>
-        <span>Home</span>
+        <span class="span-navBar">Home</span>
       </li>
       <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
         <mat-icon>post_add</mat-icon>
-        <span>Posts</span>
+        <span class="span-navBar">Posts</span>
       </li>
       <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
         <mat-icon>group</mat-icon>
-        <span>Users</span>
+        <span class="span-navBar">Users</span>
       </li>
     </ul>
-  </mat-drawer>
-  <mat-drawer-content class="content-wrapper"
-    ><mat-toolbar>
-      <button mat-icon-button routerLink="posts">
-        <img
-          src="../assets/faviconFiore.png"
-          alt="Harmony Icon"
-          style="width: 26px; height: 26px"
-        />
-      </button>
-      <span>Harmony</span>
-      <span class="spacer"></span>
-      <button class="logOut" mat-icon-button type="button" (click)="logOut()">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </mat-toolbar>
+  </div>
+  <div class="content-wrapper col-10 p-0">
     <div class="main-content">
+      
       <router-outlet></router-outlet>
+    
     </div>
     <nav class="bottom-nav">
       <a
@@ -63,5 +65,68 @@
         <span>Users</span>
       </a>
     </nav>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </div>
+</div> -->
+<mat-toolbar class="toolBar p-0">
+  <button mat-icon-button routerLink="posts" style="height: 60px;width: 60px;" class="ms-2">
+    <img src="../assets/faviconFiore.png" alt="Harmony Icon" style="width: 38px; height: 38px" />
+  </button>
+  <span class="ps-2" style="color: rgb(255, 255, 255);">Harmony</span>
+  <span class="spacer"></span>
+  <button class="logOut" mat-icon-button type="button" (click)="logOut()">
+    <mat-icon style="color: white;">logout</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="fluid w-100 m-0 p-0" style=" overflow-y: hidden;">
+  <div class="row g-0">
+    <div class="col-2 p-2">
+    <div class="h-100" style="background-color: #d8c5e9; border-radius: 20px; padding: 10px;">
+      <ul class="mat-list pt-2">
+        <li class="mat-list-item" routerLink="/homeUser" routerLinkActive="active">
+          <mat-icon>account_circle</mat-icon>
+          <span class="span-navBar">Home</span>
+        </li>
+        <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
+          <mat-icon>post_add</mat-icon>
+          <span class="span-navBar">Posts</span>
+        </li>
+        <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
+          <mat-icon>group</mat-icon>
+          <span class="span-navBar">Users</span>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div class="content-wrapper col-10 p-0" style="height: calc(100vh - 64px); overflow: hidden;">
+      <div class="h-100 p-2">
+        <mat-card class="h-100" style="background-color: #F9FAFB;border-radius: 10px;">
+          <div class="p-4" style="overflow-y: auto;">
+            <router-outlet></router-outlet>
+          </div>
+        </mat-card>
+      </div>
+      <!-- <div class="main-content h-100">
+        <mat-card class="card-scroll">
+          <div class="card-content">
+            <router-outlet></router-outlet>
+          </div>
+        </mat-card>
+      </div> -->
+      <nav class="bottom-nav">
+        <a class="mat-list-item" routerLink="/homeUser" routerLinkActive="active-link">
+          <mat-icon>account_circle</mat-icon>
+          <span>Home</span>
+        </a>
+        <a class="mat-list-item" routerLink="/posts" routerLinkActive="active-link">
+          <mat-icon>post_add</mat-icon>
+          <span>Posts</span>
+        </a>
+        <a class="mat-list-item" routerLink="/users" routerLinkActive="active-link">
+          <mat-icon>group</mat-icon>
+          <span>Users</span>
+        </a>
+      </nav>
+    </div>
+    
+  </div>
+</div>

@@ -7,7 +7,7 @@ export interface User {
   status: string;
   description: string;
   address: string;
-  image: any;
+  imageId: any;
 }
 
 export interface Comment {
@@ -26,6 +26,8 @@ export interface Post {
   body: string;
   likes: number;
   date: string;
+  userName: String;
+  email: String;
 }
 
 export class AddPostDto {

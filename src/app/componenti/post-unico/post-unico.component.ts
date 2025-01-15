@@ -20,18 +20,23 @@ export class PostUnicoComponent implements OnInit {
   title!: string;
   body!: string;
   nameLikes!: string;
-  logUserId!: string;
+  @Input() logUserId!: string;
+
+  //@Output() isCommentVisible = new EventEmitter<boolean>();
+
+  isCommentVisible: boolean = false;
 
   constructor(
     private userService: userService,
     private postService: postService
   ) {}
   ngOnInit(): void {
+    //console.log(this.post)
     if (this.post) {
       this.getPost();
       this.getUserInfo();
-      this.getLogUser();
-      this.getNameLikes();
+      //this.getLogUser();
+      //this.getNameLikes();
     }
   }
   getPost() {
@@ -41,49 +46,91 @@ export class PostUnicoComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.userService.getUserById(this.post.userId).subscribe((data: any) => {
-      this.userName = data.name;
-      this.userEmail = data.email;
-    });
-  }
-  getLogUser() {
-    this.userService.getUserInfo().subscribe((data: any) => {
-      this.logUserId = data._id;
-    });
+    if (this.post.userEmail || this.post.email) {
+      this.userEmail = this.post.email;
+      this.userName = this.post.userName;}
+      // else {
+    //   this.userService.getUserById(this.post.userId).subscribe((data: any) => {
+    //     this.userName = data.name;
+    //     this.userEmail = data.email;
+    //   });
+    // }
   }
 
   // prende gli id degli user nel dato "likedBy" e cerca il nome di ogni user tramite l'id e lo manda a schermo formattato
-  getNameLikes(): void {
-    if (!this.post.likedBy || this.post.likedBy.length === 0) {
-      this.nameLikes = '';
-      return;
-    }
-    const reversedLikes = this.post.likedBy.slice().reverse();
-    const observables = reversedLikes.map((userId: any) =>
-      this.userService.getUserById(userId)
-    );
+  // getNameLikes(): void {
+  //   //   if (!this.post.likedBy || this.post.likedBy.length === 0) {
+  //   //     this.nameLikes = '';
+  //   //     return;
+  //   //   }
+  //   //   const reversedLikes = this.post.likedBy.slice().reverse();
+  //   //   const observables = reversedLikes.map((userId: any) =>
+  //   //     this.userService.getUserById(userId)
+  //   //   );
 
-    forkJoin(observables).subscribe({
-      next: (users: any) => {
-        const names = users.map((user: any) => user.name);
-        if (names.length <= 3) {
-          this.nameLikes = names.join(', ');
-        } else {
-          this.nameLikes = `${names.slice(0, 3).join(', ')} +${
-            names.length - 3
-          }`;
-        }
-      },
-      error: (error: any) => {
-        console.error('Errore nel recuperare i nomi degli utenti:', error);
-      },
-    });
-  }
+  //   //   forkJoin(observables).subscribe({
+  //   //     next: (users: any) => {
+  //   //       const names = users.map((user: any) => user.name);
+  //   //       if (names.length <= 3) {
+  //   //         this.nameLikes = names.join(', ');
+  //   //       } else {
+  //   //         this.nameLikes = `${names.slice(0, 3).join(', ')} +${
+  //   //           names.length - 3
+  //   //         }`;
+  //   //       }
+  //   //     },
+  //   //     error: (error: any) => {
+  //   //       console.error('Errore nel recuperare i nomi degli utenti:', error);
+  //   //     },
+  //   //   });
+  //   // Controlla se ci sono like
+  //   if (!this.post.likedBy || this.post.likedBy.length === 0) {
+  //     this.nameLikes = '';
+  //     return;
+  //   }
+
+  //   // Se ci sono più ID che nomi, utilizziamo il vecchio metodo con gli ID
+  //   if (this.post.likedBy.length > (this.post.likedByName?.length || 0)) {
+  //     const reversedLikes = this.post.likedBy.slice().reverse();
+  //     const observables = reversedLikes.map((userId: any) =>
+  //       this.userService.getUserById(userId)
+  //     );
+
+  //     forkJoin(observables).subscribe({
+  //       next: (users: any) => {
+  //         const names = users.map((user: any) => user.name);
+  //         if (names.length <= 3) {
+  //           this.nameLikes = names.join(', ');
+  //         } else {
+  //           this.nameLikes = `${names.slice(0, 3).join(', ')} +${
+  //             names.length - 3
+  //           }`;
+  //         }
+  //       },
+  //       error: (error: any) => {
+  //         console.error('Errore nel recuperare i nomi degli utenti:', error);
+  //       },
+  //     });
+  //   }
+  //   // Se gli ID sono uguali o inferiori ai nomi, usiamo il metodo con i nomi
+  //   else if (this.post.likedByName && this.post.likedByName.length > 0) {
+  //     const reversedNames = this.post.likedByName.slice().reverse();
+  //     console.log(reversedNames);
+
+  //     if (reversedNames.length <= 3) {
+  //       this.nameLikes = reversedNames.join(', ');
+  //     } else {
+  //       this.nameLikes = `${reversedNames.slice(0, 3).join(', ')} +${
+  //         reversedNames.length - 3
+  //       }`;
+  //     }
+  //   }
+  // }
   like() {
     this.postService.postLike(this.post._id).subscribe((data: any) => {
       this.post.likes = data.likes;
       this.post.likedBy = data.likedBy;
-      this.getNameLikes();
+      //this.getNameLikes();
     });
   }
   delatePost() {
@@ -91,9 +138,15 @@ export class PostUnicoComponent implements OnInit {
       this.postDeleted.emit();
     });
   }
+  getPostCount(){
+    this.post.commentCount += 1
+  }
 
   // se l'id Utente del post corrisponde all'id dell'Utente loggato visualizza il bottone per cancellare i propri post insieme a tutti i commenti
   canDeletePost(): boolean {
     return this.post.userId === this.logUserId;
+  }
+  openComments(){
+    this.isCommentVisible = !this.isCommentVisible; // Alterna visibilità
   }
 }

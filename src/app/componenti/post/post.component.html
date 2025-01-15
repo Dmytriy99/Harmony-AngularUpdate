@@ -1,71 +1,82 @@
-<form
-  class="search"
-  #SearchPostform="ngForm"
-  (ngSubmit)="onSearch(SearchPostform)"
->
-  <mat-form-field appearance="outline" class="custom-search-bar">
-    <mat-label>Search By Title</mat-label>
-    <input
-      matInput
-      type="text"
-      name="search"
-      placeholder="Type here..."
-      [(ngModel)]="PostDto.search"
-    />
-  </mat-form-field>
-  <button class="srcbtn" mat-fab extended color="primary" type="submit">
-    Search
-  </button>
-</form>
-<form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)">
-  <h1>Add Post</h1>
-  <mat-form-field class="title">
-    <mat-label>Title</mat-label>
-    <input matInput type="text" name="title" [(ngModel)]="PostDto.title" />
-  </mat-form-field>
-  <mat-form-field class="addPost">
-    <mat-label>Textarea</mat-label>
-    <textarea
-      matInput
-      type="text"
-      name="post"
-      [(ngModel)]="PostDto.post"
-      class="fixed-height-textarea"
-    ></textarea>
-    <button
-      mat-fab
-      extended
-      color="primary"
-      type="submit"
-      [disabled]="!PostDto.title || !PostDto.post || isSubmitting"
-    >
-      Post
-    </button>
-  </mat-form-field>
-</form>
-<div class="loading-overlay" *ngIf="isLoading">
-  <mat-spinner diameter="50"></mat-spinner>
-</div>
+<div class="row p-0">
+  <div class="col-9" *ngIf="{
+ Allpost: Allpost$ | async,
+} as observables">
+    <form class="search w-100 pb-4" #SearchPostform="ngForm" (ngSubmit)="onSearch(SearchPostform)">
 
-<div class="post" *ngFor="let post of Allpost">
-  <app-post-unico
-    [post]="post"
-    (postDeleted)="onPostDeleted()"
-  ></app-post-unico>
-</div>
-<div class="button-paginator">
-  <button
-    class="paginator"
-    *ngIf="remainingPosts > 0"
-    mat-fab
-    extended
-    (click)="loadMorePosts()"
-  >
-    Load more post
-    <mat-icon
-      ><span class="paginator-color">
-        keyboard_double_arrow_down
-      </span></mat-icon
-    >
-  </button>
+      <input class="input" placeholder="Search By Title">
+
+      <!-- <mat-form-field appearance="outline" class="custom-search-bar">
+      <mat-label>Search By Title</mat-label>
+      <input
+        matInput
+        type="text"
+        name="search"
+        placeholder="Type here..."
+        [(ngModel)]="PostDto.search"
+      />
+    </mat-form-field>
+    <button class="srcbtn" mat-fab extended color="primary" type="submit">
+      Search
+    </button> -->
+    </form>
+    <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
+      <div class="py-2 pt-3">
+        <input type="text" name="title" class="input-add" placeholder="Write a Title" [(ngModel)]="PostDto.title">
+      </div>
+      <div class="py-2">
+        <textarea type="text" name="post" class="input-add" placeholder="Write a Post" [(ngModel)]="PostDto.post"
+          style="height: 60px;"></textarea>
+      </div>
+      <button class="mb-2" style="height: 24px; width: 100px;" mat-fab extended color="primary" type="submit"
+        [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
+        Post
+      </button>
+      <!-- <h1>Add Post</h1> -->
+      <!-- <mat-form-field class="title">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" name="title" [(ngModel)]="PostDto.title" />
+    </mat-form-field> -->
+      <!-- <mat-form-field class="addPost">
+      <mat-label>Textarea</mat-label>
+      <textarea
+        matInput
+        type="text"
+        name="post"
+        [(ngModel)]="PostDto.post"
+        class="fixed-height-textarea"
+      ></textarea>
+      <button
+        mat-fab
+        extended
+        color="primary"
+        type="submit"
+        [disabled]="!PostDto.title || !PostDto.post || isSubmitting"
+      >
+        Post
+      </button>
+    </mat-form-field> -->
+    </form>
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <div class="post" *ngFor="let post of Allpost" style="border-radius: 10px;">
+      <app-post-unico [logUserId]="logUserId" [post]="post" (postDeleted)="onPostDeleted()"></app-post-unico>
+    </div>
+    <div class="button-paginator">
+      <button  class="paginator" style="height: 28px; color: white;" *ngIf="remainingPosts > 0" mat-fab extended
+        (click)="loadMorePosts()">
+        Load more post
+        <mat-icon><span class="paginator-color">
+            keyboard_double_arrow_down
+          </span></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="user-nav col-3 pe-0" style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
+    <div class="p-3  h-100" style="overflow-y: auto;">
+      <app-users></app-users>
+    </div>
+  </div>
 </div>

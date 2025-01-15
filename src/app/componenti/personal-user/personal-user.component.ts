@@ -29,6 +29,7 @@ export class PersonalUserComponent implements OnInit {
   isSubmitting = false;
   @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
   isLoading = false;
+  imageID!: any
 
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
@@ -58,9 +59,10 @@ export class PersonalUserComponent implements OnInit {
       .subscribe((data: any) => {
         this.user = data;
         this.userId = this.user._id;
-        if (this.user.image) {
+        this.imageID = this.user.imageId
+        if (this.user.imageId) {
           this.userService
-            .getUserImage(this.userId)
+            .getUserImage(this.imageID)
             .subscribe((response: Blob) => {
               const reader = new FileReader();
               reader.readAsDataURL(response);

@@ -1,4 +1,5 @@
 const User = require("../model/user.model");
+const Image = require("../model/image.model");
 
 exports.getUserLogInfo = async (req, res) => {
   try {
@@ -111,41 +112,94 @@ exports.updateUserDetails = async (req, res) => {
   }
 };
 
+// exports.updatePhoto = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       return res.status(404).send("User not found.");
+//     }
+
+//     if (req.file) {
+//       user.image.data = req.file.buffer;
+//       user.image.contentType = req.file.mimetype;
+//     } else {
+//       return res.status(400).send("No image file uploaded");
+//     }
+
+//     await user.save();
+
+//     res.status(200).send({ message: "User Photo updated successfully." });
+//   } catch (error) {
+//     res.status(500).send("Error updating user Photo.");
+//   }
+// };
 exports.updatePhoto = async (req, res) => {
   try {
     const userId = req.userId;
 
+    // Trova l'utente
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(404).send("User not found.");
     }
 
-    if (req.file) {
-      user.image.data = req.file.buffer;
-      user.image.contentType = req.file.mimetype;
-    } else {
-      return res.status(400).send("No image file uploaded");
+    if (!req.file) {
+      return res.status(400).send("No image file uploaded.");
     }
 
+    // Crea un nuovo documento immagine
+    const newImage = new Image({
+      userId,
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    });
+
+    // Salva l'immagine nel database
+    const savedImage = await newImage.save();
+
+    // Aggiorna l'utente con l'ID dell'immagine
+    user.imageId = savedImage._id;
     await user.save();
 
-    res.status(200).send({ message: "User Photo updated successfully." });
+    res.status(200).send({
+      message: "Image uploaded successfully.",
+      imageId: savedImage._id,
+    });
   } catch (error) {
-    res.status(500).send("Error updating user Photo.");
+    res.status(500).send("Error uploading image.");
   }
 };
 
+// exports.getUserImage = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+
+//     if (!user || !user.image || !user.image.data) {
+//       return res.status(200).json({ message: "Image not found." });
+//     }
+
+//     res.set("Content-Type", user.image.contentType);
+//     res.send(user.image.data);
+//   } catch (error) {
+//     res.status(500).send("Error retrieving image.");
+//   }
+//};
 exports.getUserImage = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const imageId = req.params.id;
 
-    if (!user || !user.image || !user.image.data) {
-      return res.status(200).json({ message: "Image not found." });
+    // Trova l'immagine nel database
+    const image = await Image.findById(imageId);
+    if (!image) {
+      return res.status(404).send("Image not found.");
     }
 
-    res.set("Content-Type", user.image.contentType);
-    res.send(user.image.data);
+    // Imposta il tipo di contenuto e invia l'immagine
+    res.set("Content-Type", image.contentType);
+    res.send(image.data);
   } catch (error) {
     res.status(500).send("Error retrieving image.");
   }

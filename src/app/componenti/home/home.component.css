@@ -1,5 +1,27 @@
-.container {
-  height: 100%;
+colore principale #3f51b5
+
+colore secondario #e8eaf6
+
+colore terziario #c5cae9
+
+colore 
+
+
+
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar{
+  background-color:  #d8c5e9;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #823fb5;
+  border-radius: 100px;
 }
 .spacer {
   flex: 1;
@@ -8,28 +30,24 @@
   display: flex;
   flex-direction: column;
 }
-mat-drawer {
-  width: 10%;
-  text-align: center;
-  background-color: rgb(228, 201, 220);
+
+.toolBar {
+  height: 60px;
+  min-height: 60px;
 }
 
 mat-toolbar {
-  background-color: rgb(228, 201, 220);
-  position: fixed;
-  width: 90.3%;
-  z-index: 1000;
-  top: 0;
+  background-color: #823fb5;
   justify-content: space-between;
   align-items: center;
   display: flex;
-}
-.main-content {
-  margin-top: 65px;
-  padding: 20px;
-  overflow-y: auto;
+  width: 100%;
 }
 
+.main-content {
+  overflow-y: auto; 
+  overflow-x: hidden;
+}
 .mat-list {
   list-style: none;
   padding: 0;
@@ -39,29 +57,37 @@ mat-toolbar {
 .mat-list-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s;
   height: 43.5px;
+  border-radius:18px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .mat-list-item:hover {
-  background-color: rgb(163, 122, 151);
+  background-color: #916ec0 ;
 }
 
+
+.span-navBar{
+  color: rgb(0, 0, 0);
+  padding-left: 22px;
+}
 .mat-list-item mat-icon {
-  margin-right: 10px;
-  margin-left: 15px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
 }
 
 .mat-list-item span {
   font-size: 16px;
-  margin-left: 15px;
   margin-top: 2px;
 }
 
 .mat-list-item.active {
-  background-color: rgb(163, 122, 151);
+  background-color: #916ec0 ;
 }
 
 .bottom-nav {
@@ -71,12 +97,9 @@ mat-toolbar {
   display: none;
   align-items: center;
   background-color: #ffffff;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  bottom: 0;
   width: 100%;
   height: 56px;
-  z-index: 2;
+ 
 }
 @media only screen and (max-width: 1360px) {
   mat-drawer {
@@ -109,9 +132,7 @@ mat-toolbar {
   .bottom-nav {
     display: flex;
   }
-  .main-content {
-    margin-bottom: 56px;
-  }
+  
   .mat-list-item {
     height: 38px;
     width: 33%;

@@ -1,5 +1,33 @@
-<form #Commentform="ngForm" (ngSubmit)="onSubmit(Commentform)">
-  <mat-form-field appearance="fill">
+<form *ngIf="isCommentVisible" @fadeInOut #Commentform="ngForm" (ngSubmit)="onSubmit(Commentform)">
+  <div class="py-2">
+    <div class="input-add">
+      <textarea  type="text" name="body" class="textArea w-100 " placeholder="Leave a comment" [(ngModel)]="commentDto.content" style="height: 35px; border: 0;background-color:  #faf9f9;"></textarea>
+      <div class="w-100 d-flex justify-content-end">
+      <button  mat-fab extended style="height: 22px;background-color: rgb(161 118 183);"
+        type="submit"
+        [disabled]="!commentDto.content || isSend"
+      >Comment</button>
+    </div>
+    </div>
+    <!-- <textarea  type="text" name="post" class="input-add" placeholder="Leave a comment" [(ngModel)]="commentDto.content" style="height: 35px;"></textarea> -->
+  </div>
+</form>
+<ng-container *ngIf="isCommentVisible">
+<div class="commenti ps-4" *ngFor="let comments of comment" @fadeInOut>
+  <mat-card class="comment-card p-2" style="width: fit-content; ; max-width: 60%;border-radius: 15px;">
+    <div class="card-header d-flex" style="flex-direction: column;">
+      <div style="font-weight: 500;font-size: 13px;">{{comments.name}}</div>
+      <div>{{comments.content}}</div>
+    </div>
+  </mat-card>
+  <div class="ps-2" style="font-size: 10px;">{{comments.createdAt | date : "dd/MM/yy, HH:mm"}}</div>
+</div>
+</ng-container>
+
+
+
+
+<!-- <mat-form-field appearance="fill">
     <mat-label>Leave a comment</mat-label>
     <input
       type="text"
@@ -19,18 +47,17 @@
     >
       <mat-icon>send</mat-icon>
     </button>
-  </mat-form-field>
-</form>
+  </mat-form-field> -->
 
-<div class="commenti" *ngFor="let comments of comment">
-  <mat-card class="comment-card">
-    <div class="card-header">
-      <mat-card-title>{{ comments.name }}</mat-card-title>
+
+
+
+  <!-- <mat-card-title>{{ comments.name }}</mat-card-title>
       <span class="date">{{
         comments.createdAt | date : "dd/MM/yy, HH:mm"
-      }}</span>
-    </div>
-    <mat-card-subtitle>{{ comments.email }}</mat-card-subtitle>
-    <p>{{ comments.content }}</p>
-  </mat-card>
-</div>
+      }}</span> -->
+
+
+
+      <!-- <mat-card-subtitle>{{ comments.email }}</mat-card-subtitle>
+    <p>{{ comments.content }}</p> -->
