@@ -19,7 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { PostComponent } from './componenti/post/post.component';
 import { PostUnicoComponent } from './componenti/post-unico/post-unico.component';
 import { CommentiComponent } from './componenti/commenti/commenti.component';
@@ -32,42 +32,35 @@ import { UsersComponent } from './componenti/users/users.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    PostComponent,
-    PostUnicoComponent,
-    CommentiComponent,
-    CreateUserComponent,
-    LoginComponent,
-    PersonalUserComponent,
-    RegisterComponent,
-    UserComponent,
-    UsersComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDialogModule,
-    MatListModule,
-    HttpClientModule,
-    MatPaginatorModule,
-    MatRadioModule,
-    MatBadgeModule,
-    MatProgressSpinnerModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        PostComponent,
+        PostUnicoComponent,
+        CommentiComponent,
+        CreateUserComponent,
+        LoginComponent,
+        PersonalUserComponent,
+        RegisterComponent,
+        UserComponent,
+        UsersComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatDialogModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatRadioModule,
+        MatBadgeModule,
+        MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
