@@ -8,15 +8,16 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
-  providers: [
-    {
-      provide: MAT_RADIO_DEFAULT_OPTIONS,
-      useValue: { color: 'purple' },
-    },
-  ],
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css'],
+    providers: [
+        {
+            provide: MAT_RADIO_DEFAULT_OPTIONS,
+            useValue: { color: 'purple' },
+        },
+    ],
+    standalone: false
 })
 export class UsersComponent implements OnInit {
   selectedOption!: string;

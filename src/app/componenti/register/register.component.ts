@@ -5,9 +5,10 @@ import { User, UserDto } from 'src/app/modelli/interface';
 import { AuthServiceComp } from 'src/app/service/authService/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+    standalone: false
 })
 export class RegisterComponent {
   persone!: User[];

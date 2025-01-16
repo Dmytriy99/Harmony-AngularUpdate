@@ -5,9 +5,10 @@ import { UserDto } from 'src/app/modelli/interface';
 import { AuthServiceComp } from 'src/app/service/authService/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent {
   error!: string;

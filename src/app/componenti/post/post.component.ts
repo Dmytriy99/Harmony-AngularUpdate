@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
 import { userService } from 'src/app/service/userService/user.service';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css'],
+    selector: 'app-post',
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.css'],
+    standalone: false
 })
 export class PostComponent implements OnInit {
   constructor(

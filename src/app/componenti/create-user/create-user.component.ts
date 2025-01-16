@@ -5,9 +5,10 @@ import { UserDto } from 'src/app/modelli/interface';
 import { userService } from 'src/app/service/userService/user.service';
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css'],
+    selector: 'app-create-user',
+    templateUrl: './create-user.component.html',
+    styleUrls: ['./create-user.component.css'],
+    standalone: false
 })
 export class CreateUserComponent implements OnInit {
   textError!: string;

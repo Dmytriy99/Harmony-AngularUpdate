@@ -6,9 +6,10 @@ import { userService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/modelli/interface';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.css'],
+    standalone: false
 })
 export class UserComponent implements OnInit {
   noPost!: string;

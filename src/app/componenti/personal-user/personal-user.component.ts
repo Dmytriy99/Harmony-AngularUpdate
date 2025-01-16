@@ -12,9 +12,10 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-personal-user',
-  templateUrl: './personal-user.component.html',
-  styleUrls: ['./personal-user.component.css'],
+    selector: 'app-personal-user',
+    templateUrl: './personal-user.component.html',
+    styleUrls: ['./personal-user.component.css'],
+    standalone: false
 })
 export class PersonalUserComponent implements OnInit {
   nopost: string = '';

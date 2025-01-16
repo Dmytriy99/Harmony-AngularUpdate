@@ -5,9 +5,10 @@ import { postService } from 'src/app/service/postService/post.service';
 
 import { userService } from 'src/app/service/userService/user.service';
 @Component({
-  selector: 'app-post-unico',
-  templateUrl: './post-unico.component.html',
-  styleUrls: ['./post-unico.component.css'],
+    selector: 'app-post-unico',
+    templateUrl: './post-unico.component.html',
+    styleUrls: ['./post-unico.component.css'],
+    standalone: false
 })
 export class PostUnicoComponent implements OnInit {
   userName!: string;
