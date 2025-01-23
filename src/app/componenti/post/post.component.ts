@@ -39,6 +39,8 @@ export class PostComponent implements OnInit {
   PostDto: AddPostDto = new AddPostDto();
   isLoading = false;
   logUserId!: string;
+  imagePreview!: any
+  
 
   Allpost$!: Observable<Post[]>;
   loadPostsSubject = new BehaviorSubject<void>(undefined);
@@ -105,8 +107,12 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
 
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
-    this.postService.postPost(this.PostDto).subscribe((data) => {
-      this.postService
+    this.postService.postPost(this.PostDto).subscribe((data:any) => {
+      console.log(data)
+      const formDataImage = new FormData();
+      formDataImage.append('image', this.selectedFile!);
+      this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
+        this.postService
         .getPost(this.pageFirst, this.limit)
         .subscribe((data: any) => {
           this.Allpost = data.post;
@@ -114,7 +120,9 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
           this.PostDto = new AddPostDto();
           this.isSubmitting = false;
           this.page = 1;
+          console.log(data)
         });
+      })
     });
   }
 
@@ -154,4 +162,55 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
     }
     return throwError(() => new Error('Token expired'));
   }
+
+  // uploadImage(image : any) {
+  //   console.log("ciao")
+  // }
+  renderImagePreview(event: Event): void {
+    console.log(this.imagePreview)
+    const file = (event.target as HTMLInputElement).files?.[0];
+    console.log(file)
+    if (file) {
+      this.selectedFile = file
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string; // Imposta l'anteprima
+      };
+      reader.readAsDataURL(file); // Legge il file e genera una data URL
+    } else {
+      this.imagePreview = null; // Rimuove l'anteprima se non c'è un file
+    }
+  }
+
+  clearImagePreview(){
+    this.imagePreview = null
+    this.selectedFile = null
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+  if (fileInput) {
+    fileInput.value = ''; // Resetta il valore del file input
+  }
+  }
+  // uploadImage(event: any): void {
+  //   const selectedFile = event.target.files[0];
+  //   if (!selectedFile) {
+  //     console.log('Nessun file selezionato.');
+  //     this.selectedImageName = null;
+  //     return;
+  //   }
+  //   this.selectedImageName = selectedFile.name;
+  //   const formData = new FormData();
+  //   formData.append('image', selectedFile);
+  //   this.userService.updateImage(formData).subscribe((res: any) => {});
+  // }
+  // uploadImage(event: any): void {
+  //   const selectedFile = event.target.files[0];
+  //   if (!selectedFile) {
+  //     console.log('Nessun file selezionato.');
+  //     this.selectedFile = null;
+  //     return;
+  //   }
+  //   const formData = new FormData();
+  //   formData.append('image', selectedFile);
+  //   this.postService.postPhotoPost(formData).subscribe((res: any) => {});
+  // }
 }

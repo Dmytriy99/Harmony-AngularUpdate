@@ -30,4 +30,15 @@ export class postService {
   delatePost(postId: string) {
     return this.http.delete(`${urlPost}/${postId}`, httpOption);
   }
+  
+  postPhotoPost(postId: string, image: any) {
+    return this.http.post(`${urlPost}/${postId}/image`,image, httpOption);
+  }
+
+  getPostImage(imageId: string, postId: any) {
+    return this.http.get(`${urlPost}/${postId}/image/${imageId}`, {
+      responseType: 'blob',
+    });
+  }
+  //router.get("/:postId/image/:imageId", postController.getPostImage);
 }

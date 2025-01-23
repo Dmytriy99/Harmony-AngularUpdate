@@ -1,6 +1,7 @@
 const Post = require("../model/post.model");
 const Comment = require("../model/comment.model");
 const User = require("../model/user.model")
+const ImagePost = require("../model/imagePost.model");
 exports.getPost = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -105,5 +106,59 @@ exports.PostPost = async (req, res) => {
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.updatePostImage = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).send("Post not found.");
+    }
+
+    if (!req.file) {
+      return res.status(400).send("No image file uploaded.");
+    }
+
+    // Crea un nuovo documento immagine per il post
+    const newImage = new ImagePost({
+      postId,
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    });
+
+    // Salva l'immagine nel database
+    const savedImage = await newImage.save();
+
+    // Aggiungi l'ID dell'immagine al post
+    post.imageId = savedImage._id;
+    await post.save();
+
+    res.status(200).send({
+      message: "Post image uploaded successfully.",
+      imageId: savedImage._id,
+    });
+  } catch (error) {
+    res.status(500).send("Error uploading post image.");
+  }
+};
+
+
+exports.getPostImage = async (req, res) => {
+  try {
+    const imageId = req.params.imageId;
+
+    // Trova l'immagine nel database
+    const image = await ImagePost.findById(imageId);
+    if (!image) {
+      return res.status(404).send("Image not found.");
+    }
+
+    // Imposta il tipo di contenuto e invia l'immagine
+    res.set("Content-Type", image.contentType);
+    res.send(image.data);
+  } catch (error) {
+    res.status(500).send("Error retrieving post image.");
   }
 };

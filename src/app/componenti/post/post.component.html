@@ -3,10 +3,72 @@
  Allpost: Allpost$ | async,
 } as observables">
     <form class="search w-100 pb-4" #SearchPostform="ngForm" (ngSubmit)="onSearch(SearchPostform)">
+      <input class="search-Bar" placeholder="Search By Title">
+    </form>
+    <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
+      <div class="customInput">
+        <div class="py-1 pt-1">
+          <input type="text" name="title" class="input-title-text w-100" placeholder="Write a Title" [(ngModel)]="PostDto.title"
+            style="border: 0;outline: none;">
+        </div>
+        <div class="py-1">
+          <textarea type="text" name="post" class="input-title-text w-100 pt-2" placeholder="Write a Post" [(ngModel)]="PostDto.post"
+            style="height: 40px; border: 0;outline: none;border-top: solid 1px #d3caca;"></textarea>
+        </div>
+        <div *ngIf="imagePreview" class="clearImagePreview">
+          <a mat-mini-fab class="button">
+            <mat-icon style="color: white;" (click)="clearImagePreview()">close</mat-icon>
+            <span class="text">Clear Image</span>
+          </a>
+        </div>
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Image Preview" />
+        </div>
+        <div class="w-100 d-flex justify-content-end align-items-end">
+          <div style="height: 28.8px;">
+          <button class="mb-2" style="height: 24px; width: 100px;" mat-fab extended color="primary" type="submit"
+            [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
+            Post
+          </button>
+        </div>
+          <div class="ps-2">
+            <a mat-fab extended class="custom-file-upload" [disabled]="isSubmitting">
+              <label class="custom-file-upload" mat-fab extended>
+                <input type="file" (change)="renderImagePreview($event)" accept="image/*" />
+                <span class="material-symbols-outlined">image</span>
+              </label>
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
 
-      <input class="input" placeholder="Search By Title">
+    <div class="post" *ngFor="let post of Allpost" style="border-radius: 10px;">
+      <app-post-unico [logUserId]="logUserId" [post]="post" (postDeleted)="onPostDeleted()"></app-post-unico>
+    </div>
+    <div class="button-paginator">
+      <button class="paginator" style="height: 28px; color: white;" *ngIf="remainingPosts > 0" mat-fab extended
+        (click)="loadMorePosts()">
+        Load more post
+        <mat-icon><span class="paginator-color">
+            keyboard_double_arrow_down
+          </span></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="user-nav col-3 pe-0"
+    style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
+    <div class="p-3  h-100" style="overflow-y: auto;">
+      <app-users></app-users>
+    </div>
+  </div>
+</div>
 
-      <!-- <mat-form-field appearance="outline" class="custom-search-bar">
+
+<!-- <mat-form-field appearance="outline" class="custom-search-bar">
       <mat-label>Search By Title</mat-label>
       <input
         matInput
@@ -19,25 +81,13 @@
     <button class="srcbtn" mat-fab extended color="primary" type="submit">
       Search
     </button> -->
-    </form>
-    <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
-      <div class="py-2 pt-3">
-        <input type="text" name="title" class="input-add" placeholder="Write a Title" [(ngModel)]="PostDto.title">
-      </div>
-      <div class="py-2">
-        <textarea type="text" name="post" class="input-add" placeholder="Write a Post" [(ngModel)]="PostDto.post"
-          style="height: 60px;"></textarea>
-      </div>
-      <button class="mb-2" style="height: 24px; width: 100px;" mat-fab extended color="primary" type="submit"
-        [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
-        Post
-      </button>
-      <!-- <h1>Add Post</h1> -->
-      <!-- <mat-form-field class="title">
+
+<!-- <h1>Add Post</h1> -->
+<!-- <mat-form-field class="title">
       <mat-label>Title</mat-label>
       <input matInput type="text" name="title" [(ngModel)]="PostDto.title" />
     </mat-form-field> -->
-      <!-- <mat-form-field class="addPost">
+<!-- <mat-form-field class="addPost">
       <mat-label>Textarea</mat-label>
       <textarea
         matInput
@@ -56,27 +106,3 @@
         Post
       </button>
     </mat-form-field> -->
-    </form>
-    <div class="loading-overlay" *ngIf="isLoading">
-      <mat-spinner diameter="50"></mat-spinner>
-    </div>
-
-    <div class="post" *ngFor="let post of Allpost" style="border-radius: 10px;">
-      <app-post-unico [logUserId]="logUserId" [post]="post" (postDeleted)="onPostDeleted()"></app-post-unico>
-    </div>
-    <div class="button-paginator">
-      <button  class="paginator" style="height: 28px; color: white;" *ngIf="remainingPosts > 0" mat-fab extended
-        (click)="loadMorePosts()">
-        Load more post
-        <mat-icon><span class="paginator-color">
-            keyboard_double_arrow_down
-          </span></mat-icon>
-      </button>
-    </div>
-  </div>
-  <div class="user-nav col-3 pe-0" style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
-    <div class="p-3  h-100" style="overflow-y: auto;">
-      <app-users></app-users>
-    </div>
-  </div>
-</div>

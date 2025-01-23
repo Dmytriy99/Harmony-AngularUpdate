@@ -10,6 +10,7 @@ const PostSchema = mongoose.Schema(
     likes: { type: Number, default: 0 },
     likedBy: [{  type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     likedByName: [String],
+    imageId: { type: mongoose.Schema.Types.ObjectId, ref: 'ImagePost' },
    // commentCount: { type: Number, default: 0 }
   },
   {

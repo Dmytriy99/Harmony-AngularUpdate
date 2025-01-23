@@ -3,7 +3,7 @@
     <div class="input-add">
       <textarea  type="text" name="body" class="textArea w-100 " placeholder="Leave a comment" [(ngModel)]="commentDto.content" style="height: 35px; border: 0;background-color:  #faf9f9;"></textarea>
       <div class="w-100 d-flex justify-content-end">
-      <button  mat-fab extended style="height: 22px;background-color: rgb(161 118 183);"
+      <button  mat-fab extended style="height: 22px;background-color: rgb(161 118 183);color: white;"
         type="submit"
         [disabled]="!commentDto.content || isSend"
       >Comment</button>

@@ -32,6 +32,7 @@ import { UsersComponent } from './componenti/users/users.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -62,5 +63,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatPaginatorModule,
         MatRadioModule,
         MatBadgeModule,
+        MatTooltipModule,
         MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

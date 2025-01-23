@@ -22,6 +22,7 @@ export class PostUnicoComponent implements OnInit {
   body!: string;
   nameLikes!: string;
   @Input() logUserId!: string;
+  imagePost: any;
 
   //@Output() isCommentVisible = new EventEmitter<boolean>();
 
@@ -44,6 +45,16 @@ export class PostUnicoComponent implements OnInit {
     this.title = this.post.title;
     this.body = this.post.post;
     this.iDpost = this.post._id;
+    if (this.post.imageId) {
+      this.postService.getPostImage(this.post.imageId,this.iDpost)
+        .subscribe((response: Blob) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            this.imagePost = reader.result;
+          };
+        });
+    }
   }
 
   getUserInfo() {
