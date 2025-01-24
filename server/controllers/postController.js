@@ -49,6 +49,9 @@ exports.delatePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
+    if (post.imageId) {
+      await ImagePost.findByIdAndDelete(post.imageId);
+    }
 
     // Cancellare tutti i commenti associati al post
     await Comment.deleteMany({ postId: postId });

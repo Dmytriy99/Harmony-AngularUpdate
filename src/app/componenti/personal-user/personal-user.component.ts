@@ -112,21 +112,28 @@ export class PersonalUserComponent implements OnInit {
   // }
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
-    this.postService.postPost(this.PostDto).subscribe((data:any) => {
-      console.log(data)
-      const formDataImage = new FormData();
-      formDataImage.append('image', this.selectedFile!);
-      this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
-        this.getPersonalUserInfo();
-        this.PostDto = new AddPostDto();
-        this.clearImagePreview()
-        this.isSubmitting = false;
-        this.isLoading = false;
-        this.nopost = '';
+    this.postService.postPost(this.PostDto).subscribe((data: any) => {
+      if (this.selectedFile) {
+        console.log(data)
+        const formDataImage = new FormData();
+        formDataImage.append('image', this.selectedFile!);
+        this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
+          this.getPersonalUserInfo();
+          this.PostDto = new AddPostDto();
+          this.clearImagePreview()
+          this.isSubmitting = false;
+          this.isLoading = false;
+          this.nopost = '';
         });
-      })
+      } else {
+          this.getPersonalUserInfo();
+          this.PostDto = new AddPostDto();
+          this.isSubmitting = false;
+          this.isLoading = false;
+          this.nopost = '';
+      }
+    })
   }
-
   onPostDeleted() {
     if (this.post.length === 1) {
       this.post = [];

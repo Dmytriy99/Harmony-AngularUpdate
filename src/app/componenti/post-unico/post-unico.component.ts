@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
+import heic2any from "heic2any";
 import { forkJoin } from 'rxjs';
 import { postService } from 'src/app/service/postService/post.service';
 
@@ -41,22 +41,78 @@ export class PostUnicoComponent implements OnInit {
       //this.getNameLikes();
     }
   }
+  // getPost() {
+  //   this.title = this.post.title;
+  //   this.body = this.post.post;
+  //   this.iDpost = this.post._id;
+  //   if (this.post.imageId) {
+  //     this.postService.getPostImage(this.post.imageId,this.iDpost)
+  //       .subscribe((response: Blob) => {
+  //         const reader = new FileReader();
+  //         reader.readAsDataURL(response);
+  //         reader.onloadend = () => {
+  //           this.imagePost = reader.result;
+  //         };
+  //       });
+  //   }
+  // }
+
   getPost() {
     this.title = this.post.title;
     this.body = this.post.post;
     this.iDpost = this.post._id;
+  
     if (this.post.imageId) {
-      this.postService.getPostImage(this.post.imageId,this.iDpost)
+      this.postService.getPostImage(this.post.imageId, this.iDpost)
         .subscribe((response: Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(response);
-          reader.onloadend = () => {
-            this.imagePost = reader.result;
-          };
+          // Controllo del tipo MIME
+          if (response.type === "image/heic") {
+            this.convertHeicToBase64(response).then((convertedImage: string) => {
+              this.imagePost = convertedImage;
+            }).catch(error => {
+              console.error("Errore nella conversione dell'immagine HEIC:", error);
+              this.imagePost = null; // Gestisci eventuali errori
+            });
+          } else {
+            this.convertBlobToBase64(response).then((base64: string) => {
+              this.imagePost = base64;
+            }).catch(error => {
+              console.error("Errore nella conversione del blob:", error);
+            });
+          }
         });
     }
   }
-
+  
+  // Funzione per convertire HEIC in Base64
+  private async convertHeicToBase64(heicBlob: Blob): Promise<string> {
+    try {
+      const convertedBlob = await heic2any({
+        blob: heicBlob,
+        toType: "image/jpeg", // Puoi scegliere PNG o JPEG
+      });
+  
+      return this.convertBlobToBase64(convertedBlob as Blob);
+    } catch (error) {
+      throw new Error("Impossibile convertire l'immagine HEIC");
+    }
+  }
+  
+  // Funzione per convertire qualsiasi Blob in Base64
+  private convertBlobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        if (reader.result) {
+          resolve(reader.result as string);
+        } else {
+          reject("Impossibile leggere il file Blob");
+        }
+      };
+      reader.onerror = reject;
+    });
+  }
   getUserInfo() {
     if (this.post.userEmail || this.post.email) {
       this.userEmail = this.post.email;

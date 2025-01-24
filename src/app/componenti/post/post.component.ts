@@ -107,24 +107,35 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
 
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
-    this.postService.postPost(this.PostDto).subscribe((data:any) => {
+    this.postService.postPost(this.PostDto).subscribe((data: any) => {
       console.log(data)
-      const formDataImage = new FormData();
-      formDataImage.append('image', this.selectedFile!);
-      this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
+      if (this.selectedFile) {
+        const formDataImage = new FormData();
+        formDataImage.append('image', this.selectedFile!);
+        this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
+          this.postService
+            .getPost(this.pageFirst, this.limit)
+            .subscribe((data: any) => {
+              this.Allpost = data.post;
+              this.totalPosts = data.totalPost;
+              this.PostDto = new AddPostDto();
+              this.clearImagePreview()
+              this.isSubmitting = false;
+              this.page = 1;
+              console.log(data)
+            });
+        })
+      } else {
         this.postService
-        .getPost(this.pageFirst, this.limit)
-        .subscribe((data: any) => {
-          this.Allpost = data.post;
-          this.totalPosts = data.totalPost;
-          this.PostDto = new AddPostDto();
-          this.clearImagePreview()
-          this.isSubmitting = false;
-          this.page = 1;
-          console.log(data)
-        });
-      })
-    });
+          .getPost(this.pageFirst, this.limit)
+          .subscribe((data: any) => {
+            this.Allpost = data.post;
+            this.totalPosts = data.totalPost;
+            this.PostDto = new AddPostDto();
+            this.isSubmitting = false;
+            this.page = 1;
+          })
+      }});
   }
 
   onSearch(form: NgForm) {
