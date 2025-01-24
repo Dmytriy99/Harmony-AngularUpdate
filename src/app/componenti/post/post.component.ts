@@ -118,6 +118,7 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
           this.Allpost = data.post;
           this.totalPosts = data.totalPost;
           this.PostDto = new AddPostDto();
+          this.clearImagePreview()
           this.isSubmitting = false;
           this.page = 1;
           console.log(data)

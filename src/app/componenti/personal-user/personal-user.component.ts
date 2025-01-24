@@ -31,6 +31,9 @@ export class PersonalUserComponent implements OnInit {
   @Output() postDeleted: EventEmitter<string> = new EventEmitter<string>();
   isLoading = false;
   imageID!: any
+  imageLoading = false
+  imagePreview!: any
+  selectedFile: File | null = null;
 
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
@@ -62,6 +65,7 @@ export class PersonalUserComponent implements OnInit {
         this.userId = this.user._id;
         this.imageID = this.user.imageId
         if (this.user.imageId) {
+          this.imageLoading= true
           this.userService
             .getUserImage(this.imageID)
             .subscribe((response: Blob) => {
@@ -70,6 +74,7 @@ export class PersonalUserComponent implements OnInit {
               reader.onloadend = () => {
                 this.userImage = reader.result;
               };
+              this.imageLoading= false
             });
         } else {
           this.userImage =
@@ -95,16 +100,33 @@ export class PersonalUserComponent implements OnInit {
     });
   }
 
+  // onSubmit(form: NgForm) {
+  //   this.isSubmitting = true;
+  //   this.postService.postPost(this.PostDto).subscribe((data) => {
+  //     this.getPersonalUserInfo();
+  //     this.PostDto = new AddPostDto();
+  //     this.isSubmitting = false;
+  //     this.isLoading = false;
+  //     this.nopost = '';
+  //   });
+  // }
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
-    this.postService.postPost(this.PostDto).subscribe((data) => {
-      this.getPersonalUserInfo();
-      this.PostDto = new AddPostDto();
-      this.isSubmitting = false;
-      this.isLoading = false;
-      this.nopost = '';
-    });
+    this.postService.postPost(this.PostDto).subscribe((data:any) => {
+      console.log(data)
+      const formDataImage = new FormData();
+      formDataImage.append('image', this.selectedFile!);
+      this.postService.postPhotoPost(data._id, formDataImage).subscribe((data) => {
+        this.getPersonalUserInfo();
+        this.PostDto = new AddPostDto();
+        this.clearImagePreview()
+        this.isSubmitting = false;
+        this.isLoading = false;
+        this.nopost = '';
+        });
+      })
   }
+
   onPostDeleted() {
     if (this.post.length === 1) {
       this.post = [];
@@ -123,4 +145,29 @@ export class PersonalUserComponent implements OnInit {
     }
     return throwError(() => new Error('Token expired'));
   }
+
+  renderImagePreview(event: Event): void {
+    console.log(this.imagePreview)
+    const file = (event.target as HTMLInputElement).files?.[0];
+    console.log(file)
+    if (file) {
+      this.selectedFile = file
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string; // Imposta l'anteprima
+      };
+      reader.readAsDataURL(file); // Legge il file e genera una data URL
+    } else {
+      this.imagePreview = null; // Rimuove l'anteprima se non c'è un file
+    }
+  }
+
+  clearImagePreview(){
+    this.imagePreview = null
+    this.selectedFile = null
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+  if (fileInput) {
+    fileInput.value = ''; // Resetta il valore del file input
+  }
+}
 }

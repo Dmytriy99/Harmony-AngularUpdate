@@ -2,48 +2,50 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <div *ngIf="user">
-  <mat-card class="container"
-    ><mat-drawer-container class="drawer-container">
-      <mat-drawer mode="side" opened class="photo-border"
-        ><div class="photo-container">
-          <img class="photo" [src]="userImage" /></div
-      ></mat-drawer>
-      <mat-drawer-content class="desktop-user-info"
-        ><mat-drawer-container class="drawer-container">
-          <mat-drawer mode="side" opened class="user-info">
-            <mat-card-header class="card">
-              <mat-card-title
-                >{{ user.name }}
-                <div
-                  class="cerchio"
-                  [ngStyle]="{
+  <div class="d-flex justify-content-center pb-4">
+    <mat-card class="p-3" style="border-radius: 15px; width: 90%; background-color: #ede8f6;">
+      <div class="row h-100">
+        <div class="col-4 d-flex justify-content-center p-2">
+          <div class="ps-2">
+            <div class="image-preview">
+              <img *ngIf="userImage" [src]="userImage" alt="Image Preview" />
+            </div>
+          </div>
+        </div>
+        <div *ngIf="user" class="col-3 align-content-center" style="font-size: 30px;font-weight: 500;">
+          <div class="d-flex align-items-center py-3">
+            <span>{{ user.name }}</span>
+            <span class="ms-2" style="display: inline-block; height: 10px; width: 10px; border-radius: 50%;" [ngStyle]="{
                     background: user.status === 'online' ? 'green' : 'red'
-                  }"
-                ></div>
-              </mat-card-title>
-              <mat-card-subtitle>Email : {{ user.email }}</mat-card-subtitle>
-              <mat-card-subtitle
-                >Age : {{ user.age || "Age not provided" }}</mat-card-subtitle
+                  }"></span>
+          </div>
+          <div style="font-size: 12px;">{{user.email}}</div>
+          <div style="font-size: 12px;">Age : {{ user.age || "Age not provided" }}</div>
+          <div style="font-size: 12px;">Address :{{ user.address || "Address not provided" }}</div>
+          <div style="font-size: 12px;">Gender : {{ user.gender }}</div>
+        </div>
+        <div class="col pt-3">
+          <div style="height: 80%;">
+          <p style="font-size: 24px; font-weight: 500;">In breve</p>
+          <p>{{
+            user.description || "No description available"
+          }}</p>
+          </div>
+            <div class="addUser d-flex justify-content-center">
+              <button
+                mat-fab
+                extended
+                color="primary"
+                class="btnUser"
+                (click)="openDialog()"
               >
-              <mat-card-subtitle
-                >Address :
-                {{ user.address || "Address not provided" }}</mat-card-subtitle
-              >
-              <mat-card-subtitle>Gender : {{ user.gender }}</mat-card-subtitle>
-            </mat-card-header>
-          </mat-drawer>
-          <mat-drawer-content class="desc">
-            <mat-card-content>
-              <h2 class="description">Description</h2>
-              {{
-                user.description || "No description available"
-              }}</mat-card-content
-            >
-          </mat-drawer-content>
-        </mat-drawer-container>
-      </mat-drawer-content>
-    </mat-drawer-container>
-  </mat-card>
+                Customize Profile
+              </button>
+            </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
   <mat-card class="container-device-info-user">
     <mat-card-content class="device-info-user">
       <mat-card-title
@@ -83,7 +85,7 @@
       {{ user.description || "No description available" }}</mat-card-content
     >
   </mat-card>
-  <div class="addUser">
+  <!-- <div class="addUser">
     <button
       mat-fab
       extended
@@ -93,32 +95,43 @@
     >
       Customize Profile
     </button>
-  </div>
+  </div> -->
   <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)">
-    <h1>Add Post</h1>
-    <mat-form-field class="title">
-      <mat-label>Title</mat-label>
-      <input matInput type="text" name="title" [(ngModel)]="PostDto.title" />
-    </mat-form-field>
-
-    <mat-form-field class="addPost">
-      <mat-label>Textarea</mat-label>
-      <textarea
-        matInput
-        type="text"
-        name="post"
-        [(ngModel)]="PostDto.post"
-      ></textarea>
-    </mat-form-field>
-    <button
-      class="btnPost"
-      mat-fab
-      extended
-      type="submit"
-      [disabled]="!PostDto.title || !PostDto.post || isSubmitting"
-    >
-      Post
-    </button>
+    <div class="customInput">
+      <div class="py-1 pt-1">
+        <input type="text" name="title" class="input-title-text w-100" placeholder="Write a Title" [(ngModel)]="PostDto.title"
+          style="border: 0;outline: none;">
+      </div>
+      <div class="py-1">
+        <textarea type="text" name="post" class="input-title-text w-100 pt-2" placeholder="Write a Post" [(ngModel)]="PostDto.post"
+          style="height: 40px; border: 0;outline: none;border-top: solid 1px #d3caca;"></textarea>
+      </div>
+      <div *ngIf="imagePreview" class="clearImagePreview">
+        <a mat-mini-fab class="button">
+          <mat-icon style="color: white;" (click)="clearImagePreview()">close</mat-icon>
+          <span class="text">Clear Image</span>
+        </a>
+      </div>
+      <div *ngIf="imagePreview" class="image-previewPost">
+        <img [src]="imagePreview" alt="Image Preview" />
+      </div>
+      <div class="w-100 d-flex justify-content-end align-items-end">
+        <div style="height: 28.8px;">
+        <button class="mb-2" style="height: 24px; width: 100px;" mat-fab extended color="primary" type="submit"
+          [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
+          Post
+        </button>
+      </div>
+        <div class="ps-2">
+          <a mat-fab extended class="custom-file-upload" [disabled]="isSubmitting">
+            <label class="custom-file-upload" mat-fab extended>
+              <input type="file" (change)="renderImagePreview($event)" accept="image/*" />
+              <span class="material-symbols-outlined">image</span>
+            </label>
+          </a>
+        </div>
+      </div>
+    </div>
   </form>
   <h2 class="no-post">{{ nopost }}</h2>
   <div class="post" *ngFor="let posts of post">
