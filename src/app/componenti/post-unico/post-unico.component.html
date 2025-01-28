@@ -2,8 +2,8 @@
   <mat-card class="post-card">
     <div class="header row pt-3 ps-3 pb-2">
       <div class="col-11">
-        <div class="user d-flex" style="gap: 6px;">
-          <div class="name" style="font-size: 12px"><p>{{ userName }}   </p></div>
+        <div class="user d-flex pb-1" style="gap: 6px;">
+          <div class="name" style="font-size: 12px"><a class="user-link" (click)="openUserProfile()">{{ userName }}   </a></div>
           <div class="date" style="font-size: 10px;">  {{ post.createdAt | date : "dd/MM/yy, HH:mm"}}</div>
         </div>
         <div class="title" style="font-size: 22px;font-weight: 500;">{{title}}</div>
@@ -35,8 +35,11 @@
       </div>
     </div>
     <div class="py-2 ps-3" style="font-weight: 400; font-size: 16px;">{{body}}</div>
-    <div *ngIf="imagePost" class="image-preview">
-      <img [src]="imagePost" alt="Image Preview" />
+    <div class="image-preview">
+      <div class="image-loading" *ngIf="imageLoading">
+        <mat-spinner diameter="30"></mat-spinner>
+      </div>
+      <img *ngIf="!imageLoading" [src]="imagePost"/>
     </div>
     <div style="border-top: solid 1px #e0e0e0;height: 45px;" class="d-flex align-items-center">
       <!-- <button (click)="openComments()">Comments</button> -->

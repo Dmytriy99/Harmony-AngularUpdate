@@ -38,6 +38,8 @@ export class UsersComponent implements OnInit {
   remainingUsers = 0;
   userDto: UserDto = new UserDto();
   isLoading = false;
+  imageLoading = false
+
   constructor(private userService: userService, private router: Router) {}
   ngOnInit(): void {
     if (token) {
@@ -60,12 +62,14 @@ export class UsersComponent implements OnInit {
   }
 
   getUserImage(userId: string) {
+    this.imageLoading = true
     this.userService.getUserImage(userId).subscribe({
       next: (response: any) => {
         const reader = new FileReader();
         reader.readAsDataURL(response);
         reader.onloadend = () => {
           this.userImage[userId] = reader.result as string;
+          this.imageLoading = false
         };
       },
       error: (error) => {
@@ -148,5 +152,9 @@ export class UsersComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     return throwError(() => new Error('Token expired'));
+  }
+  openUserProfile(userId: any) {
+    this.router.navigate([`users/${userId}`]);
+    
   }
 }

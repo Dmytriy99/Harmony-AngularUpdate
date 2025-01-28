@@ -22,6 +22,7 @@ const routes: Routes = [
         path: 'users/:id',
         canActivate: [isauthGuard],
         component: UserComponent,
+        runGuardsAndResolvers: 'paramsChange'
       },
       {
         path: 'homeUser',
@@ -35,7 +36,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule],
+  
 })
 export class AppRoutingModule {}

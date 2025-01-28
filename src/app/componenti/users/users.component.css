@@ -1,3 +1,48 @@
+.loading-overlay {
+  position: absolute; /* Usa fixed per coprire tutta la viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Assicura che stia sopra a tutto */
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px; /* Diametro del cerchio */
+  height: 75px; /* Diametro del cerchio */
+  overflow: hidden;
+  border-radius: 50%; /* Crea il cerchio */
+  background-color: rgb(197, 197, 197); /* Colore di sfondo, nel caso l'immagine non venga caricata */
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Adatta l'immagine al contenitore senza deformarla */
+}
+
+.user-link {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-link:hover {
+  color: #866ec0;
+  text-decoration: underline;
+}
+
+.image-preview:hover {
+  border:2px solid #866ec0;
+}
+
 .input {
   border: 2px solid transparent;
   width: 40%;
@@ -22,98 +67,6 @@
   width: 35%;
 }
 
-.mat-form-field {
-  border-radius: 25px;
-  background-color: #f5f5f5;
-}
-
-.mat-form-field-underline {
-  display: none;
-}
-
-.mat-input-element {
-  font-size: 14px;
-  color: #333;
-}
-
-.mat-form-field.mat-focused .mat-form-field-outline {
-  color: #007bff;
-}
-
-.container {
-  margin-bottom: 40px;
-}
-.example-container {
-  background-color: rgb(235, 232, 232);
-}
-.photo-border {
-  margin-left: 10px;
-  background-color: rgb(235, 232, 232);
-}
-.card-info {
-  margin-left: 20px;
-}
-mat-card {
-  margin: 0 auto;
-  width: 65%;
-  height: 135px;
-  border-radius: 15px;
-}
-mat-drawer-container {
-  height: 135px;
-}
-mat-drawer {
-  width: 100px;
-  height: 130px;
-  border-right: 0px;
-  margin-top: 12px;
-}
-
-.photo-container {
-  width: 75px;
-  height: 75px;
-  overflow: hidden;
-  align-items: center;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-}
-
-.photo {
-  width: 100%;
-  height: auto;
-}
-.cerchio {
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  margin-left: 10px;
-}
-
-.search {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.back {
-  margin-left: 10px;
-}
-
-/* button {
-  background-color: rgb(163, 122, 151);
-  height: 32px;
-  margin-left: 20px;
-} */
-
-mat-radio-group {
-  margin-right: 10px;
-}
-
-mat-card-title {
-  display: flex;
-  align-items: center;
-}
 .button-paginator {
   width: 100%;
   text-align: center;
@@ -127,49 +80,4 @@ mat-card-title {
   width: 200px;
   margin: 0 auto;
   margin-top: 10px;
-}
-@media only screen and (max-width: 862px) {
-  mat-card {
-    width: 100%;
-    height: 155px;
-  }
-  mat-drawer-container {
-    height: 155px;
-  }
-  mat-card-title {
-    font-size: 17px;
-  }
-  mat-card-subtitle {
-    font-size: 11px;
-  }
-
-  .custom-search-bar {
-    width: 90%;
-  }
-  .back {
-    margin-bottom: 25px;
-  }
-
-  mat-radio-group {
-    margin-right: 8px;
-  }
-}
-.loading-overlay {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-@media only screen and (max-width: 580px) {
-  mat-radio-group {
-    margin-left: 60px;
-    margin-right: 60px;
-  }
-}
-@media only screen and (max-width: 451px) {
-  mat-radio-group {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
 }

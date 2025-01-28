@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import heic2any from "heic2any";
 import { forkJoin } from 'rxjs';
 import { postService } from 'src/app/service/postService/post.service';
@@ -23,6 +24,7 @@ export class PostUnicoComponent implements OnInit {
   nameLikes!: string;
   @Input() logUserId!: string;
   imagePost: any;
+  imageLoading: boolean = false
 
   //@Output() isCommentVisible = new EventEmitter<boolean>();
 
@@ -30,7 +32,8 @@ export class PostUnicoComponent implements OnInit {
 
   constructor(
     private userService: userService,
-    private postService: postService
+    private postService: postService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     //console.log(this.post)
@@ -66,9 +69,11 @@ export class PostUnicoComponent implements OnInit {
       this.postService.getPostImage(this.post.imageId, this.iDpost)
         .subscribe((response: Blob) => {
           // Controllo del tipo MIME
+          this.imageLoading = true
           if (response.type === "image/heic") {
             this.convertHeicToBase64(response).then((convertedImage: string) => {
               this.imagePost = convertedImage;
+              this.imageLoading = false
             }).catch(error => {
               console.error("Errore nella conversione dell'immagine HEIC:", error);
               this.imagePost = null; // Gestisci eventuali errori
@@ -76,6 +81,7 @@ export class PostUnicoComponent implements OnInit {
           } else {
             this.convertBlobToBase64(response).then((base64: string) => {
               this.imagePost = base64;
+              this.imageLoading = false
             }).catch(error => {
               console.error("Errore nella conversione del blob:", error);
             });
@@ -86,6 +92,7 @@ export class PostUnicoComponent implements OnInit {
   
   // Funzione per convertire HEIC in Base64
   private async convertHeicToBase64(heicBlob: Blob): Promise<string> {
+    this.imageLoading = true
     try {
       const convertedBlob = await heic2any({
         blob: heicBlob,
@@ -100,6 +107,7 @@ export class PostUnicoComponent implements OnInit {
   
   // Funzione per convertire qualsiasi Blob in Base64
   private convertBlobToBase64(blob: Blob): Promise<string> {
+    this.imageLoading = true
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
@@ -216,5 +224,8 @@ export class PostUnicoComponent implements OnInit {
   }
   openComments(){
     this.isCommentVisible = !this.isCommentVisible; // Alterna visibilità
+  }
+  openUserProfile(){
+    this.router.navigate([`users/${this.post.userId}`])
   }
 }

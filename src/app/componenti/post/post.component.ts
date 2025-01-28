@@ -52,8 +52,8 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
 
 
 
-    //this.getAllPost();
-    this.getAllPostObs();
+    this.getAllPost();
+    // this.getAllPostObs();
     this.getLogUser();
   }
   getLogUser() {
@@ -61,35 +61,35 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
       this.logUserId = data._id;
     });
   }
-  getAllPostObs() {
-    this.Allpost$ = this.loadPostsSubject.pipe(
-      switchMap(() => {
-        this.isLoading = true;
-        return this.postService.getPost(this.page, this.limit).pipe(
-          tap((data: any) => {
-            this.totalPosts = data.totalPosts;
-            this.isLoading = false;
-            this.Allpost = data.post;
-            console.log(this.Allpost);
-            this.calculateRemainingPosts();
-          })
-        );
-      })
-    );
-  }
-
-  // getAllPost() {
-  //   this.isLoading = true;
-  //   this.postService
-  //     .getPost(this.page, this.limit)
-  //     .pipe(catchError((error) => this.handleError(error)))
-  //     .subscribe((data: any) => {
-  //       this.Allpost = data.post;
-  //       this.totalPosts = data.totalPosts;
-  //       this.calculateRemainingPosts();
-  //       this.isLoading = false;
-  //     });
+  // getAllPostObs() {
+  //   this.Allpost$ = this.loadPostsSubject.pipe(
+  //     switchMap(() => {
+  //       this.isLoading = true;
+  //       return this.postService.getPost(this.page, this.limit).pipe(
+  //         tap((data: any) => {
+  //           this.totalPosts = data.totalPosts;
+  //           this.isLoading = false;
+  //           this.Allpost = data.post;
+  //           console.log(this.Allpost);
+  //           this.calculateRemainingPosts();
+  //         })
+  //       );
+  //     })
+  //   );
   // }
+
+  getAllPost() {
+    this.isLoading = true;
+    this.postService
+      .getPost(this.page, this.limit)
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe((data: any) => {
+        this.Allpost = data.post;
+        this.totalPosts = data.totalPosts;
+        this.calculateRemainingPosts();
+        this.isLoading = false;
+      });
+  }
 
   // Il limite di post caricati inizialmente è 10 e poi tramite pulsante ne carica di 10 in 10
   loadMorePosts(): void {
@@ -147,7 +147,7 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
         this.calculateRemainingPosts();
         if (!this.PostDto.search) {
           this.page = 1;
-          this.getAllPostObs();
+          this.getAllPost();
         }
       });
   }

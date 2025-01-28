@@ -21,38 +21,46 @@ export class UserComponent implements OnInit {
   photoMan2: string =
     'https://media.istockphoto.com/id/1349231567/it/vettoriale/personaggio-in-stile-anime-del-giovane-uomo-anime-ragazzo-vettoriale.jpg?s=612x612&w=0&k=20&c=og5UTl4H2bTTuqLDA9cHoYikk9pzYYgHxR1ZhWaopS4=';
   userImage: { [key: string]: string } = {};
+  imageLoading = false
   constructor(
     private route: ActivatedRoute,
     private postService: postService,
     private userService: userService
   ) {}
   ngOnInit(): void {
-    if (this.idUser) {
-      this.userService.getUserById(this.idUser).subscribe((data: any) => {
-        this.user = data;
-        if (this.user.imageId) {
-          this.getUserImage(this.idUser);
-        } else {
-          this.userImage[this.idUser] =
-            this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
-        }
-      });
-      this.postService.getPostbyId(this.idUser).subscribe((data: any) => {
-        if (data.length === 0) {
-          this.noPost = 'There are no Posts yet';
-        } else {
-          this.post = data;
-        }
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      this.idUser = params.get('id')!;
+      this.post = []
+      if (this.idUser) {
+        this.userService.getUserById(this.idUser).subscribe((data: any) => {
+          this.user = data;
+          console.log(this.user)
+          if (this.user.imageId) {
+            this.getUserImage(this.user.imageId);
+          } else {
+            this.userImage[this.idUser] =
+              this.user.gender === 'female' ? this.photoGirl2 : this.photoMan2;
+          }
+        });
+        this.postService.getPostbyId(this.idUser).subscribe((data: any) => {
+          if (data.length === 0) {
+            this.noPost = 'There are no Posts yet';
+          } else {
+            this.post = data;
+          }
+        });
+      }
+  });
   }
   getUserImage(userId: string) {
+    this.imageLoading = true
     this.userService.getUserImage(userId).subscribe({
       next: (response: Blob) => {
         const reader = new FileReader();
         reader.readAsDataURL(response);
         reader.onloadend = () => {
           this.userImage[userId] = reader.result as string;
+          this.imageLoading = false
         };
       },
       error: (error) => {

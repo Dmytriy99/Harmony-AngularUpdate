@@ -33,6 +33,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTooltipModule} from '@angular/material/tooltip';
+
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -46,7 +49,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         UserComponent,
         UsersComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+     imports: [BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         FormsModule,
@@ -64,5 +68,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatRadioModule,
         MatBadgeModule,
         MatTooltipModule,
-        MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        MatProgressSpinnerModule,
+        ScrollingModule
+            ], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

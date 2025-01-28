@@ -1,5 +1,5 @@
 <form
-  class="search pb-2"
+  class="search pb-2 pt-1"
   #SearchUserform="ngForm"
   (ngSubmit)="onSubmit(SearchUserform)"
 >
@@ -25,19 +25,24 @@
   <button class="back" mat-fab extended color="primary" (click)="back()">
     Go Back
   </button> -->
-  <input class="input" style="width: 100%;" placeholder="Persone che potresti conoscere">
+  <input class="input" style="width: 98%;" placeholder="Persone che potresti conoscere">
 </form>
 
 <div class="loading-overlay" *ngIf="isLoading">
-  <mat-spinner diameter="50"></mat-spinner>
+  <mat-spinner diameter="40"></mat-spinner>
 </div>
-<div class="card my-2" style="height: 100px;box-sizing: border-box; background-color: #f9f6ff; " *ngFor="let user of users">
+<div class="card my-2" style="height: 100px;box-sizing: border-box; background-color: #f9f6ff; border-radius: 15px;width: 98%;" *ngFor="let user of users">
   <div class="row h-100" style="align-items: center;">
     <div class="col-4">
       <div class="ps-2">
-        <div class="photo-container">
-          <img class="photo" [src]="userImage[user.imageId] || userImage[user._id]" />
-        </div>
+        <a style="cursor: pointer;" (click)="openUserProfile(user._id)" routerLinkActive="active">
+          <div class="image-preview">
+            <div *ngIf="imageLoading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </div>
+            <img *ngIf="!imageLoading" [src]="userImage[user.imageId] || userImage[user._id]" />
+          </div>
+        </a>
       </div>
     </div>
     
@@ -45,18 +50,18 @@
       <!-- <div class="row g-0"> -->
       <div>
         <div class="d-flex align-items-center ">
-          <span>{{ user.name }}</span>
+          <span><a class="user-link"(click)="openUserProfile(user._id)">{{ user.name }}</a></span>
           <span class="ms-2" style="display: inline-block; height: 7px; width: 7px; border-radius: 50%;" [ngStyle]="{
                     background: user.status === 'online' ? 'green' : 'red'
                   }"></span>
         </div>
-        <div style="font-size: 10px;">{{user.email}}</div>
+        <a class="user-link" (click)="openUserProfile(user._id)"><div style="font-size: 10px;">{{user.email}}</div></a>
       </div>
-      <div class="d-flex justify-content-end align-items-end pt-2 pe-2">
+      <!-- <div class="d-flex justify-content-end align-items-end pt-2 pe-2">
         <button style="height: 22px; background-color: #866ec0; " mat-fab extended color="primary" type="submit">
         Apri Profilo
       </button>
-      </div>
+      </div> -->
     </div>
   </div>
   <!-- <mat-card class="container">
