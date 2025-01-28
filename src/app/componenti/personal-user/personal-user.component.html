@@ -1,10 +1,10 @@
 <div class="loading-overlay" *ngIf="isLoading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
-<div class="row p-0">
-  <div class="col-9 " *ngIf="user">
+<div class="row p-3 h-100" style="overflow: auto;">
+  <div class="col-9 py-2" *ngIf="user">
     <div class="d-flex justify-content-center pb-4">
-      <mat-card class="p-3" style="border-radius: 15px; width: 100%; background-color: #ede8f6;">
+      <mat-card class="p-3" style="border-radius: 15px; width: 98%; background-color: #ede8f6;">
         <div class="row h-100">
           <div class="col-5 d-flex justify-content-center p-2">
             <div class="ps-2">
@@ -88,9 +88,9 @@
       <app-post-unico [post]="posts" (postDeleted)="onPostDeleted()"></app-post-unico>
     </div>
   </div>
-  <div *ngIf="user" class="user-nav col-3 pe-0"
+  <div *ngIf="user" class="user-nav col-3 p-0"
     style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
-    <div class="p-3  h-100" style="overflow-y: auto;">
+    <div class="p-3 pe-1 h-100" style="overflow-y: auto; overflow-x: hidden;">
       <app-users></app-users>
     </div>
   </div>

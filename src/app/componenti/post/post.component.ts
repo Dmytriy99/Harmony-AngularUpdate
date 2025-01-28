@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AddPostDto, Post } from 'src/app/modelli/interface';
 import { NgForm } from '@angular/forms';
 import { postService } from 'src/app/service/postService/post.service';
 import {
   BehaviorSubject,
   catchError,
-  map,
   Observable,
-  switchMap,
-  tap,
   throwError,
 } from 'rxjs';
 import { Router } from '@angular/router';
@@ -21,6 +18,7 @@ import { userService } from 'src/app/service/userService/user.service';
     standalone: false
 })
 export class PostComponent implements OnInit {
+  @ViewChild('postContainer', { static: true }) postContainer!: ElementRef;
   constructor(
     private postService: postService,
     private router: Router,
@@ -40,21 +38,18 @@ export class PostComponent implements OnInit {
   isLoading = false;
   logUserId!: string;
   imagePreview!: any
+  isLoadingNewPost: any = false
   
 
   Allpost$!: Observable<Post[]>;
   loadPostsSubject = new BehaviorSubject<void>(undefined);
   ngOnInit(): void {
-
-console.log(Date.parse("2019-01-01"),
-Date.parse("2019-01-01T00:00:00.000Z"),
-Date.parse("2019-01-01T00:00:00.000+00:00"))
-
-
-
     this.getAllPost();
     // this.getAllPostObs();
     this.getLogUser();
+    this.postContainer.nativeElement.addEventListener('scroll', () => {
+      this.onScroll();
+    });
   }
   getLogUser() {
     this.userService.getUserInfo().subscribe((data: any) => {
@@ -91,13 +86,27 @@ Date.parse("2019-01-01T00:00:00.000+00:00"))
       });
   }
 
+  onScroll(): void {
+    const container = this.postContainer.nativeElement;
+
+    // Controlla se lo scroll è arrivato in fondo
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+      if (this.remainingPosts > 0) {
+        this.loadMorePosts(); // Scatena il caricamento di altri post
+      }
+    }
+  }
+
   // Il limite di post caricati inizialmente è 10 e poi tramite pulsante ne carica di 10 in 10
   loadMorePosts(): void {
+    this.isLoadingNewPost = true
     this.page++;
     this.postService.getPost(this.page, this.limit).subscribe((data: any) => {
       this.Allpost = [...this.Allpost, ...data.post];
       this.totalPosts = data.totalPosts;
+      console.log(this.Allpost);
       this.calculateRemainingPosts();
+      this.isLoadingNewPost= false
     });
   }
 

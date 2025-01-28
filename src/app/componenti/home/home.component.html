@@ -90,28 +90,23 @@
           <mat-icon>post_add</mat-icon>
           <span class="span-navBar">Posts</span>
         </li>
-        <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
+        <!-- <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
           <mat-icon>group</mat-icon>
           <span class="span-navBar">Users</span>
-        </li>
+        </li> -->
       </ul>
     </div>
     </div>
     <div class="content-wrapper col-10 p-0" style="height: calc(100vh - 64px); overflow: hidden;">
       <div class="h-100 p-2">
         <mat-card class="h-100" style="background-color: #F9FAFB;border-radius: 10px;">
-          <div class="px-4 py-3" style="overflow-y: auto;">
+          <div class="px-1 h-100">
             <router-outlet></router-outlet>
           </div>
         </mat-card>
       </div>
-      <!-- <div class="main-content h-100">
-        <mat-card class="card-scroll">
-          <div class="card-content">
-            <router-outlet></router-outlet>
-          </div>
-        </mat-card>
-      </div> -->
+
+      
       <nav class="bottom-nav">
         <a class="mat-list-item" routerLink="/homeUser" routerLinkActive="active-link">
           <mat-icon>account_circle</mat-icon>
@@ -121,10 +116,10 @@
           <mat-icon>post_add</mat-icon>
           <span>Posts</span>
         </a>
-        <a class="mat-list-item" routerLink="/users" routerLinkActive="active-link">
+        <!-- <a class="mat-list-item" routerLink="/users" routerLinkActive="active-link">
           <mat-icon>group</mat-icon>
           <span>Users</span>
-        </a>
+        </a> -->
       </nav>
     </div>
     

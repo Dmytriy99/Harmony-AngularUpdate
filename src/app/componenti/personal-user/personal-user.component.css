@@ -5,7 +5,6 @@
 }
 
 ::-webkit-scrollbar{
-  background-color: #e6ddee;
   width: 10px;
 }
 
@@ -189,8 +188,8 @@ background-color: #faf9f9
   text-align: center;
 }
 .post {
-  margin-top: 30px;
-  width: 90%;
+  margin-top: 15px;
+  width: 98%;
   margin: 0 auto;
 }
 
@@ -260,7 +259,6 @@ h2 {
 }
 .no-post {
   font-size: 25px;
-  margin-top: 30px;
   text-align: center;
 }
 /* .add {

@@ -74,7 +74,7 @@
     <app-post-unico [post]="posts"></app-post-unico>
   </div>
 </div> -->
-<div class="row p-0">
+<div class="row p-3 h-100" style="overflow: auto;">
   <div class="col-9 " *ngIf="user">
     <div class="d-flex justify-content-center pb-4">
       <mat-card class="p-3" style="border-radius: 15px; width: 100%; background-color: #ede8f6;">
@@ -118,9 +118,9 @@
       <app-post-unico *ngIf="posts" [post]="posts"></app-post-unico>
     </div>
   </div>
-  <div *ngIf="user" class="user-nav col-3 pe-0"
+  <div *ngIf="user" class="user-nav col-3 p-0"
     style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
-    <div class="p-2  h-100" style="overflow-y: auto;">
+    <div class="p-3 pe-1  h-100" style="overflow-y: auto; overflow-x: hidden;">
       <app-users></app-users>
     </div>
   </div>
