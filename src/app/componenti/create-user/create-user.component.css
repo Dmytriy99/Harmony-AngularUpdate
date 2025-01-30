@@ -1,93 +1,85 @@
-.custom-file-upload {
-  display: inline-block;
-  cursor: pointer;
-  font-size: 16px;
-  color: #ffffff;
-  background-color: rgb(163, 122, 151);
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  transition: background-color 0.3s;
-  width: 60%;
-  margin: 0 auto;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.custom-file-upload:hover {
-  background-color: rgb(134, 80, 118);
-}
-
-.custom-file-upload input[type="file"] {
-  display: none;
-}
-
-mat-form-field {
-  margin-top: 8px;
-  margin: 0 auto;
-  flex-direction: column;
+.title {
   display: flex;
-  width: 80%;
+    font-family: serif;
+    font-size: 30px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
 }
-form {
-  width: 650px;
+
+::ng-deep .mdc-dialog__surface{
+  border-radius: 20px;
+}
+
+.secondInfo{
+  /* font-size: 14px; */
+  font-size: 0.48em;
+  color: rgb(88, 88, 88);
+}
+
+.image-preview {
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px; /* Diametro del cerchio */
+  height: 300px; /* Diametro del cerchio */
+  overflow: hidden;
+  border-radius: 50%; /* Crea il cerchio */
+  background-color: rgb(197, 197, 197); /* Colore di sfondo, nel caso l'immagine non venga caricata */
 }
 
-.adduser {
-  margin: 0 auto;
-  width: 50%;
-  background-color: rgb(163, 122, 151);
-  height: 32px;
-}
-button {
-  margin: 0 auto;
+.image-preview:hover {
+  border: 2px solid #866ec0;
 }
 
-h2 {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.error {
-  font-weight: 400;
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Adatta l'immagine al contenitore senza deformarla */
 }
 
-.description {
-  height: 150px;
-}
-
-.dialog-content {
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 10px;
-}
-.fixed-height-textarea {
-  min-height: 60px;
-  overflow-y: auto;
-}
-.close {
-  margin: 0 auto;
-  width: 80%;
-}
-.closebtn {
-  height: 30px;
-  background-color: lightgray;
-}
-@media only screen and (max-width: 880px) {
-  form {
-    width: 280px;
+.input-title-text{
+  background-color: #faf9f9;
+  border-radius: 10px;
   }
-  .dialog-content {
-    padding: 5px;
+  
+  .input-title-text:hover {
+    /* background-color: white; */
+    background-color: #ececec;
   }
-  h2 {
-    font-size: 13px;
-    margin: 0 auto;
-    text-align: center;
+  .input-title-text:focus {
+    background-color: #ececec;
   }
-}
+
+  .addUser {
+    width: 100%;
+    height: 30%;
+    align-items: end;
+    border-top: 1px solid gray;
+  }
+
+  .btnUser {
+    width: 200px;
+    height: 35px;
+    background-color:  #866ec0;;
+  }
+
+  .icon-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente */
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-overlay mat-icon {
+    font-size: 24px;
+  }

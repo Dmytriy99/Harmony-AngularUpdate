@@ -1,12 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { httpOption, urlUser } from '../api.export';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class userService {
   constructor(private http: HttpClient) {}
+
+  private refreshUserSubject = new BehaviorSubject<boolean>(false);
+  refreshUser$ = this.refreshUserSubject.asObservable();
+
+  triggerUserRefresh() {
+    this.refreshUserSubject.next(true);
+  }
+
+
   updateUserInfo(body: any) {
     return this.http.patch(`${urlUser}/updateDetails`, body, httpOption);
   }

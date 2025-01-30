@@ -39,7 +39,13 @@ export class PostComponent implements OnInit {
   logUserId!: string;
   imagePreview!: any
   isLoadingNewPost: any = false
+  userImage!: any
+  imageLoading= false
   
+  photoGirl2: string =
+    'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
+  photoMan2: string =
+    'https://media.istockphoto.com/id/1349231567/it/vettoriale/personaggio-in-stile-anime-del-giovane-uomo-anime-ragazzo-vettoriale.jpg?s=612x612&w=0&k=20&c=og5UTl4H2bTTuqLDA9cHoYikk9pzYYgHxR1ZhWaopS4=';
 
   Allpost$!: Observable<Post[]>;
   loadPostsSubject = new BehaviorSubject<void>(undefined);
@@ -54,8 +60,27 @@ export class PostComponent implements OnInit {
   getLogUser() {
     this.userService.getUserInfo().subscribe((data: any) => {
       this.logUserId = data._id;
-    });
+      this.userImage = data.imageId
+      if (this.userImage) {
+        this.imageLoading = true
+        this.userService
+          .getUserImage(this.userImage)
+          .subscribe((response: Blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              this.userImage = reader.result;
+            };
+            this.imageLoading = false
+          });
+      } else {
+        this.userImage =
+          data.gender === 'female' ? this.photoGirl2 : this.photoMan2;
+      }
+    }
+    );
   }
+
   // getAllPostObs() {
   //   this.Allpost$ = this.loadPostsSubject.pipe(
   //     switchMap(() => {

@@ -25,7 +25,7 @@
   <button class="back" mat-fab extended color="primary" (click)="back()">
     Go Back
   </button> -->
-  <input class="input" style="width: 98%;" placeholder="Persone che potresti conoscere">
+  <input [(ngModel)]="userDto.search" type="text" name="search" class="input" style="width: 98%;" placeholder="Persone che potresti conoscere">
 </form>
 
 <div class="loading-overlay" *ngIf="isLoading">

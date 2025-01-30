@@ -6,7 +6,27 @@ colore terziario #c5cae9
 
 colore  */
 
+.col-2-lg-custom{
+  flex: 0 0 19%; /* Circa metà tra col-2 (16.6%) e col-3 (25%) */
+    max-width: 19%;
+}
 
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Diametro del cerchio */
+  height: 40px; /* Diametro del cerchio */
+  overflow: hidden;
+  border-radius: 50%; /* Crea il cerchio */
+  background-color: rgb(197, 197, 197); /* Colore di sfondo, nel caso l'immagine non venga caricata */
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Adatta l'immagine al contenitore senza deformarla */
+}
 
 
 body {
@@ -60,7 +80,7 @@ mat-toolbar {
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s;
-  height: 43.5px;
+  height: 52px;
   border-radius:18px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -73,7 +93,6 @@ mat-toolbar {
 
 .span-navBar{
   color: rgb(0, 0, 0);
-  padding-left: 22px;
 }
 .mat-list-item mat-icon {
   color: rgb(0, 0, 0);

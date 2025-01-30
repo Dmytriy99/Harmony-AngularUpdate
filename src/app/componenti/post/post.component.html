@@ -7,14 +7,27 @@
       <input class="search-Bar" placeholder="Cerca Post dal titolo">
     </form>
     <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
-      <div class="customInput">
+      <div class="customInput row">
+        <div class="col-2 d-flex pt-1 align-items-start justify-content-center">
+          <div class="ps-1">
+            <a style="cursor: pointer;" routerLinkActive="active">
+              <div class="image-preview-user-log">
+                <div *ngIf="imageLoading">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+                <img *ngIf="!imageLoading" [src]="userImage"/>
+              </div>
+            </a>
+          </div>
+        </div>
+      <div class="col">
         <div class="py-1 pt-1">
-          <input type="text" name="title" class="input-title-text w-100" placeholder="Write a Title" [(ngModel)]="PostDto.title"
-            style="border: 0;outline: none;">
+          <input type="text" name="title" class="input-title-text w-100 ps-3" placeholder="Write a Title"
+            [(ngModel)]="PostDto.title" style="border: 0;outline: none; height: 28px;">
         </div>
         <div class="py-1">
-          <textarea type="text" name="post" class="input-title-text w-100 pt-2" placeholder="Write a Post" [(ngModel)]="PostDto.post"
-            style="height: 40px; border: 0;outline: none;border-top: solid 1px #d3caca;"></textarea>
+          <textarea type="text" name="post" class="input-title-text w-100 pt-2 ps-3" placeholder="Write a Post"
+            [(ngModel)]="PostDto.post" style="height: 40px; border: 0;outline: none;"></textarea>
         </div>
         <div *ngIf="imagePreview" class="clearImagePreview">
           <a mat-mini-fab class="button">
@@ -25,22 +38,24 @@
         <div *ngIf="imagePreview" class="image-preview">
           <img [src]="imagePreview" alt="Image Preview" />
         </div>
-        <div class="w-100 d-flex justify-content-end align-items-end">
-          <div style="height: 28.8px;">
-          <button class="mb-2" style="height: 24px; width: 100px;" mat-fab extended color="primary" type="submit"
-            [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
-            Post
-          </button>
-        </div>
+        <div class="w-100 d-flex justify-content-end align-items-end"
+          style="height: 40px; border-top: 2px solid lightgray;">
+          <div style="height: 32.8px;">
+            <button class="mb-2" style="height: 28px; width: 100px; border-radius: 10px;" mat-fab extended color="primary" type="submit"
+              [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
+              Post
+            </button>
+          </div>
           <div class="ps-2">
             <a mat-fab extended class="custom-file-upload" [disabled]="isSubmitting">
               <label class="custom-file-upload" mat-fab extended>
                 <input type="file" (change)="renderImagePreview($event)" accept="image/*" />
-                <span class="material-symbols-outlined">image</span>
+                <span class="material-symbols-outlined" style="font-size: 28px;">image</span>
               </label>
             </a>
           </div>
         </div>
+      </div> 
       </div>
     </form>
     <div class="post" *ngFor="let post of Allpost" style="border-radius: 10px;">
@@ -59,8 +74,7 @@
       <mat-spinner diameter="30"></mat-spinner>
     </div>
   </div>
-  <div class="user-nav col-3 p-0"
-    style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px;">
+  <div class="user-nav col-3 p-0" style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px;">
     <div class="p-3 pe-1 h-100" style="overflow-y: auto;overflow-x: hidden;">
       <app-users></app-users>
     </div>

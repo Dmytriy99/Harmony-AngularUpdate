@@ -79,25 +79,35 @@
 </mat-toolbar>
 <div class="fluid w-100 m-0 p-0" style=" overflow-y: hidden;">
   <div class="row g-0">
-    <div class="col-2 p-2">
-    <div class="h-100" style="background-color: #d8c5e9; border-radius: 20px; padding: 10px;">
-      <ul class="mat-list pt-2">
-        <li class="mat-list-item" routerLink="/homeUser" routerLinkActive="active">
-          <mat-icon>account_circle</mat-icon>
-          <span class="span-navBar">Home</span>
-        </li>
-        <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
-          <mat-icon>post_add</mat-icon>
-          <span class="span-navBar">Posts</span>
-        </li>
-        <!-- <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
+    <div class="col-2-lg-custom p-2">
+      <div class="h-100" style="background-color: #d8c5e9; border-radius: 20px; padding: 10px;">
+        <ul class="mat-list pt-2">
+          <li class="mat-list-item" routerLink="/homeUser" routerLinkActive="active">
+            <!-- <mat-icon>account_circle</mat-icon> -->
+            <div class="col-3 d-flex align-items-center justify-content-center">
+              <div class="image-preview">
+                <div *ngIf="imageLoading">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+                <img *ngIf="!imageLoading" [src]="userImage" />
+              </div>
+            </div>
+            <span class="span-navBar col">{{userName}}</span>
+          </li>
+          <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
+            <div class="col-3 d-flex justify-content-center">
+              <mat-icon style="font-size: 30px;height: 30px;">post_add</mat-icon>
+            </div>
+            <span class="span-navBar col">Home</span>
+          </li>
+          <!-- <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
           <mat-icon>group</mat-icon>
           <span class="span-navBar">Users</span>
         </li> -->
-      </ul>
+        </ul>
+      </div>
     </div>
-    </div>
-    <div class="content-wrapper col-10 p-0" style="height: calc(100vh - 64px); overflow: hidden;">
+    <div class="content-wrapper col p-0" style="height: calc(100vh - 64px); overflow: hidden;">
       <div class="h-100 p-2">
         <mat-card class="h-100" style="background-color: #F9FAFB;border-radius: 10px;">
           <div class="px-1 h-100">
@@ -106,7 +116,7 @@
         </mat-card>
       </div>
 
-      
+
       <nav class="bottom-nav">
         <a class="mat-list-item" routerLink="/homeUser" routerLinkActive="active-link">
           <mat-icon>account_circle</mat-icon>
@@ -122,6 +132,6 @@
         </a> -->
       </nav>
     </div>
-    
+
   </div>
 </div>

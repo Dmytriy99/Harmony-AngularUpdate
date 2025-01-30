@@ -20,8 +20,11 @@ export class LoginComponent {
     this.isLoading = true;
     this.authservice.login(this.userDto).subscribe({
       next: (data: any) => {
+        console.log(data)
         localStorage.setItem('token', data.token);
         localStorage.setItem('isLog', 'true');
+        localStorage.setItem('user', data.user._id);
+        localStorage.setItem('userImage', data.user.imageId);
         this.route.navigate(['/homeUser']);
         this.isLoading = false;
       },

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { AddPostDto, Post, User } from 'src/app/modelli/interface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { postService } from 'src/app/service/postService/post.service';
 
 import { userService } from 'src/app/service/userService/user.service';
@@ -87,16 +87,26 @@ export class PersonalUserComponent implements OnInit {
   getAllPost() {
     this.postService.getPostbyId(this.userId).subscribe((data: any) => {
       if (data.length === 0) {
-        this.nopost = 'There are no Posts yet';
+        this.nopost = 'Non ci sono Post disponibili, Posta qualcosa!';
       } else {
         this.post = data;
       }
     });
   }
   openDialog() {
-    const opendialog = this.dialog.open(CreateUserComponent);
+    const dialogConfig: MatDialogConfig<any> = {
+      width: "60%",
+      minHeight: "75%",
+      maxHeight: "90%",
+      data: {
+        user: this.user,
+        userImage: this.userImage
+      }
+    };
+    const opendialog = this.dialog.open(CreateUserComponent,dialogConfig);
     opendialog.afterClosed().subscribe((result: any) => {
-      location.reload();
+      this.userService.triggerUserRefresh()
+      this.getPersonalUserInfo()
     });
   }
 
@@ -177,4 +187,5 @@ export class PersonalUserComponent implements OnInit {
     fileInput.value = ''; // Resetta il valore del file input
   }
 }
+
 }

@@ -108,10 +108,11 @@ export class UsersComponent implements OnInit {
     if (!form.value.search) {
       this.page = 1;
       this.getAllUser();
-    } else if (this.selectedOption === '1') {
+    } else {
       this.onSearch(form);
-    } else if (this.selectedOption === '2') {
-      this.onSearchEmail(form);
+    // } else if (this.selectedOption === '2') {
+    //   this.onSearchEmail(form);
+    // }
     }
   }
 

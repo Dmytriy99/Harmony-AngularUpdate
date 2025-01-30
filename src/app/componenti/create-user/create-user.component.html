@@ -1,4 +1,4 @@
-<div class="dialog-content">
+<!-- <div class="dialog-content">
   <form #addUserform="ngForm" (ngSubmit)="onSubmit(addUserform)">
     <h2>Customize Profile</h2>
     <label class="custom-file-upload">
@@ -64,4 +64,101 @@
     </div>
     <h2 class="error">{{ textError }}</h2>
   </form>
-</div>
+</div> -->
+<form #addUserform="ngForm" (ngSubmit)="onSubmit(addUserform)"class="d-flex justify-content-center h-100" style="border-radius: 30px;">
+  <mat-card class="p-3" style="width: 100%; background-color: #ede8f6;">
+    <div class="title w-100 pb-2 d-flex justify-content-between align-items-center">
+      <div class="mx-auto">Modifica il Profilo</div>
+      <button  mat-dialog-close mat-icon-button type="button" class="d-flex justify-content-end">
+        <mat-icon style="color: black;font-weight: 600;">arrow_back</mat-icon>
+      </button>
+    </div>
+    <!-- <div class="title w-100 pb-2">
+      <div>Modifica il Profilo</div> 
+      <button class="d-flex justify-content-end" mat-icon-button type="button">
+        <mat-icon style="color: black;">logout</mat-icon>
+      </button>
+   </div> -->
+    <div class="row h-100">
+      <div class="col-5 d-flex justify-content-center p-2">
+        <input type="file" #fileInput (change)="uploadImage($event)" accept="image/*" hidden />
+        <div class="ps-2">
+            <div class="image-preview">
+              <div *ngIf="imageLoading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </div>
+              <img *ngIf="!imageLoading" [src]="userImage" />
+              <div *ngIf="!imageLoading" class="icon-overlay" (click)="triggerFileInput()">
+                <mat-icon>edit</mat-icon>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="user" class="col-7 align-content-center" style="font-size: 32px;font-weight: 500;">
+        <div class="secondInfo py-2 pt-1 w-100">
+          Change Name : <input [(ngModel)]="userDto.name" type="text" name="title" class="input-title-text ps-3" placeholder="{{user.name}} "
+             style="border: 0;outline: none; height: 25px; font-size: 1em;">
+        </div>
+        <!-- <div class="d-flex align-items-center py-3">
+          <span>{{ user.name }}</span>
+          <span class="ms-2" style="display: inline-block; height: 10px; width: 10px; border-radius: 50%;"
+            [ngStyle]="{
+                  background: user.status === 'online' ? 'green' : 'red'
+                }"></span>
+        </div> -->
+        <div class="secondInfo py-2 pt-1">
+          Change Email : <input [(ngModel)]="userDto.email" type="text" name="title" class="input-title-text ps-3" placeholder="{{user.email}}"
+             style="border: 0;outline: none; height: 25px; font-size: 1em;">
+        </div>
+        <div class="secondInfo py-2 pt-1 ">
+          Change Age : <input [(ngModel)]="userDto.age" type="text" name="title" class="input-title-text ps-3" placeholder="{{user.age}}"
+             style="border: 0;outline: none; height: 25px; font-size: 1em;">
+        </div>
+        <div class="secondInfo py-2 pt-1">
+          Change Address : <input [(ngModel)]="userDto.address" type="text" name="title" class="input-title-text ps-3" placeholder="{{user.address}}"
+             style="border: 0;outline: none; height: 25px; font-size: 1em;">
+        </div>
+        <div class="secondInfo py-2 pt-1">
+          Change Gender : <input [(ngModel)]="userDto.gender" type="text" name="title" class="input-title-text ps-3" placeholder="{{user.gender}}"
+             style="border: 0;outline: none; height: 25px; font-size: 1em;">
+        </div>
+        
+        <!-- <mat-form-field class="description">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            type="text"
+            name="description"
+            [(ngModel)]="userDto.description"
+            class="fixed-height-textarea"
+          >{{user.description}}</textarea>
+        </mat-form-field> -->
+        <!-- <div class="secondInfo">{{user.email}}</div>
+        <div class="secondInfo">Age : {{ user.age || "Age not provided" }}</div>
+        <div class="secondInfo">Address :{{ user.address || "Address not provided" }}</div>
+        <div class="secondInfo">Gender : {{ user.gender }}</div> -->
+      </div>
+      <div class="col d-flex align-items-center flex-column pt-3">
+        <div class="py-1 w-100">
+          <textarea type="text" name="post" class="input-title-text w-100 pt-2 ps-3"
+          [(ngModel)]="userDto.description"
+            style="height: 100px; max-height: 200px;  border: 0;outline: none; font-size: 0.99em;"></textarea>
+        </div>
+        <!-- <div style="height: 70%; width: 95%">
+          <p style="font-size: 24px; font-weight: 500;">In breve</p>
+          <p style="text-align: justify;font-size: 0.99em;">{{
+            user.description || "No description available"
+            }}</p>
+        </div> -->
+        <div class="addUser pt-3 d-flex justify-content-center">
+          <div *ngIf="closingDialig">
+            <mat-spinner diameter="30"></mat-spinner>
+          </div>
+          <button [ngStyle]="{'display': closingDialig ? 'none' : 'inline-block'}"  mat-fab extended color="primary" class="btnUser" (click)="openDialog()">
+            Customize Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</form>
