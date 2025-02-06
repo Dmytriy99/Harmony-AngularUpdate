@@ -2,7 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import heic2any from "heic2any";
 import { forkJoin } from 'rxjs';
+import { io } from 'socket.io-client';
 import { postService } from 'src/app/service/postService/post.service';
+import { SoketService } from 'src/app/service/soketService/soket.service';
 
 import { userService } from 'src/app/service/userService/user.service';
 @Component({
@@ -30,36 +32,39 @@ export class PostUnicoComponent implements OnInit {
 
   isCommentVisible: boolean = false;
 
+  socket: any
   constructor(
     private userService: userService,
     private postService: postService,
-    private router: Router
+    private router: Router,
+    private soketService: SoketService
   ) {}
   ngOnInit(): void {
     //console.log(this.post)
     if (this.post) {
       this.getPost();
       this.getUserInfo();
+      this.setupSocketConnection()
       //this.getLogUser();
       //this.getNameLikes();
     }
   }
-  // getPost() {
-  //   this.title = this.post.title;
-  //   this.body = this.post.post;
-  //   this.iDpost = this.post._id;
-  //   if (this.post.imageId) {
-  //     this.postService.getPostImage(this.post.imageId,this.iDpost)
-  //       .subscribe((response: Blob) => {
-  //         const reader = new FileReader();
-  //         reader.readAsDataURL(response);
-  //         reader.onloadend = () => {
-  //           this.imagePost = reader.result;
-  //         };
-  //       });
-  //   }
-  // }
+  setupSocketConnection() {
+    const socket = this.soketService.getSocket();
 
+    socket.on('Like', (like: any) => {
+      if (this.post._id === like.postId) {
+        console.log('Nuovo Like Ricevuto:', like);
+        this.post.likes = like.likes;
+      }
+    }); 
+      // Quando un post viene eliminat);
+    socket.on('newCommentCount', (comment: any) => {
+      if (this.post._id === comment.postId) {
+        console.log('newCommentCount:', comment);
+      this.post.commentCount = comment.commentCount;
+    }}); 
+  }
   getPost() {
     this.title = this.post.title;
     this.body = this.post.post;
@@ -125,15 +130,61 @@ export class PostUnicoComponent implements OnInit {
     if (this.post.userEmail || this.post.email) {
       this.userEmail = this.post.email;
       this.userName = this.post.userName;}
-      // else {
+  }
+  like() {
+    this.postService.postLike(this.post._id).subscribe((data: any) => {
+      this.post.likes = data.likes;
+      this.post.likedBy = data.likedBy;
+      //this.getNameLikes();
+    });
+  }
+  delatePost() {
+    this.postService.delatePost(this.post._id).subscribe((data: any) => {
+      this.postDeleted.emit();
+    });
+  }
+  getPostCommentCount() {
+    console.log(this.post.commentCount)
+    this.post.commentCount
+  }
+
+  // se l'id Utente del post corrisponde all'id dell'Utente loggato visualizza il bottone per cancellare i propri post insieme a tutti i commenti
+  canDeletePost(): boolean {
+    return this.post.userId === this.logUserId;
+  }
+  openComments(){
+    this.isCommentVisible = !this.isCommentVisible; // Alterna visibilità
+  }
+  openUserProfile(){
+    this.router.navigate([`users/${this.post.userId}`])
+  }
+}
+
+
+ // getPost() {
+  //   this.title = this.post.title;
+  //   this.body = this.post.post;
+  //   this.iDpost = this.post._id;
+  //   if (this.post.imageId) {
+  //     this.postService.getPostImage(this.post.imageId,this.iDpost)
+  //       .subscribe((response: Blob) => {
+  //         const reader = new FileReader();
+  //         reader.readAsDataURL(response);
+  //         reader.onloadend = () => {
+  //           this.imagePost = reader.result;
+  //         };
+  //       });
+  //   }
+  // }
+
+  // else {
     //   this.userService.getUserById(this.post.userId).subscribe((data: any) => {
     //     this.userName = data.name;
     //     this.userEmail = data.email;
     //   });
     // }
-  }
 
-  // prende gli id degli user nel dato "likedBy" e cerca il nome di ogni user tramite l'id e lo manda a schermo formattato
+ // prende gli id degli user nel dato "likedBy" e cerca il nome di ogni user tramite l'id e lo manda a schermo formattato
   // getNameLikes(): void {
   //   //   if (!this.post.likedBy || this.post.likedBy.length === 0) {
   //   //     this.nameLikes = '';
@@ -202,30 +253,3 @@ export class PostUnicoComponent implements OnInit {
   //     }
   //   }
   // }
-  like() {
-    this.postService.postLike(this.post._id).subscribe((data: any) => {
-      this.post.likes = data.likes;
-      this.post.likedBy = data.likedBy;
-      //this.getNameLikes();
-    });
-  }
-  delatePost() {
-    this.postService.delatePost(this.post._id).subscribe((data: any) => {
-      this.postDeleted.emit();
-    });
-  }
-  getPostCount(){
-    this.post.commentCount += 1
-  }
-
-  // se l'id Utente del post corrisponde all'id dell'Utente loggato visualizza il bottone per cancellare i propri post insieme a tutti i commenti
-  canDeletePost(): boolean {
-    return this.post.userId === this.logUserId;
-  }
-  openComments(){
-    this.isCommentVisible = !this.isCommentVisible; // Alterna visibilità
-  }
-  openUserProfile(){
-    this.router.navigate([`users/${this.post.userId}`])
-  }
-}

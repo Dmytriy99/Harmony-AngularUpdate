@@ -14,6 +14,9 @@ const userSchema = mongoose.Schema({
   address: String,
   status: { type: String, enum: ["online", "offline"] },
   imageId: { type: mongoose.Schema.Types.ObjectId, ref: "Image", default: null }, // Collegamento all'immagine
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Lista amici
+  friendRequests: [{ userId: String, name: String }], // Richieste in sospeso
+  sentRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }] // Richieste inviate
   // image: {
   //   contentType: String,
   //   data: Buffer,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { userService } from 'src/app/service/userService/user.service';
 import { User, UserDto } from 'src/app/modelli/interface';
@@ -20,6 +20,8 @@ import { Router } from '@angular/router';
     standalone: false
 })
 export class UsersComponent implements OnInit {
+
+ @Input() listFriends!: any
   selectedOption!: string;
   userImage: { [key: string]: string } = {};
   userID: any;
@@ -40,11 +42,15 @@ export class UsersComponent implements OnInit {
   isLoading = false;
   imageLoading = false
 
+  searchText: any
+
+
   constructor(private userService: userService, private router: Router) {}
   ngOnInit(): void {
     if (token) {
       this.getAllUser();
     }
+    
   }
 
   getAllUser() {
@@ -54,10 +60,17 @@ export class UsersComponent implements OnInit {
       .pipe(catchError((error: any) => this.handleError(error)))
       .subscribe((data: any) => {
         this.users = data.user;
+        if(this.listFriends) {this.users = this.users.filter((user) => this.listFriends.includes(user._id));
+          this.totalUser = this.users.length;
+          this.searchText = "Cerca tra i tuoi amici"
+        } else {this.users = data.user
+          this.totalUser = data.totalUser;
+          this.searchText = "Persone che potresti conoscere"
+        }
         this.loadAllImage();
-        this.totalUser = data.totalUser;
         this.calculateRemainingUsers();
         this.isLoading = false;
+        console.log(this.users)
       });
   }
 

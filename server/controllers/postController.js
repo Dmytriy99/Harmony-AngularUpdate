@@ -2,6 +2,7 @@ const Post = require("../model/post.model");
 const Comment = require("../model/comment.model");
 const User = require("../model/user.model")
 const ImagePost = require("../model/imagePost.model");
+const { getIO } = require("../soket"); // Importa Socket.IO
 exports.getPost = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -55,6 +56,10 @@ exports.delatePost = async (req, res) => {
 
     // Cancellare tutti i commenti associati al post
     await Comment.deleteMany({ postId: postId });
+
+     // Invia un evento a tutti i client con l'ID del post eliminato
+     getIO().emit("postDeleted", { postId });
+
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -85,6 +90,8 @@ exports.postLike = async (req, res) => {
 
     await post.save();
 
+    getIO().emit("Like", { postId: postId, likes: post.likes });
+
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -103,8 +110,15 @@ exports.PostPost = async (req, res) => {
     req.body.userId = req.userId;
     req.body.userName = user.name;
     req.body.email = user.email
+    console.log("req.body:", req.body);
     console.log("Creazione del post");
     const post = await Post.create(req.body);
+
+    if (req.body.image === "false"){
+    getIO().emit("newPost", post); // Notifica tutti i client con il nuovo post
+    }
+
+    
     console.log("Post creato:", post);
     res.status(200).json(post);
   } catch (error) {
@@ -137,6 +151,8 @@ exports.updatePostImage = async (req, res) => {
     // Aggiungi l'ID dell'immagine al post
     post.imageId = savedImage._id;
     await post.save();
+
+    getIO().emit("newPost", post);
 
     res.status(200).send({
       message: "Post image uploaded successfully.",

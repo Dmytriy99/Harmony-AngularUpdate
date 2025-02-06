@@ -1,6 +1,7 @@
 const Comment = require("../model/comment.model");
 const Post = require("../model/post.model");
 const User = require("../model/user.model");
+const { getIO } = require("../soket"); // Importa Socket.IO
 exports.createComment = async (req, res) => {
   try {
     const content = req.body.content;
@@ -24,8 +25,12 @@ exports.createComment = async (req, res) => {
       email: email,
     });
 
-    // post.commentCount += 1;
-    // await post.save()
+
+     post.commentCount += 1;
+     await post.save()
+
+    getIO().emit("newCommentCount", { postId: postId, commentCount:post.commentCount });
+    getIO().emit("newComment", {postId: postId, comment: comment});
 
     res.status(200).json(comment);
   } catch (error) {

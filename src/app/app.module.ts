@@ -33,6 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -69,6 +70,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatBadgeModule,
         MatTooltipModule,
         MatProgressSpinnerModule,
-        ScrollingModule
+        ScrollingModule,
+        MatMenuModule
             ], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

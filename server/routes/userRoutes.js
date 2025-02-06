@@ -16,4 +16,11 @@ router.patch(
   userController.updatePhoto
 );
 
+router.post("/send-friend-request", verifyToken, userController.sendFriendRequest);
+router.post("/accept-friend-request", verifyToken, userController.acceptFriendRequest);
+router.post("/reject-friend-request", verifyToken, userController.rejectFriendRequest);
+router.post("/remove-friend", verifyToken, userController.removeFriend);
+router.post("/friends", verifyToken, userController.getFriendsList);
+
+
 module.exports = router;

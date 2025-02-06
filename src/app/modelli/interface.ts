@@ -8,6 +8,9 @@ export interface User {
   description: string;
   address: string;
   imageId: any;
+  sentRequests: any;
+  friendRequests: any;
+  friends: any
 }
 
 export interface Comment {
@@ -28,12 +31,14 @@ export interface Post {
   date: string;
   userName: String;
   email: String;
+  imageId: string
 }
 
 export class AddPostDto {
   title!: string;
   post!: string;
   search!: string;
+  image! : any
 }
 export class UserDto {
   name!: string;

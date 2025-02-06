@@ -73,6 +73,38 @@
   </button>
   <span class="ps-2" style="color: rgb(255, 255, 255);">Harmony</span>
   <span class="spacer"></span>
+  <div style="padding-right: 20px;">
+    <div class="notification" (click)="toggleWindow()" (click)="loadNotifications()">
+      <div class="bell-container">
+        <div class="bell">
+          <span class="material-icons bell">notifications</span>
+          <!-- Badge con il numero di notifiche -->
+          <span *ngIf="notificationCount > 0" class="badge">{{ notificationCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finestra notifiche con animazione -->
+    <div *ngIf="isWindowOpen" class="notification-window" style="background-color: #F9FAFB;">
+      <p class="window-header">Notifiche</p>
+      <ul>
+        <div *ngFor="let notification of userLog.friendRequests">
+          <div style="border-radius: 10px; background-color: #ede8f6;">
+            <p class="m-0 p-2" style="font-weight: 400;font-size: 0.70em;white-space: break-spaces;text-align: justify;line-height: 1.5;">
+              <span style="font-weight: 500;font-size: 1.25em;">{{ notification.name }}</span> ti ha inviato una richiesta di amicizia
+            </p>
+            <div class="d-flex w-100 p-2" style="justify-content: space-around;">
+            <button mat-fab extended style="height: 30px; width: 45%; background-color: rgb(161 118 183); border-radius: 8px; color: white;" (click)="acceptFriendRequest(notification.userId)">
+              Accetta
+            </button>
+            <button mat-fab extended style="height: 30px; width: 45%; background-color: #d6d6d6; border-radius: 8px;">Rifiuta</button>
+          </div>
+          </div>
+        </div>
+        <!-- <li *ngFor="let notification of notifications">{{ notification }}</li> -->
+      </ul>
+    </div>
+</div>
   <button class="logOut" mat-icon-button type="button" (click)="logOut()">
     <mat-icon style="color: white;">logout</mat-icon>
   </button>

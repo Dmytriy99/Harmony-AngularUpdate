@@ -49,4 +49,25 @@ export class userService {
   updateImage(body: any) {
     return this.http.patch(`${urlUser}/updatePhoto`, body, httpOption);
   }
+
+  sendFriendRequest2(userId: any) {
+    return this.http.post(`${urlUser}/send-friend-request`,  {userId} , httpOption);
+  }
+
+  acceptFriendRequest(userId: string) {
+    return this.http.post(`${urlUser}/accept-friend-request`, { userId }, httpOption);
+  }
+
+  rejectFriendRequest(userId: string) {
+    return this.http.post(`${urlUser}/reject-friend-request`, { userId }, httpOption);
+  }
+
+  removeFriend(userId: string) {
+    return this.http.post(`${urlUser}/remove-friend`, { userId }, httpOption);
+  }
+
+  getFriendsList(usersIds:any) {
+    return this.http.post(`${urlUser}/friends`,usersIds, httpOption);
+  }
+
 }

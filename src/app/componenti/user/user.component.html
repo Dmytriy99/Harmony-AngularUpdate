@@ -101,6 +101,7 @@
             <div class="secondInfo">Age : {{ user.age || "Age not provided" }}</div>
             <div class="secondInfo">Address :{{ user.address || "Address not provided" }}</div>
             <div class="secondInfo">Gender : {{ user.gender }}</div>
+            <button [disabled]="disableButton" mat-button style="background-color: #ffffff;" (click)="sendFriendRequest(user._id)">{{buttonText}}</button>
           </div>
           <div class="col d-flex align-items-center flex-column pt-3">
             <div style="height: 70%; width: 100%">

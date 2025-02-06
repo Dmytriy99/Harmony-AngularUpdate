@@ -35,6 +35,8 @@ export class PersonalUserComponent implements OnInit {
   imagePreview!: any
   selectedFile: File | null = null;
 
+  friendlist: any
+
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
   photoMan2: string =
@@ -64,6 +66,7 @@ export class PersonalUserComponent implements OnInit {
         this.user = data;
         this.userId = this.user._id;
         this.imageID = this.user.imageId
+        this.friendlist = this.user.friends
         if (this.user.imageId) {
           this.imageLoading= true
           this.userService

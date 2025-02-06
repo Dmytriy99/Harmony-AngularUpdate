@@ -12,6 +12,7 @@ import { User } from 'src/app/modelli/interface';
     standalone: false
 })
 export class UserComponent implements OnInit {
+  logUser: any
   noPost!: string;
   idUser: string = this.route.snapshot.paramMap.get('id')!;
   user!: User;
@@ -22,18 +23,36 @@ export class UserComponent implements OnInit {
     'https://media.istockphoto.com/id/1349231567/it/vettoriale/personaggio-in-stile-anime-del-giovane-uomo-anime-ragazzo-vettoriale.jpg?s=612x612&w=0&k=20&c=og5UTl4H2bTTuqLDA9cHoYikk9pzYYgHxR1ZhWaopS4=';
   userImage: { [key: string]: string } = {};
   imageLoading = false
+
+  disableButton: boolean = false
+
+  buttonText: any
+
+  friends : any
   constructor(
     private route: ActivatedRoute,
     private postService: postService,
     private userService: userService
   ) {}
   ngOnInit(): void {
+   this.logUser = localStorage.getItem('user');
+   console.log(this.logUser)
     this.route.paramMap.subscribe(params => {
       this.idUser = params.get('id')!;
       this.post = []
       if (this.idUser) {
         this.userService.getUserById(this.idUser).subscribe((data: any) => {
           this.user = data;
+          if (this.user.friendRequests.some((request: any) => request.userId === this.logUser)) {
+            this.buttonText = 'Richiesta di amicizia inviata';
+            this.disableButton = true
+          } else if ( this.user.friends.includes(this.logUser)){
+            this.buttonText = 'Siete amici';
+            this.disableButton = true
+          } else {
+            this.buttonText = 'Invia richiesta di amicizia';
+            this.disableButton = false
+          }
           console.log(this.user)
           if (this.user.imageId) {
             this.getUserImage(this.user.imageId);
@@ -66,6 +85,12 @@ export class UserComponent implements OnInit {
       error: (error) => {
         console.error('errore', error);
       },
+    });
+  }
+
+  sendFriendRequest(userId: string) {
+    console.log(userId)
+    this.userService.sendFriendRequest2(userId).subscribe(data => {
     });
   }
 }

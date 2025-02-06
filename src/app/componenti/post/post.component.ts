@@ -10,6 +10,9 @@ import {
 } from 'rxjs';
 import { Router } from '@angular/router';
 import { userService } from 'src/app/service/userService/user.service';
+import { io } from 'socket.io-client';  // 🔥 Importa Socket.IO client
+import { SoketService } from 'src/app/service/soketService/soket.service';
+
 
 @Component({
     selector: 'app-post',
@@ -22,7 +25,8 @@ export class PostComponent implements OnInit {
   constructor(
     private postService: postService,
     private router: Router,
-    private userService: userService
+    private userService: userService,
+    private soketService: SoketService
   ) {}
   userId!: string;
   Allpost: Post[] = [];
@@ -41,6 +45,8 @@ export class PostComponent implements OnInit {
   isLoadingNewPost: any = false
   userImage!: any
   imageLoading= false
+
+  private socket: any; // 🔥 Variabile per il socket
   
   photoGirl2: string =
     'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
@@ -56,6 +62,26 @@ export class PostComponent implements OnInit {
     this.postContainer.nativeElement.addEventListener('scroll', () => {
       this.onScroll();
     });
+    this.setupSocketConnection();
+  }
+
+  setupSocketConnection() {
+    const socket = this.soketService.getSocket();
+
+    socket.on('newPost', (post: Post) => {
+      console.log('Nuovo post ricevuto:', post);
+      this.Allpost.unshift(post); // Aggiungi il nuovo post in cima alla lista
+      this.calculateRemainingPosts();
+    });
+
+    // Quando un post viene eliminato
+    socket.on('postDeleted', (data: { postId: string }) => {
+    console.log("Post eliminato:", data.postId);
+    this.onPostDeleted()
+    // this.Allpost = this.Allpost.filter((post:any) => post._id !== data.postId);
+    // this.calculateRemainingPosts();
+    // console.log(this.Allpost)
+  });
   }
   getLogUser() {
     this.userService.getUserInfo().subscribe((data: any) => {
@@ -104,6 +130,7 @@ export class PostComponent implements OnInit {
       .getPost(this.page, this.limit)
       .pipe(catchError((error) => this.handleError(error)))
       .subscribe((data: any) => {
+        console.log(data.post)
         this.Allpost = data.post;
         this.totalPosts = data.totalPosts;
         this.calculateRemainingPosts();
@@ -141,6 +168,8 @@ export class PostComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.isSubmitting = true;
+    if(!this.selectedFile) {this.PostDto.image = "false"
+    }else{this.PostDto.image = "true"}
     this.postService.postPost(this.PostDto).subscribe((data: any) => {
       console.log(data)
       if (this.selectedFile) {

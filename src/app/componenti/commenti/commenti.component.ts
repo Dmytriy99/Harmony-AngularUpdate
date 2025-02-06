@@ -9,6 +9,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { SoketService } from 'src/app/service/soketService/soket.service';
 
 @Component({
     selector: 'app-commenti',
@@ -38,7 +39,7 @@ export class CommentiComponent implements OnInit {
   isSend = false;
   //@Output() commentPost: EventEmitter<void> = new EventEmitter<void>();
   @Input() isCommentVisible!: any ;
-  constructor(private commentService: CommentService) {
+  constructor(private commentService: CommentService,private soketService: SoketService) {
   }
   // visualizzazione commenti
   ngOnInit(): void {
@@ -47,7 +48,17 @@ export class CommentiComponent implements OnInit {
         this.comment = data;
         //console.log(this.comment)
       });
+      this.setupSocketConnection()
     }
+  }
+
+  setupSocketConnection() {
+    const socket = this.soketService.getSocket();
+
+    socket.on('newComment', (comment: any) => {
+      if(this.postId === comment.postId){
+        console.log('Nuovo Commento : ', comment.comment);
+    }}); 
   }
   // post commenti e visualizzazione nuovo commento
   onSubmit(form: NgForm) {

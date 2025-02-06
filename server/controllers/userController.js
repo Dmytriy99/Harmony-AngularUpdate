@@ -112,30 +112,6 @@ exports.updateUserDetails = async (req, res) => {
   }
 };
 
-// exports.updatePhoto = async (req, res) => {
-//   try {
-//     const userId = req.userId;
-
-//     const user = await User.findById(userId);
-
-//     if (!user) {
-//       return res.status(404).send("User not found.");
-//     }
-
-//     if (req.file) {
-//       user.image.data = req.file.buffer;
-//       user.image.contentType = req.file.mimetype;
-//     } else {
-//       return res.status(400).send("No image file uploaded");
-//     }
-
-//     await user.save();
-
-//     res.status(200).send({ message: "User Photo updated successfully." });
-//   } catch (error) {
-//     res.status(500).send("Error updating user Photo.");
-//   }
-// };
 exports.updatePhoto = async (req, res) => {
   try {
     const userId = req.userId;
@@ -173,20 +149,6 @@ exports.updatePhoto = async (req, res) => {
   }
 };
 
-// exports.getUserImage = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-
-//     if (!user || !user.image || !user.image.data) {
-//       return res.status(200).json({ message: "Image not found." });
-//     }
-
-//     res.set("Content-Type", user.image.contentType);
-//     res.send(user.image.data);
-//   } catch (error) {
-//     res.status(500).send("Error retrieving image.");
-//   }
-//};
 exports.getUserImage = async (req, res) => {
   try {
     const imageId = req.params.id;
@@ -204,3 +166,204 @@ exports.getUserImage = async (req, res) => {
     res.status(500).send("Error retrieving image.");
   }
 };
+
+
+
+
+////////////////////////////////////////////////////////////////
+//RICHIESTE DI AMICIZIA
+
+
+
+
+  exports.sendFriendRequest = async (req, res) => {
+    console.log("Ricevuta richiesta:", req.body.userId); // Aggiungi questo log
+    console.log("Ricevuta richiesta:", req.userId); // Aggiungi questo log
+    try {
+      const senderId = req.userId;
+      const  receiverId  = req.body.userId;
+  
+      if (senderId === receiverId) {
+        return res.status(400).send("Non puoi inviare una richiesta a te stesso.");
+      }
+  
+      const sender = await User.findById(senderId);
+      const receiver = await User.findById(receiverId);
+  
+      if (!sender || !receiver) {
+        return res.status(404).send("Utente non trovato.");
+      }
+  
+      // if (receiver.friendRequests.some(senderId)) {
+      //   return res.status(400).send("Richiesta già inviata.");
+      // }
+      const alreadyRequested = receiver.friendRequests.some(req => req.userId.toString() === senderId);
+    if (alreadyRequested) {
+      return res.status(400).send("Richiesta già inviata.");
+    }
+  
+      if (receiver.friends.includes(senderId)) {
+        return res.status(400).send("Siete già amici.");
+      }
+      console.log("user", sender.name); // Aggiungi questo log
+      receiver.friendRequests.push({ userId: senderId, name: sender.name });
+      sender.sentRequests.push(receiverId);
+
+      await receiver.save();
+      await sender.save();
+  
+      res.status(200).send();
+    } catch (error) {
+      res.status(500).send("Errore nell'invio della richiesta di amicizia.");
+    }
+  };
+  exports.acceptFriendRequest = async (req, res) => {
+    try {
+      const receiverId = req.userId;
+      const senderId  = req.body.userId;
+      console.log("Ricevuta richiesta:", req.body.userId); // Aggiungi questo log
+      const receiver = await User.findById(receiverId);
+      const sender = await User.findById(senderId);
+  
+      if (!receiver || !sender) {
+        return res.status(404).send("Utente non trovato.");
+      }
+  
+      const requestExists = receiver.friendRequests.some(req => req.userId.toString() === senderId);
+      if (!requestExists) {
+        return res.status(400).send("Nessuna richiesta di amicizia trovata.");
+      }
+  
+      // Aggiungere agli amici
+      receiver.friends.push(senderId);
+      sender.friends.push(receiverId);
+  
+      // Rimuovere la richiesta dalla lista delle richieste in sospeso
+      receiver.friendRequests = receiver.friendRequests.filter(
+        (id) => id.userId.toString() !== senderId
+      );
+
+      receiver.sentRequests = receiver.sentRequests.filter(id => id.toString() !== senderId);
+
+      // 🔥 Rimuovere l'ID del destinatario dalla lista delle richieste inviate del mittente
+      sender.sentRequests = sender.sentRequests.filter(id => id.toString() !== receiverId);
+
+      sender.friendRequests = sender.friendRequests.filter(
+        (id) => id.userId.toString() !== receiverId
+      );
+
+  
+      await receiver.save();
+      await sender.save();
+  
+      res.status(200).send("Richiesta di amicizia accettata.");
+    } catch (error) {
+      res.status(500).send("Errore nell'accettare la richiesta di amicizia.");
+    }
+  };
+  exports.rejectFriendRequest = async (req, res) => {
+    try {
+      const receiverId = req.userId;
+      const { senderId } = req.body;
+  
+      const receiver = await User.findById(receiverId);
+      const sender = await User.findById(senderId);
+  
+      if (!receiver) {
+        return res.status(404).send("Utente non trovato.");
+      }
+  
+      receiver.friendRequests = receiver.friendRequests.filter(
+        (id) => id.toString() !== senderId
+      );
+      // 🔥 Rimuovere l'ID del destinatario dalla lista delle richieste inviate del mittente
+      sender.sentRequests = sender.sentRequests.filter(id => id.toString() !== receiverId);
+  
+      await receiver.save();
+      await sender.save();
+  
+      res.status(200).send("Richiesta di amicizia rifiutata.");
+    } catch (error) {
+      res.status(500).send("Errore nel rifiutare la richiesta di amicizia.");
+    }
+  };
+  exports.removeFriend = async (req, res) => {
+    try {
+      const userId = req.userId;
+      const { friendId } = req.body;
+  
+      const user = await User.findById(userId);
+      const friend = await User.findById(friendId);
+  
+      if (!user || !friend) {
+        return res.status(404).send("Utente non trovato.");
+      }
+  
+      user.friends = user.friends.filter((id) => id.toString() !== friendId);
+      friend.friends = friend.friends.filter((id) => id.toString() !== userId);
+  
+      await user.save();
+      await friend.save();
+  
+      res.status(200).send("Amico rimosso con successo.");
+    } catch (error) {
+      res.status(500).send("Errore nel rimuovere l'amico.");
+    }
+  };
+
+  exports.getFriendsList = async (req, res) => {
+    try {
+      const userId = req.body.userId;
+  
+      const user = await User.findById(userId).populate("friends", "name email");
+  
+      if (!user) {
+        return res.status(404).send("Utente non trovato.");
+      }
+  
+      res.status(200).json(user.friends);
+    } catch (error) {
+      res.status(500).send("Errore nel recuperare la lista amici.");
+    }
+  };
+;
+
+// exports.getUserImage = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+
+//     if (!user || !user.image || !user.image.data) {
+//       return res.status(200).json({ message: "Image not found." });
+//     }
+
+//     res.set("Content-Type", user.image.contentType);
+//     res.send(user.image.data);
+//   } catch (error) {
+//     res.status(500).send("Error retrieving image.");
+//   }
+//};
+
+// exports.updatePhoto = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       return res.status(404).send("User not found.");
+//     }
+
+//     if (req.file) {
+//       user.image.data = req.file.buffer;
+//       user.image.contentType = req.file.mimetype;
+//     } else {
+//       return res.status(400).send("No image file uploaded");
+//     }
+
+//     await user.save();
+
+//     res.status(200).send({ message: "User Photo updated successfully." });
+//   } catch (error) {
+//     res.status(500).send("Error updating user Photo.");
+//   }
+// };

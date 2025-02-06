@@ -10,11 +10,15 @@ import { userService } from 'src/app/service/userService/user.service';
     standalone: false
 })
 export class HomeComponent implements OnInit {
+  notificationCount!: number ;
   userId!: any
   userImage!: any
   imageLoading = false
   userLog!:any
   userName!: any
+  friendRequests: any
+
+  isWindowOpen: boolean = false;
 
   photoGirl2: string =
   'https://media.istockphoto.com/id/1222666476/it/vettoriale/donna-divertente-che-more-i-capelli-a-casa-vector.jpg?s=612x612&w=0&k=20&c=IrBrTs24crgvdIuWGiLGqYDchzvIZeuJEavVlHIhqdc=';
@@ -36,12 +40,17 @@ photoMan2: string =
     });
   }
 
+  toggleWindow() {
+    this.isWindowOpen = !this.isWindowOpen;
+  }
   getUserLogInfo() {
     this.userService.getUserById(this.userId).subscribe((data: any) => {
       console.log(data)
       this.userLog = data
       this.userImage = data.imageId
       this.userName = data.name
+      this.friendRequests = data.friendRequests
+      this.notificationCount = this.friendRequests.length
       if (this.userImage) {
         this.getUserImage(this.userImage)
       } else {
@@ -76,4 +85,12 @@ photoMan2: string =
     localStorage.removeItem('user');
     this.route.navigate(['login']);
   }
+
+  loadNotifications(){
+    console.log(this.userLog)
+  }
+  acceptFriendRequest(userId: any) {
+    this.userService.acceptFriendRequest(userId).subscribe((data: any) => {
+    })
+    }
 }
