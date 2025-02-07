@@ -21,6 +21,7 @@ router.post("/accept-friend-request", verifyToken, userController.acceptFriendRe
 router.post("/reject-friend-request", verifyToken, userController.rejectFriendRequest);
 router.post("/remove-friend", verifyToken, userController.removeFriend);
 router.post("/friends", verifyToken, userController.getFriendsList);
+router.post("/reset-notifications", verifyToken ,userController.resetNotificationCount);
 
 
 module.exports = router;

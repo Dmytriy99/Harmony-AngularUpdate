@@ -11,6 +11,7 @@ export interface User {
   sentRequests: any;
   friendRequests: any;
   friends: any
+  notification:any
 }
 
 export interface Comment {

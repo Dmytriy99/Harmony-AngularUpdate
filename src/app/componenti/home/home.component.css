@@ -1,3 +1,16 @@
+.user-link {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-link:hover {
+  color: #866ec0;
+  text-decoration: underline;
+}
+
+
 .notification-window {
   position: absolute;
   top: 70px; /* Regola a seconda della tua toolbar */

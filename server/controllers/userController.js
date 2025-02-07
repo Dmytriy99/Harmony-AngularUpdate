@@ -1,6 +1,6 @@
 const User = require("../model/user.model");
 const Image = require("../model/image.model");
-
+const { getIO, getOnlineUsers } = require("../soket"); // Importa Socket.IO
 exports.getUserLogInfo = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -167,6 +167,26 @@ exports.getUserImage = async (req, res) => {
   }
 };
 
+exports.resetNotificationCount = async (req, res) => {
+  try {
+      const userId = req.userId; // Assumendo che req.userId sia l'ID dell'utente loggato
+
+      // 🔍 Trova l'utente e azzera il contatore notifiche
+      const user = await User.findById(userId);
+      if (!user) {
+          return res.status(404).send("Utente non trovato.");
+      }
+
+      user.notificationCount = 0; // Azzera il counter
+      await user.save(); // Salva le modifiche nel database
+
+      res.status(200).send();
+  } catch (error) {
+      console.error("Errore nel reset delle notifiche:", error);
+      res.status(500).send("Errore nel reset del contatore notifiche.");
+  }
+};
+
 
 
 
@@ -197,20 +217,37 @@ exports.getUserImage = async (req, res) => {
       // if (receiver.friendRequests.some(senderId)) {
       //   return res.status(400).send("Richiesta già inviata.");
       // }
-      const alreadyRequested = receiver.friendRequests.some(req => req.userId.toString() === senderId);
-    if (alreadyRequested) {
-      return res.status(400).send("Richiesta già inviata.");
-    }
+    //   const alreadyRequested = receiver.friendRequests.some(req => req.userId.toString() === senderId);
+    // if (alreadyRequested) {
+    //   return res.status(400).send("Richiesta già inviata.");
+    // }
   
       if (receiver.friends.includes(senderId)) {
         return res.status(400).send("Siete già amici.");
       }
       console.log("user", sender.name); // Aggiungi questo log
-      receiver.friendRequests.push({ userId: senderId, name: sender.name });
+      // receiver.friendRequests.push({ userId: senderId, name: sender.name });
       sender.sentRequests.push(receiverId);
+
+      receiver.notification.push({ type: "friendRequest", userId: senderId, userName: sender.name, isFriendAccept: false });
+      receiver.notificationCount += 1
+
+      // getIO().emit("newFriendRequestReceived", { userId: senderId, name: sender.name });
 
       await receiver.save();
       await sender.save();
+
+      const onlineUsers = getOnlineUsers();
+      const receiverSocketId = onlineUsers.get(receiverId);
+
+      console.log(receiverSocketId)
+      // Se il destinatario è online, mandagli la notifica
+      if (receiverSocketId) {
+          getIO().to(receiverSocketId).emit("newFriendRequestReceived", {
+              senderId,
+              senderName: sender.name,
+          });
+      }
   
       res.status(200).send();
     } catch (error) {
@@ -225,33 +262,36 @@ exports.getUserImage = async (req, res) => {
       const receiver = await User.findById(receiverId);
       const sender = await User.findById(senderId);
   
-      if (!receiver || !sender) {
-        return res.status(404).send("Utente non trovato.");
-      }
+      console.log("receiver", receiver);
+      console.log("sender", sender);
+      // if (!receiver || !sender) {
+      //   return res.status(404).send("Utente non trovato.");
+      // }
   
-      const requestExists = receiver.friendRequests.some(req => req.userId.toString() === senderId);
-      if (!requestExists) {
-        return res.status(400).send("Nessuna richiesta di amicizia trovata.");
-      }
+      // const requestExists = receiver.friendRequests.some(req => req.userId.toString() === senderId);
+      // if (!requestExists) {
+      //   return res.status(400).send("Nessuna richiesta di amicizia trovata.");
+      // }
   
       // Aggiungere agli amici
       receiver.friends.push(senderId);
       sender.friends.push(receiverId);
   
       // Rimuovere la richiesta dalla lista delle richieste in sospeso
-      receiver.friendRequests = receiver.friendRequests.filter(
-        (id) => id.userId.toString() !== senderId
-      );
+      // receiver.friendRequests = receiver.friendRequests.filter(
+      //   (id) => id.userId.toString() !== senderId
+      // );
 
-      receiver.sentRequests = receiver.sentRequests.filter(id => id.toString() !== senderId);
+      // receiver.sentRequests = receiver.sentRequests.filter(id => id.toString() !== senderId);
+      receiver.notification = receiver.notification.map(notification => {
+        if (notification.userId.toString() === senderId) {
+            return { ...notification, isFriendAccept: true };
+        }
+        return notification;
+    });
 
       // 🔥 Rimuovere l'ID del destinatario dalla lista delle richieste inviate del mittente
       sender.sentRequests = sender.sentRequests.filter(id => id.toString() !== receiverId);
-
-      sender.friendRequests = sender.friendRequests.filter(
-        (id) => id.userId.toString() !== receiverId
-      );
-
   
       await receiver.save();
       await sender.save();
@@ -264,7 +304,7 @@ exports.getUserImage = async (req, res) => {
   exports.rejectFriendRequest = async (req, res) => {
     try {
       const receiverId = req.userId;
-      const { senderId } = req.body;
+      const senderId = req.body.userId;
   
       const receiver = await User.findById(receiverId);
       const sender = await User.findById(senderId);
@@ -290,7 +330,7 @@ exports.getUserImage = async (req, res) => {
   exports.removeFriend = async (req, res) => {
     try {
       const userId = req.userId;
-      const { friendId } = req.body;
+      const friendId = req.body.userId;
   
       const user = await User.findById(userId);
       const friend = await User.findById(friendId);

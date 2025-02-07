@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceComp } from 'src/app/service/authService/auth.service';
+import { SoketService } from 'src/app/service/soketService/soket.service';
 import { userService } from 'src/app/service/userService/user.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   imageLoading = false
   userLog!:any
   userName!: any
-  friendRequests: any
+  notification: any
 
   isWindowOpen: boolean = false;
 
@@ -26,7 +27,7 @@ photoMan2: string =
   'https://media.istockphoto.com/id/1349231567/it/vettoriale/personaggio-in-stile-anime-del-giovane-uomo-anime-ragazzo-vettoriale.jpg?s=612x612&w=0&k=20&c=og5UTl4H2bTTuqLDA9cHoYikk9pzYYgHxR1ZhWaopS4=';
 
 
-  constructor(private route: Router, private authService: AuthServiceComp, private userService: userService) {}
+  constructor(private route: Router, private authService: AuthServiceComp, private userService: userService,private soketService: SoketService,private router: Router,) {}
   ngOnInit(): void {
     this.userId = localStorage.getItem('user')
     this.imageLoading = true
@@ -38,10 +39,19 @@ photoMan2: string =
         this.getUserLogInfo();
       }
     });
+    this.setupSocketConnection()
+  }
+  setupSocketConnection() {
+    const socket = this.soketService.getSocket();
+    socket.on('newFriendRequestReceived', (friendRequests: any) => {
+        console.log('Nuovo Like Ricevuto:', friendRequests);
+      }) 
   }
 
   toggleWindow() {
     this.isWindowOpen = !this.isWindowOpen;
+    this.notificationCount = 0
+    this.userService.resetNotificationCount().subscribe((data: any) => {})
   }
   getUserLogInfo() {
     this.userService.getUserById(this.userId).subscribe((data: any) => {
@@ -49,8 +59,9 @@ photoMan2: string =
       this.userLog = data
       this.userImage = data.imageId
       this.userName = data.name
-      this.friendRequests = data.friendRequests
-      this.notificationCount = this.friendRequests.length
+      this.notification = data.notification
+      this.notificationCount = data.notificationCount
+      console.log(this.notification)
       if (this.userImage) {
         this.getUserImage(this.userImage)
       } else {
@@ -91,6 +102,10 @@ photoMan2: string =
   }
   acceptFriendRequest(userId: any) {
     this.userService.acceptFriendRequest(userId).subscribe((data: any) => {
+
     })
+    }
+    openUserProfile(userId:any){
+      this.router.navigate([`users/${userId}`])
     }
 }

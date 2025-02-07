@@ -43,11 +43,16 @@ export class UserComponent implements OnInit {
       if (this.idUser) {
         this.userService.getUserById(this.idUser).subscribe((data: any) => {
           this.user = data;
-          if (this.user.friendRequests.some((request: any) => request.userId === this.logUser)) {
-            this.buttonText = 'Richiesta di amicizia inviata';
-            this.disableButton = true
-          } else if ( this.user.friends.includes(this.logUser)){
+          console.log(this.user)
+          // if (this.user.notification.some((request: any) => request.userId === this.logUser && request.type === 'friendRequest')) {
+          //   this.buttonText = 'Richiesta di amicizia inviata';
+          //   this.disableButton = true
+          // } else 
+          if ( this.user.friends.includes(this.logUser)){
             this.buttonText = 'Siete amici';
+            this.disableButton = true
+          }  else if ( this.user.sentRequests.includes(this.logUser)){
+            this.buttonText = 'Ti ha già invitato la richiesta di amicizia';
             this.disableButton = true
           } else {
             this.buttonText = 'Invia richiesta di amicizia';
@@ -92,5 +97,9 @@ export class UserComponent implements OnInit {
     console.log(userId)
     this.userService.sendFriendRequest2(userId).subscribe(data => {
     });
+  }
+  removeFriend(userId: string) {
+    console.log(userId)
+    this.userService.removeFriend(userId).subscribe(data => {});
   }
 }

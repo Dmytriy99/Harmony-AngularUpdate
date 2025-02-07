@@ -1,3 +1,130 @@
+
+<mat-toolbar class="toolBar p-0">
+  <button mat-icon-button routerLink="posts" style="height: 60px;width: 60px;" class="ms-2">
+    <img src="../assets/faviconFiore.png" alt="Harmony Icon" style="width: 38px; height: 38px" />
+  </button>
+  <span class="ps-2" style="color: rgb(255, 255, 255);">Harmony</span>
+  <span class="spacer"></span>
+  <div style="padding-right: 20px;">
+    <div class="notification" (click)="toggleWindow()" (click)="loadNotifications()">
+      <div class="bell-container">
+        <div class="bell">
+          <span class="material-icons bell">notifications</span>
+          <!-- Badge con il numero di notifiche -->
+          <span *ngIf="notificationCount > 0" class="badge">{{ notificationCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finestra notifiche con animazione -->
+    <div *ngIf="isWindowOpen" class="notification-window" style="background-color: #F9FAFB;">
+      <p class="window-header">Notifiche</p>
+      <ul>
+        <div *ngFor="let notification of userLog.notification">
+          <div *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === false"
+            style="border-radius: 10px; background-color: #ede8f6;">
+            <p class="m-0 p-2"
+              style="font-weight: 400;font-size: 0.70em;white-space: break-spaces;text-align: justify;line-height: 1.5;">
+              <span  class="user-link" style="font-weight: 500;font-size: 1.25em;"(click)="openUserProfile(notification.userId)">
+                {{ notification.userName }}</span> ti ha inviato una
+              richiesta di amicizia
+            </p>
+            <div class="d-flex w-100 p-2" style="justify-content: space-around;">
+              <button mat-fab extended
+                style="height: 30px; width: 45%; background-color: rgb(161 118 183); border-radius: 8px; color: white;"
+                (click)="acceptFriendRequest(notification.userId)">
+                Accetta
+              </button>
+              <button mat-fab extended
+                style="height: 30px; width: 45%; background-color: #d6d6d6; border-radius: 8px;">Rifiuta</button>
+            </div>
+          </div>
+          <div *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === true"
+            style="border-radius: 10px; background-color: #ede8f6;">
+            <p class="m-0 p-2"
+              style="font-weight: 400;font-size: 0.70em;
+              white-space: break-spaces;text-align: justify;line-height: 1.5;">Hai accettato la richiesta di amicizia di 
+              <span class="user-link" style="font-weight: 500;font-size: 1.25em;"(click)="openUserProfile(notification.userId)">
+                {{ notification.userName }}</span>
+            </p>
+          </div>
+        </div>
+        <!-- <li *ngFor="let notification of notifications">{{ notification }}</li> -->
+      </ul>
+    </div>
+</div>
+  <button class="logOut" mat-icon-button type="button" (click)="logOut()">
+    <mat-icon style="color: white;">logout</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="fluid w-100 m-0 p-0" style=" overflow-y: hidden;">
+  <div class="row g-0">
+    <div class="col-2-lg-custom p-2">
+      <div class="h-100" style="background-color: #d8c5e9; border-radius: 20px; padding: 10px;">
+        <ul class="mat-list pt-2">
+          <li class="mat-list-item" routerLink="/homeUser" routerLinkActive="active">
+            <!-- <mat-icon>account_circle</mat-icon> -->
+            <div class="col-3 d-flex align-items-center justify-content-center">
+              <div class="image-preview">
+                <div *ngIf="imageLoading">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </div>
+                <img *ngIf="!imageLoading" [src]="userImage" />
+              </div>
+            </div>
+            <span class="span-navBar col">{{userName}}</span>
+          </li>
+          <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
+            <div class="col-3 d-flex justify-content-center">
+              <mat-icon style="font-size: 30px;height: 30px;">post_add</mat-icon>
+            </div>
+            <span class="span-navBar col">Home</span>
+          </li>
+          <!-- <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
+          <mat-icon>group</mat-icon>
+          <span class="span-navBar">Users</span>
+        </li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="content-wrapper col p-0" style="height: calc(100vh - 64px); overflow: hidden;">
+      <div class="h-100 p-2">
+        <mat-card class="h-100" style="background-color: #F9FAFB;border-radius: 10px;">
+          <div class="px-1 h-100">
+            <router-outlet></router-outlet>
+          </div>
+        </mat-card>
+      </div>
+
+
+      <nav class="bottom-nav">
+        <a class="mat-list-item" routerLink="/homeUser" routerLinkActive="active-link">
+          <mat-icon>account_circle</mat-icon>
+          <span>Home</span>
+        </a>
+        <a class="mat-list-item" routerLink="/posts" routerLinkActive="active-link">
+          <mat-icon>post_add</mat-icon>
+          <span>Posts</span>
+        </a>
+        <!-- <a class="mat-list-item" routerLink="/users" routerLinkActive="active-link">
+          <mat-icon>group</mat-icon>
+          <span>Users</span>
+        </a> -->
+      </nav>
+    </div>
+
+  </div>
+</div>
+<!-- <div class="d-flex w-100 p-2" style="justify-content: space-around;">
+              <button mat-fab extended
+                style="height: 30px; width: 45%; background-color: rgb(161 118 183); border-radius: 8px; color: white;"
+                (click)="acceptFriendRequest(notification.userId)">
+                Accetta
+              </button>
+              <button mat-fab extended
+                style="height: 30px; width: 45%; background-color: #d6d6d6; border-radius: 8px;">Rifiuta</button>
+            </div> -->
+
 <!-- <div class="fluid row w-100 m-0 p-0" style="overflow-y: hidden;">
   <mat-toolbar class="toolBar p-0">
     <button mat-icon-button routerLink="posts">
@@ -67,103 +194,3 @@
     </nav>
   </div>
 </div> -->
-<mat-toolbar class="toolBar p-0">
-  <button mat-icon-button routerLink="posts" style="height: 60px;width: 60px;" class="ms-2">
-    <img src="../assets/faviconFiore.png" alt="Harmony Icon" style="width: 38px; height: 38px" />
-  </button>
-  <span class="ps-2" style="color: rgb(255, 255, 255);">Harmony</span>
-  <span class="spacer"></span>
-  <div style="padding-right: 20px;">
-    <div class="notification" (click)="toggleWindow()" (click)="loadNotifications()">
-      <div class="bell-container">
-        <div class="bell">
-          <span class="material-icons bell">notifications</span>
-          <!-- Badge con il numero di notifiche -->
-          <span *ngIf="notificationCount > 0" class="badge">{{ notificationCount }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Finestra notifiche con animazione -->
-    <div *ngIf="isWindowOpen" class="notification-window" style="background-color: #F9FAFB;">
-      <p class="window-header">Notifiche</p>
-      <ul>
-        <div *ngFor="let notification of userLog.friendRequests">
-          <div style="border-radius: 10px; background-color: #ede8f6;">
-            <p class="m-0 p-2" style="font-weight: 400;font-size: 0.70em;white-space: break-spaces;text-align: justify;line-height: 1.5;">
-              <span style="font-weight: 500;font-size: 1.25em;">{{ notification.name }}</span> ti ha inviato una richiesta di amicizia
-            </p>
-            <div class="d-flex w-100 p-2" style="justify-content: space-around;">
-            <button mat-fab extended style="height: 30px; width: 45%; background-color: rgb(161 118 183); border-radius: 8px; color: white;" (click)="acceptFriendRequest(notification.userId)">
-              Accetta
-            </button>
-            <button mat-fab extended style="height: 30px; width: 45%; background-color: #d6d6d6; border-radius: 8px;">Rifiuta</button>
-          </div>
-          </div>
-        </div>
-        <!-- <li *ngFor="let notification of notifications">{{ notification }}</li> -->
-      </ul>
-    </div>
-</div>
-  <button class="logOut" mat-icon-button type="button" (click)="logOut()">
-    <mat-icon style="color: white;">logout</mat-icon>
-  </button>
-</mat-toolbar>
-<div class="fluid w-100 m-0 p-0" style=" overflow-y: hidden;">
-  <div class="row g-0">
-    <div class="col-2-lg-custom p-2">
-      <div class="h-100" style="background-color: #d8c5e9; border-radius: 20px; padding: 10px;">
-        <ul class="mat-list pt-2">
-          <li class="mat-list-item" routerLink="/homeUser" routerLinkActive="active">
-            <!-- <mat-icon>account_circle</mat-icon> -->
-            <div class="col-3 d-flex align-items-center justify-content-center">
-              <div class="image-preview">
-                <div *ngIf="imageLoading">
-                  <mat-spinner diameter="20"></mat-spinner>
-                </div>
-                <img *ngIf="!imageLoading" [src]="userImage" />
-              </div>
-            </div>
-            <span class="span-navBar col">{{userName}}</span>
-          </li>
-          <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
-            <div class="col-3 d-flex justify-content-center">
-              <mat-icon style="font-size: 30px;height: 30px;">post_add</mat-icon>
-            </div>
-            <span class="span-navBar col">Home</span>
-          </li>
-          <!-- <li class="mat-list-item" routerLink="/users" routerLinkActive="active">
-          <mat-icon>group</mat-icon>
-          <span class="span-navBar">Users</span>
-        </li> -->
-        </ul>
-      </div>
-    </div>
-    <div class="content-wrapper col p-0" style="height: calc(100vh - 64px); overflow: hidden;">
-      <div class="h-100 p-2">
-        <mat-card class="h-100" style="background-color: #F9FAFB;border-radius: 10px;">
-          <div class="px-1 h-100">
-            <router-outlet></router-outlet>
-          </div>
-        </mat-card>
-      </div>
-
-
-      <nav class="bottom-nav">
-        <a class="mat-list-item" routerLink="/homeUser" routerLinkActive="active-link">
-          <mat-icon>account_circle</mat-icon>
-          <span>Home</span>
-        </a>
-        <a class="mat-list-item" routerLink="/posts" routerLinkActive="active-link">
-          <mat-icon>post_add</mat-icon>
-          <span>Posts</span>
-        </a>
-        <!-- <a class="mat-list-item" routerLink="/users" routerLinkActive="active-link">
-          <mat-icon>group</mat-icon>
-          <span>Users</span>
-        </a> -->
-      </nav>
-    </div>
-
-  </div>
-</div>

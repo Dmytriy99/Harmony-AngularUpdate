@@ -70,4 +70,7 @@ export class userService {
     return this.http.post(`${urlUser}/friends`,usersIds, httpOption);
   }
 
+  resetNotificationCount() {
+    return this.http.post(`${urlUser}/reset-notifications`,{}, httpOption);
+  }
 }
