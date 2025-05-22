@@ -1,12 +1,12 @@
 
 <mat-toolbar class="toolBar p-0">
-  <button mat-icon-button routerLink="posts" style="height: 60px;width: 60px;" class="ms-2">
+  <button mat-icon-button routerLink="posts" style="height: 60px;width: 62px;" class="ms-2">
     <img src="../assets/faviconFiore.png" alt="Harmony Icon" style="width: 38px; height: 38px" />
   </button>
   <span class="ps-2" style="color: rgb(255, 255, 255);">Harmony</span>
   <span class="spacer"></span>
   <div style="padding-right: 20px;">
-    <div class="notification" (click)="toggleWindow()" (click)="loadNotifications()">
+    <div class="notification" (click)="toggleWindow()">
       <div class="bell-container">
         <div class="bell">
           <span class="material-icons bell">notifications</span>
@@ -76,7 +76,7 @@
           </li>
           <li class="mat-list-item" routerLink="/posts" routerLinkActive="active">
             <div class="col-3 d-flex justify-content-center">
-              <mat-icon style="font-size: 30px;height: 30px;">post_add</mat-icon>
+              <mat-icon class="icon" style="font-size: 30px;height: 30px;">post_add</mat-icon>
             </div>
             <span class="span-navBar col">Home</span>
           </li>

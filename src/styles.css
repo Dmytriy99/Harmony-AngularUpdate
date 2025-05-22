@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import 'flowbite';
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+} 
 
 .custom-dialog-container .mat-dialog-container {
     border-radius: 15px; /* Bordo arrotondato */

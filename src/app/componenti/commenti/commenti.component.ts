@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Comment, CommentDto, User } from 'src/app/modelli/interface';
 import { CommentService } from 'src/app/service/commentService/comment.service';
 import {
@@ -30,6 +30,7 @@ import { SoketService } from 'src/app/service/soketService/soket.service';
     standalone: false
 })
 export class CommentiComponent implements OnInit {
+  commentFormReactive!: FormGroup
   dataLocal: any;
   user!: User;
   comment: Comment[] = [];
@@ -39,7 +40,10 @@ export class CommentiComponent implements OnInit {
   isSend = false;
   //@Output() commentPost: EventEmitter<void> = new EventEmitter<void>();
   @Input() isCommentVisible!: any ;
-  constructor(private commentService: CommentService,private soketService: SoketService) {
+  constructor(private commentService: CommentService,private soketService: SoketService, fb:FormBuilder) {
+    this.commentFormReactive = fb.group({
+      content: [''],
+    })
   }
   // visualizzazione commenti
   ngOnInit(): void {
@@ -76,4 +80,16 @@ export class CommentiComponent implements OnInit {
       });
       //this.commentPost.emit()
   }
+
+
+  emojiList: string[] = ['😀', '😂', '😍', '🤔', '😎', '😭', '👍', '🎉', '🔥', '💯'];
+showEmojiPicker = false;
+
+addEmoji(emoji: string) {
+  this.commentDto.content = (this.commentDto.content || '') + emoji;
+}
+
+toggleEmojiPicker() {
+  this.showEmojiPicker = !this.showEmojiPicker;
+}
 }

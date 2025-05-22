@@ -3,7 +3,7 @@
 </div>
 <div #postContainer class="row p-3" style="height: 100%; overflow: auto;">
   <div class="col-9 ">
-    <form class="search w-100 pb-4" #SearchPostform="ngForm" (ngSubmit)="onSearch(SearchPostform)">
+    <form class="search w-full pb-4" #SearchPostform="ngForm" (ngSubmit)="onSearch(SearchPostform)">
       <input class="search-Bar" placeholder="Cerca Post dal titolo">
     </form>
     <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
@@ -22,11 +22,11 @@
         </div>
       <div class="col">
         <div class="py-1 pt-1">
-          <input type="text" name="title" class="input-title-text w-100 ps-3" placeholder="Write a Title"
+          <input  name="title" class="input-title-text w-full ps-3" placeholder="Write a Title"
             [(ngModel)]="PostDto.title" style="border: 0;outline: none; height: 28px;">
         </div>
         <div class="py-1">
-          <textarea type="text" name="post" class="input-title-text w-100 pt-2 ps-3" placeholder="Write a Post"
+          <textarea name="post" class="input-title-text w-full pt-2 ps-3 focus:ring-0" placeholder="Write a Post"
             [(ngModel)]="PostDto.post" style="height: 40px; border: 0;outline: none;"></textarea>
         </div>
         <div *ngIf="imagePreview" class="clearImagePreview">
@@ -40,25 +40,32 @@
         </div>
         <div class="w-100 d-flex justify-content-end align-items-end"
           style="height: 40px; border-top: 2px solid lightgray;">
-          <div style="height: 32.8px;">
-            <button class="mb-2" style="height: 28px; width: 100px; border-radius: 10px;" mat-fab extended color="primary" type="submit"
+          <div class="h-full flex items-center justify-center">
+            <button style="height: 28px; width: 100px; border-radius: 10px;" mat-fab extended color="primary" type="submit"
               [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
               Post
             </button>
           </div>
           <div class="ps-2">
-            <a mat-fab extended class="custom-file-upload" [disabled]="isSubmitting">
+            <button (click)="fileInput.click()" [disabled]="isSubmitting" type="button" class="file-upload inline-flex justify-center items-center p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+              <svg style="height: 22px; width:22px" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                   <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+               </svg>
+              <span class="sr-only">Upload image</span>
+              <input #fileInput type="file" class="hidden" (change)="renderImagePreview($event)" accept="image/*"/>
+          </button>
+            <!-- <a mat-fab extended class="custom-file-upload" [disabled]="isSubmitting">
               <label class="custom-file-upload" mat-fab extended>
                 <input type="file" (change)="renderImagePreview($event)" accept="image/*" />
                 <span class="material-symbols-outlined" style="font-size: 28px;">image</span>
               </label>
-            </a>
+            </a> -->
           </div>
         </div>
       </div> 
       </div>
     </form>
-    <div class="post" *ngFor="let post of Allpost" style="border-radius: 10px;">
+    <div class="post" *ngFor="let post of Allpost">
       <app-post-unico [logUserId]="logUserId" [post]="post" (postDeleted)="onPostDeleted()"></app-post-unico>
     </div>
     <!-- <div class="button-paginator">
@@ -75,7 +82,7 @@
     </div>
   </div>
   <div class="user-nav col-3 p-0" style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px;">
-    <div class="p-3 pe-1 h-100" style="overflow-y: auto;overflow-x: hidden;">
+    <div class="p-3 pe-1 h-full" style="overflow-y: auto;overflow-x: hidden;">
       <app-users></app-users>
     </div>
   </div>

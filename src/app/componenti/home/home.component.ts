@@ -51,7 +51,11 @@ photoMan2: string =
   toggleWindow() {
     this.isWindowOpen = !this.isWindowOpen;
     this.notificationCount = 0
-    this.userService.resetNotificationCount().subscribe((data: any) => {})
+    if(this.userLog.notificationCount > 0){
+      this.userService.resetNotificationCount().subscribe((data: any) => {
+        console.log("azzeramento Eseguito")
+      })  
+    }
   }
   getUserLogInfo() {
     this.userService.getUserById(this.userId).subscribe((data: any) => {
@@ -97,9 +101,6 @@ photoMan2: string =
     this.route.navigate(['login']);
   }
 
-  loadNotifications(){
-    console.log(this.userLog)
-  }
   acceptFriendRequest(userId: any) {
     this.userService.acceptFriendRequest(userId).subscribe((data: any) => {
 

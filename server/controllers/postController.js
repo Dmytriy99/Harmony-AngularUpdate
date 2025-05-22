@@ -3,7 +3,7 @@ const Comment = require("../model/comment.model");
 const User = require("../model/user.model")
 const ImagePost = require("../model/imagePost.model");
 const { getIO } = require("../soket"); // Importa Socket.IO
-exports.getPost = async (req, res) => {
+ exports.getPost = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;

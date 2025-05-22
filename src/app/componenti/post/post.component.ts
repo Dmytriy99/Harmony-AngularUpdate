@@ -142,7 +142,7 @@ export class PostComponent implements OnInit {
     const container = this.postContainer.nativeElement;
 
     // Controlla se lo scroll è arrivato in fondo
-    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
       if (this.remainingPosts > 0) {
         this.loadMorePosts(); // Scatena il caricamento di altri post
       }

@@ -1,3 +1,8 @@
+.send-message:enabled {
+  color: rgb(161 118 183);
+  border-radius: 18px;
+}
+
 .textArea:focus{
   border: none;
 }
@@ -31,9 +36,9 @@
   
  }
 
-button {
+/* button {
   font-size: 12px;
-}
+} */
 .comment-card {
   background-color: rgb(224 220 229)
 }
@@ -55,8 +60,7 @@ p {
 form {
   display: flex;
   flex-direction: column;
-  width: 65%;
-  padding-left: 20px;
+  width: 100%;
 }
 
 mat-card-title {

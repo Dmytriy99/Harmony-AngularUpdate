@@ -1,4 +1,7 @@
-
+.file-upload:hover {
+  color: #ab80cc;
+  border-radius: 10px;
+}
 .secondInfo{
   /* font-size: 14px; */
   font-size: 0.4em;

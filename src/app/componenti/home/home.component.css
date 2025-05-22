@@ -170,6 +170,14 @@ mat-toolbar {
   background-color: #916ec0 ;
 }
 
+.mat-list-item:hover .span-navBar{
+  color: white;
+}
+
+.mat-list-item:hover .icon{
+  color: white;
+}
+
 
 .span-navBar{
   color: rgb(0, 0, 0);
@@ -185,8 +193,16 @@ mat-toolbar {
   margin-top: 2px;
 }
 
-.mat-list-item.active {
+.mat-list-item.active  {
   background-color: #916ec0 ;
+  color: white;
+}
+
+.mat-list-item.active .span-navBar {
+  color: white;
+}
+.mat-list-item.active .icon {
+  color: white;
 }
 
 .bottom-nav {
