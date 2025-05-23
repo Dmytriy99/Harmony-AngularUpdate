@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './componenti/home/home.component';
 
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -71,6 +73,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatTooltipModule,
         MatProgressSpinnerModule,
         ScrollingModule,
-        MatMenuModule
+        MatMenuModule,
+        ReactiveFormsModule,
+        OverlayModule
             ], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}

@@ -18,3 +18,8 @@ textarea:focus {
     background-color: #f9f9f9; /* Colore di sfondo */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Ombra */
   }
+
+  .cdk-overlay-no-block {
+  pointer-events: none !important; /* 👈 questo fa la magia */
+  background: transparent !important;
+}

@@ -1,25 +1,39 @@
-<form *ngIf="isCommentVisible" @fadeInOut #Commentform="ngForm" (ngSubmit)="onSubmit(Commentform)">
+<form [formGroup]="commentFormReactive" *ngIf="isCommentVisible" @fadeInOut>
   <div class="px-1 pb-1 bg-gray-100">
     <label for="chat" class="sr-only">Your message</label>
     <div class="flex items-center px-3 py-1 rounded-lg dark:bg-gray-700 border border-gray-300 bg-white">
-        <button type="button" (click)="toggleEmojiPicker()" class="p-2 ps-1 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <button #emojiTrigger type="button" (click)="toggleEmojiPicker(emojiTrigger)" style="border-radius: 50%;"
+        class="p-1 flex rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <!-- <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"/>
-            </svg>
+            </svg> -->
+            <span class="material-symbols-outlined" style="font-size: 26px;">
+              mood
+            </span>
             <span class="sr-only">Add emoji</span>
         </button>
-        <div *ngIf="showEmojiPicker" class="bg-white border border-gray-300 rounded shadow p-2 mt-2 max-w-xs">
+        <ng-template #emojiMenu>
+          <div class="shadow bg-white border border-gray-300 rounded shadow p-2  max-w-xs">
+            <div class="flex flex-wrap gap-1">
+              <button *ngFor="let emoji of emojiList" (click)="addEmoji(emoji)"
+                class="text-2xl hover:scale-125 transition-transform">
+                {{ emoji }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <!-- <div *ngIf="showEmojiPicker" class="bg-white border border-gray-300 rounded shadow p-2 mt-2 max-w-xs">
           <div class="flex flex-wrap gap-1">
             <button *ngFor="let emoji of emojiList" (click)="addEmoji(emoji)"
               class="text-2xl hover:scale-125 transition-transform">
               {{ emoji }}
             </button>
           </div>
-        </div>
-        <textarea name="body" [(ngModel)]="commentDto.content" id="chat" rows="1" class="block mx-1 me-3 p-1.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border
+        </div> -->
+        <textarea name="body" formControlName="content" id="chat" rows="1" class="block mx-1 me-3 p-1.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border
          border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400
           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
-          <button [disabled]="!commentDto.content || isSend" type="submit" class="w-9 h-9 send-message inline-flex justify-center items-center p-2 rounded-full
+          <button [disabled]="commentFormReactive.invalid || isSend" type="submit" (click)="onSubmit()" class="w-9 h-9 send-message inline-flex justify-center items-center p-2 rounded-full
            cursor-pointer hover:bg-gray-200 disabled:hover:bg-transparent disabled:text-gray-400 disabled:cursor-not-allowed">
             <svg  class="w-4.5 h-4.5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                 <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>

@@ -17,11 +17,11 @@
     </div>
 
     <!-- Finestra notifiche con animazione -->
-    <div *ngIf="isWindowOpen" class="notification-window" style="background-color: #F9FAFB;">
+    <div *ngIf="isWindowOpen" class="notification-window shadow-lg" style="background-color: #F9FAFB;">
       <p class="window-header">Notifiche</p>
       <ul>
         <div *ngFor="let notification of userLog.notification">
-          <div *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === false"
+          <div class="my-1" *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === false"
             style="border-radius: 10px; background-color: #ede8f6;">
             <p class="m-0 p-2"
               style="font-weight: 400;font-size: 0.70em;white-space: break-spaces;text-align: justify;line-height: 1.5;">
@@ -39,7 +39,7 @@
                 style="height: 30px; width: 45%; background-color: #d6d6d6; border-radius: 8px;">Rifiuta</button>
             </div>
           </div>
-          <div *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === true"
+          <div class="my-1" *ngIf="notification.type === 'friendRequest' && notification.isFriendAccept === true"
             style="border-radius: 10px; background-color: #ede8f6;">
             <p class="m-0 p-2"
               style="font-weight: 400;font-size: 0.70em;
