@@ -8,6 +8,7 @@ import { PersonalUserComponent } from './componenti/personal-user/personal-user.
 import { RegisterComponent } from './componenti/register/register.component';
 import { isauthGuard } from './auth/auth.guard';
 import { LoginComponent } from './componenti/login/login.component';
+import { CommunityComponent } from './componenti/community/community.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: '/posts' },
       { path: 'posts', canActivate: [isauthGuard], component: PostComponent },
       { path: 'users', canActivate: [isauthGuard], component: UsersComponent },
+      { path: 'community', canActivate: [isauthGuard], component: CommunityComponent },
       {
         path: 'users/:id',
         canActivate: [isauthGuard],

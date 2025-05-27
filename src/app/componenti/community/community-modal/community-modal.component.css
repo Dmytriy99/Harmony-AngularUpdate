@@ -1,0 +1,28 @@
+::ng-deep .mdc-dialog__surface{
+  border-radius: 10px;
+}
+.input-title-text{
+background-color: #faf9f9;
+border-radius: 10px;
+
+}
+
+.input-title-text:hover {
+  /* background-color: white; */
+  background-color: #ececec;
+}
+.input-title-text:focus {
+  background-color: #ececec;
+  border: 0;
+}
+
+.communityButton {
+  background-color:  #f0f0f0 !important;
+  color: rgb(56, 56, 56);
+  height: 30px;
+  width: 75px;
+}
+
+ .btn-post:valid {
+  background-color: rgb(161 118 183);
+}

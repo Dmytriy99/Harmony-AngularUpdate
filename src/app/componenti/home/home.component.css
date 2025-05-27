@@ -161,7 +161,7 @@ mat-toolbar {
   cursor: pointer;
   transition: background-color 0.3s;
   height: 52px;
-  border-radius:18px;
+  border-radius:12px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -183,7 +183,8 @@ mat-toolbar {
   color: rgb(0, 0, 0);
 }
 .mat-list-item mat-icon {
-  color: rgb(0, 0, 0);
+  /* color: rgb(0, 0, 0); */
+  color: rgb(65 65 65);
   display: flex;
   justify-content: center;
 }
@@ -194,16 +195,18 @@ mat-toolbar {
 }
 
 .mat-list-item.active  {
-  background-color: #916ec0 ;
-  color: white;
+  /* background-color: #916ec0 ; */
+  /* color: white; */
+  border: 3px solid #916ec0;
+  color: black;
 }
 
-.mat-list-item.active .span-navBar {
+/* .mat-list-item.active .span-navBar {
   color: white;
 }
 .mat-list-item.active .icon {
   color: white;
-}
+} */
 
 .bottom-nav {
   display: flex;

@@ -11,7 +11,9 @@ const PostSchema = mongoose.Schema(
     likedBy: [{  type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     likedByName: [String],
     imageId: { type: mongoose.Schema.Types.ObjectId, ref: 'ImagePost' },
-    commentCount: { type: Number, default: 0 }
+    commentCount: { type: Number, default: 0 },
+    communityId: { type: mongoose.Schema.Types.ObjectId, ref: 'Community', default: null },
+    communityDisplayName: { type: String, default: null }, // 👈 aggiunto qui
   },
   {
     timestamps: true,

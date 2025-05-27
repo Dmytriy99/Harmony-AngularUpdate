@@ -6,7 +6,7 @@
     <form class="search w-full pb-4" #SearchPostform="ngForm" (ngSubmit)="onSearch(SearchPostform)">
       <input class="search-Bar" placeholder="Cerca Post dal titolo">
     </form>
-    <form class="add" #addPostForm="ngForm" (ngSubmit)="onSubmit(addPostForm)" style="border-radius: 15px;">
+    <form [formGroup]="postForm" class="add" style="border-radius: 15px;">
       <div class="customInput row">
         <div class="col-2 d-flex pt-1 align-items-start justify-content-center">
           <div class="ps-1">
@@ -23,11 +23,29 @@
       <div class="col">
         <div class="py-1 pt-1">
           <input  name="title" class="input-title-text w-full ps-3" placeholder="Write a Title"
-            [(ngModel)]="PostDto.title" style="border: 0;outline: none; height: 28px;">
+            formControlName="title" style="border: 0;outline: none; height: 28px;">
         </div>
         <div class="py-1">
-          <textarea name="post" class="input-title-text w-full pt-2 ps-3 focus:ring-0" placeholder="Write a Post"
-            [(ngModel)]="PostDto.post" style="height: 40px; border: 0;outline: none;"></textarea>
+          <textarea name="post" class="input-title-text w-full py-2 ps-3 focus:ring-0" placeholder="Write a Post"
+            formControlName="post" style="height: 40px; border: 0;outline: none;"></textarea>
+        </div>
+        <div #communityButtonsContainer class="row w-full pb-1 ps-3">
+          <ng-container *ngFor="let community of communityList.slice(0, 5)">
+            <div class="col">
+              <button  class="communityButton" mat-button (click)="getselectedCommunity(community)"
+              [ngClass]="{selected: selectedCommunity?.displayName === community.displayName}">
+                {{community.displayName}}
+              </button>
+            </div>
+          </ng-container>
+          <div class="col relative">
+            <button class="communityButton" mat-button (click)="openDialogCommunity()">
+              <span class="material-symbols-outlined icon-center" style="color: black;font-size: 18px;">
+              add
+              </span>
+              <span *ngIf="communityList.length > 5" class="badge-number">{{ communityList.length - 5 }}</span>
+            </button>
+          </div>
         </div>
         <div *ngIf="imagePreview" class="clearImagePreview">
           <a mat-mini-fab class="button">
@@ -41,8 +59,8 @@
         <div class="w-100 d-flex justify-content-end align-items-end"
           style="height: 40px; border-top: 2px solid lightgray;">
           <div class="h-full flex items-center justify-center">
-            <button style="height: 28px; width: 100px; border-radius: 10px;" mat-fab extended color="primary" type="submit"
-              [disabled]="!PostDto.title || !PostDto.post || isSubmitting">
+            <button class="btn-post" style="height: 28px; width: 100px; border-radius: 10px;" mat-fab extended color="primary" (click)="onSubmit()"
+              [disabled]="!postForm.valid || isSubmitting">
               Post
             </button>
           </div>

@@ -6,6 +6,7 @@ const postRoutes = require("./routes/postRoutes");
 const userRoutes = require("./routes/userRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const imageRoutes = require("./routes/imageRoutes");
+const communityRoutes = require("./routes/communityRoutes");
 const app = express();
 
 app.use(
@@ -26,5 +27,6 @@ app.use("/api", authRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/post", commentRoutes);
 app.use("/api/images", imageRoutes);
+app.use("/api/community", communityRoutes);
 
 module.exports = app;

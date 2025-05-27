@@ -39,6 +39,8 @@ import {MatMenuModule} from '@angular/material/menu';
 
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CommunityComponent } from './componenti/community/community.component';
+import { CommunityModalComponent } from './componenti/community/community-modal/community-modal.component';
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -51,6 +53,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         RegisterComponent,
         UserComponent,
         UsersComponent,
+        CommunityComponent,
+        CommunityModalComponent
     ],
     bootstrap: [AppComponent],
      imports: [BrowserModule,

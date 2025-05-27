@@ -1,0 +1,26 @@
+<div class="w-full  h-full">
+    <div class="py-1 pt-3 px-4">
+        <input  name="title" class="input-title-text w-full ps-3" placeholder="Crea una Community"
+         style="border: 0;outline: none; height: 40px;">
+         <div class="pt-2 w-full flex justify-end"> 
+            <button class="btn-post" style="height: 26px; width: 80px; border-radius: 5px;" mat-fab extended color="primary">
+                Crea
+            </button>
+        </div>
+         <div class="pt-3" style="height: 3px;width: 100%;border-bottom: 2px solid rgb(212, 212, 212);"></div>
+    </div>
+    <div class="grid grid-cols-8 px-2 w-full pt-2">
+        <ng-container *ngFor="let community of communityList">
+            <div class="col-span text-center py-1">
+                <button  class="communityButton" mat-button>
+                {{community.displayName}}
+                </button>
+            </div>
+            <div class="col-span text-center py-1">
+                <button  class="communityButton" mat-button>
+                {{community.displayName}}
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</div>

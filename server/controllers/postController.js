@@ -110,10 +110,15 @@ exports.PostPost = async (req, res) => {
     req.body.userId = req.userId;
     req.body.userName = user.name;
     req.body.email = user.email
+    // Gestione community opzionale
+    if (!req.body.communityId || req.body.communityId.trim() === '') {
+      req.body.communityId = null;
+      req.body.communityDisplayName = null;
+    }
     console.log("req.body:", req.body);
     console.log("Creazione del post");
     const post = await Post.create(req.body);
-
+    console.log(getIO())
     if (req.body.image === "false"){
     getIO().emit("newPost", post); // Notifica tutti i client con il nuovo post
     }

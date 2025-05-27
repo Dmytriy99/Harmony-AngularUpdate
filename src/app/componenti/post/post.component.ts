@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AddPostDto, Post } from 'src/app/modelli/interface';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { postService } from 'src/app/service/postService/post.service';
 import {
   BehaviorSubject,
@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 import { userService } from 'src/app/service/userService/user.service';
 import { io } from 'socket.io-client';  // 🔥 Importa Socket.IO client
 import { SoketService } from 'src/app/service/soketService/soket.service';
+import { communityService } from 'src/app/service/communityService/community.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CommunityModalComponent } from '../community/community-modal/community-modal.component';
 
 
 @Component({
@@ -22,12 +25,24 @@ import { SoketService } from 'src/app/service/soketService/soket.service';
 })
 export class PostComponent implements OnInit {
   @ViewChild('postContainer', { static: true }) postContainer!: ElementRef;
+  @ViewChild('communityButtonsContainer') buttonsContainer!: ElementRef;
   constructor(
     private postService: postService,
     private router: Router,
     private userService: userService,
-    private soketService: SoketService
-  ) {}
+    private soketService: SoketService,
+    private fb :FormBuilder,
+    private communityService: communityService,
+    private eRef: ElementRef,
+    public dialog: MatDialog,
+  ) {
+    this.postForm = this.fb.group({
+      title: ['', Validators.required],
+      post: ['', Validators.required],
+      community: [''],
+
+    })
+  }
   userId!: string;
   Allpost: Post[] = [];
   pageFirst = 1;
@@ -46,6 +61,12 @@ export class PostComponent implements OnInit {
   userImage!: any
   imageLoading= false
 
+  postForm! : FormGroup
+
+  selectedCommunity!: any | null;
+
+  communityList: any[] = [];
+
   private socket: any; // 🔥 Variabile per il socket
   
   photoGirl2: string =
@@ -63,6 +84,7 @@ export class PostComponent implements OnInit {
       this.onScroll();
     });
     this.setupSocketConnection();
+    this.getCommunity();
   }
 
   setupSocketConnection() {
@@ -107,6 +129,12 @@ export class PostComponent implements OnInit {
     );
   }
 
+  getCommunity(){
+    this.communityService.getCommunity().subscribe((data:any)=>{
+      this.communityList = data
+      console.log(data)
+    })
+  }
   // getAllPostObs() {
   //   this.Allpost$ = this.loadPostsSubject.pipe(
   //     switchMap(() => {
@@ -166,11 +194,18 @@ export class PostComponent implements OnInit {
     this.remainingPosts = this.totalPosts - this.Allpost.length;
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.isSubmitting = true;
-    if(!this.selectedFile) {this.PostDto.image = "false"
-    }else{this.PostDto.image = "true"}
-    this.postService.postPost(this.PostDto).subscribe((data: any) => {
+    const request = {
+      title: this.postForm.get('title')?.value,
+      post: this.postForm.get('post')?.value,
+      image: '',
+      communityId: this.selectedCommunity?._id,
+      communityDisplayName: this.selectedCommunity?.displayName
+    }
+    if(!this.selectedFile) {request.image = "false"
+    }else{request.image = "true"}
+    this.postService.postPost(request).subscribe((data: any) => {
       console.log(data)
       if (this.selectedFile) {
         const formDataImage = new FormData();
@@ -181,7 +216,7 @@ export class PostComponent implements OnInit {
             .subscribe((data: any) => {
               this.Allpost = data.post;
               this.totalPosts = data.totalPost;
-              this.PostDto = new AddPostDto();
+              this.postForm.reset();
               this.clearImagePreview()
               this.isSubmitting = false;
               this.page = 1;
@@ -194,7 +229,7 @@ export class PostComponent implements OnInit {
           .subscribe((data: any) => {
             this.Allpost = data.post;
             this.totalPosts = data.totalPost;
-            this.PostDto = new AddPostDto();
+            this.postForm.reset();
             this.isSubmitting = false;
             this.page = 1;
           })
@@ -265,6 +300,32 @@ export class PostComponent implements OnInit {
     fileInput.value = ''; // Resetta il valore del file input
   }
   }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedInside = this.buttonsContainer.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.selectedCommunity = null;
+    }
+  }
+  getselectedCommunity(type:any){
+    this.selectedCommunity = type
+    console.log(this.selectedCommunity)
+  }
+
+  openDialogCommunity() {
+      const dialogConfig: MatDialogConfig<any> = {
+        width: "50%",
+        height: "70%",
+        maxHeight: "90%",
+        data: {
+          community: this.communityList
+        }
+      };
+      const opendialog = this.dialog.open(CommunityModalComponent,dialogConfig);
+      opendialog.afterClosed().subscribe((result: any) => {
+       
+      });
+    }
   // uploadImage(event: any): void {
   //   const selectedFile = event.target.files[0];
   //   if (!selectedFile) {
