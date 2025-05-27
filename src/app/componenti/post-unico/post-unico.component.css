@@ -27,7 +27,7 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  max-height: 570px;
+  max-height: 450px;
   overflow: hidden;
   border-radius: 15px;
   margin-bottom: 10px;
@@ -37,7 +37,8 @@
   max-height: 100%;
   border-radius: 15px;
   width: 98%;
-  object-fit: contain;
+  /* object-fit: contain; */
+  object-fit: cover;
   background-color: #e3e2e2;
 }
 

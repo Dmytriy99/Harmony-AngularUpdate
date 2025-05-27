@@ -13,7 +13,7 @@ export const token: string = localStorage.getItem('token')!;
 
 export const urlPost: string = 'https://harmony-1.onrender.com/api/post';
 export const urlUser: string = 'https://harmony-1.onrender.com/api/user';
- export const urlCommunity: string = 'https://harmony-1.onrender.com/api/community';
+export const urlCommunity: string = 'https://harmony-1.onrender.com/api/community';
 export const urlAuth: string = 'https://harmony-1.onrender.com/api';
 
 const headers = new HttpHeaders({
