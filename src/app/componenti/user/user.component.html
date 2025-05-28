@@ -91,7 +91,14 @@
           </div>
           <div *ngIf="user" class="col-7 align-content-center" style="font-size: 32px;font-weight: 500;">
             <div class="d-flex align-items-center py-3">
-              <span>{{ user.name }}</span>
+              <!-- <span class="w-100" style="word-wrap: break-word; white-space: normal;">{{ user.name }}</span> -->
+               <span 
+                  class="truncate w-100"
+                  style="line-height: 28px;"
+                  [matTooltip]="user.name"
+                  matTooltipPosition="above">
+                  {{ user.name }}
+                </span>
               <span class="ms-2" style="display: inline-block; height: 10px; width: 10px; border-radius: 50%;"
                 [ngStyle]="{
                       background: user.status === 'online' ? 'green' : 'red'
@@ -121,7 +128,7 @@
     </div>
   </div>
   <div *ngIf="user" class="user-nav col-3 p-0"
-    style="position: sticky;top: 0;background-color: #ede8f6;border-radius: 15px; overflow: hidden;">
+    style="position: sticky;top: 0;background-color: ghostwhite;border-radius: 15px; border: 2px solid #ede8f6; overflow: hidden;">
     <div class="p-3 pe-1  h-100" style="overflow-y: auto; overflow-x: hidden;">
       <app-users></app-users>
     </div>

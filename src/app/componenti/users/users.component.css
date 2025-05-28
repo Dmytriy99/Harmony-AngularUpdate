@@ -50,7 +50,7 @@
   padding-left: 0.8em;
   outline: none;
   overflow: hidden;
-  background-color: #F3F3F3;
+  background-color: #fdfdfd;
   box-shadow: 0 0 .2vw rgba(53, 52, 52, 0.5), 0 0 0 .15vw transparent;
   border-radius: 10px;
   transition: all 0.5s;

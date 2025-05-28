@@ -8,7 +8,7 @@
   color: rgb(88, 88, 88);
 }
 
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
   width: 10px;
 }
 
@@ -17,7 +17,7 @@
   border-radius: 100px;
   background-clip: padding-box;
   border: 2px solid transparent;
-}
+} */
 
 
 .user-nav {

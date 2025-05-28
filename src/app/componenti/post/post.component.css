@@ -74,14 +74,14 @@
 
 ::-webkit-scrollbar{
   /* background-color: #e6ddee; */
-  width: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-thumb{
   background-color:  #ab80cc;
   border-radius: 100px;
   background-clip: padding-box;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
 }
 
 .user-nav {

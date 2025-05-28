@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { communityService } from 'src/app/service/communityService/community.service';
 
@@ -10,11 +11,20 @@ import { communityService } from 'src/app/service/communityService/community.ser
 })
 export class CommunityModalComponent implements OnInit {
   communityList: any[] = [];
-constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,private communityService: communityService,private dialogRef: MatDialogRef<CommunityModalComponent>) {
+  formCommunity!: FormGroup
+  communityInputName: string = '';
+constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,private communityService: communityService,private dialogRef: MatDialogRef<CommunityModalComponent>,
+            fb:FormBuilder) {   
+
+    this.formCommunity = fb.group({
+      communityName: ['']
+    })
     if(dialogData) 
       this.communityList = dialogData.community;
   }
   ngOnInit(): void {
-    console.log(this.communityList)
+    this.formCommunity.valueChanges.subscribe(data => {
+      this.communityInputName = data.communityName
+    })
   }
 }

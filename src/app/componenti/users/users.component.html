@@ -31,7 +31,7 @@
 <div class="loading-overlay" *ngIf="isLoading">
   <mat-spinner diameter="40"></mat-spinner>
 </div>
-<div class="card my-2" style="height: 100px;box-sizing: border-box; background-color: #f9f6ff; border-radius: 15px;width: 98%;" *ngFor="let user of users">
+<div class="card shadow-sm my-2" style="height: 100px;box-sizing: border-box; background-color: white; border-radius: 15px;width: 98%;" *ngFor="let user of users">
   <div class="row h-100" style="align-items: center;">
     <div class="col-4">
       <div class="ps-2">
@@ -50,7 +50,7 @@
       <!-- <div class="row g-0"> -->
       <div>
         <div class="d-flex align-items-center ">
-          <span><a class="user-link"(click)="openUserProfile(user._id)">{{ user.name }}</a></span>
+          <span class="truncate" style="max-width: 130px;"><a class="user-link" (click)="openUserProfile(user._id)">{{ user.name }}</a></span>
           <span class="ms-2" style="display: inline-block; height: 7px; width: 7px; border-radius: 50%;" [ngStyle]="{
                     background: user.status === 'online' ? 'green' : 'red'
                   }"></span>
