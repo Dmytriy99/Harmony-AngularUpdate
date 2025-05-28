@@ -158,6 +158,12 @@ export class PostUnicoComponent implements OnInit {
   openUserProfile(){
     this.router.navigate([`users/${this.post.userId}`])
   }
+
+  fitMode: 'cover' | 'contain' = 'cover';
+
+  toggleFitMode() {
+    this.fitMode = this.fitMode === 'cover' ? 'contain' : 'cover';
+  }
 }
 
 

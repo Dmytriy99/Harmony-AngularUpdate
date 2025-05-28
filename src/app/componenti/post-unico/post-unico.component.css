@@ -22,7 +22,7 @@
   text-decoration: underline;
 }
 
-
+/* 
 .image-preview {
   display: flex;
   justify-content: center;
@@ -37,9 +37,27 @@
   max-height: 100%;
   border-radius: 15px;
   width: 98%;
-  /* object-fit: contain; */
-  object-fit: cover;
+  object-fit: contain;
   background-color: #e3e2e2;
+} */
+
+.image-preview {
+  width: 100%;
+  aspect-ratio: 16/9; /* o 1/1, 16/9, dipende dal layout che vuoi */
+  overflow: hidden;
+  border-radius: 15px;
+  background-color: #e3e2e2;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* COPRE l'intero contenitore, tagliando se serve */
+  border-radius: 15px;
 }
 
 

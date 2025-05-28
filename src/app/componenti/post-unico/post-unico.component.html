@@ -35,11 +35,22 @@
       </div>
     </div>
     <div class="py-2 ps-2" style="font-weight: 400; font-size: 16px;">{{body}}</div>
-    <div class="image-preview">
+    <div class="image-preview relative" *ngIf="imagePost">
+        <span 
+          class="material-icons position-absolute top-0 end-0 m-2 p-1 text-white rounded-circle bg-dark bg-opacity-50"
+          style="cursor: pointer; font-size: 20px;"
+          (click)="toggleFitMode()"
+          title="Visualizza immagine"
+        >
+          {{ fitMode === 'cover' ? 'zoom_out_map' : 'fullscreen_exit' }}
+        </span>
       <div class="image-loading" *ngIf="imageLoading">
         <mat-spinner diameter="30"></mat-spinner>
       </div>
-      <img *ngIf="!imageLoading" [src]="imagePost"/>
+      <img *ngIf="!imageLoading" [src]="imagePost" [ngClass]="{
+      'object-fit-cover': fitMode === 'cover',
+      'object-fit-contain': fitMode === 'contain'
+      }" />
     </div>
     <div style="border-top: solid 1px #e0e0e0;height: 45px;border-top-left-radius: 10px;border-top-right-radius: 10px;" class="d-flex align-items-center bg-gray-100">
       <!-- <button (click)="openComments()">Comments</button> -->
@@ -72,32 +83,5 @@
       </div>
     </div>
     <app-commenti [isCommentVisible]="isCommentVisible" [postId]="iDpost"></app-commenti>
-    <!-- <mat-card-header>
-      <mat-card-actions class="delatePost">
-        <button *ngIf="canDeletePost()" mat-icon-button (click)="delatePost()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-card-actions>
-      <mat-card-title>{{ title }}</mat-card-title>
-      <mat-card-subtitle class="date">{{
-        post.createdAt | date : "dd/MM/yy, HH:mm"
-      }}</mat-card-subtitle>
-      <mat-card-subtitle
-        >{{ userName }}<br />
-        {{ userEmail }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{ body }}</p>
-    </mat-card-content>
-    <div class="mat-list-item">
-      <button mat-icon-button type="submit" (click)="like()">
-        <mat-icon matBadge="{{ post.likes }}" matBadgeColor="warn"
-          >favorite</mat-icon
-        >
-      </button>
-      <span class="nameLikes"> {{ nameLikes }}</span>
-    </div>
-    <app-commenti [postId]="iDpost"></app-commenti> -->
   </div>
 </div>
