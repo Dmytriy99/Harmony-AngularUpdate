@@ -2,11 +2,12 @@
   <div class="post-card">
     <div class="header row pt-2 ps-2 pb-2">
       <div class="col-11">
-        <div class="user d-flex pb-1" style="gap: 6px;">
+        <div class="user d-flex" style="gap: 6px;">
           <div class="name" style="font-size: 12px"><a class="user-link" (click)="openUserProfile()">{{ userName }}   </a></div>
           <div class="date" style="font-size: 10px;">  {{ post.createdAt | date : "dd/MM/yy, HH:mm"}}</div>
         </div>
-        <div class="title" style="font-size: 22px;font-weight: 500;">{{title}}</div>
+        <div *ngIf="post.communityDisplayName" class="name" style="font-size: 12px">Community: <a class="user-link">{{ post.communityDisplayName}}</a></div>
+        <div class="title pt-1" style="font-size: 22px;font-weight: 500;">{{title}}</div>
       </div>
       <div class="col-1">
         <label class="popup" *ngIf="canDeletePost()">
